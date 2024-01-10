@@ -5,7 +5,7 @@ import logging as log
 photoList = []
 
 
-def findPhotos(src: str):
+def init(src: str):
     for root, dirs, files in os.walk(src):
         log.info(f"In {root}")
         for f in files:
