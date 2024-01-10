@@ -1,17 +1,28 @@
 # Example file showing a circle moving on screen
 import pygame
+from screen import WIDTH,HEIGHT
+
 import photos
+
+photos.init("photos")
 
 # pygame setup
 pygame.init()
-screen = pygame.display.set_mode((1280, 720))
+screen = pygame.display.set_mode((WIDTH,HEIGHT) )
 clock = pygame.time.Clock()
 running = True
 dt = 0
 
 player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 
+
+photo1 = pygame.image.load(photos.photoList[0])
+photo2 = pygame.image.load(photos.photoList[1])
+photo3 = pygame.image.load(photos.photoList[2])
+
 while running:
+
+
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
     for event in pygame.event.get():
@@ -19,9 +30,12 @@ while running:
             running = False
 
     # fill the screen with a color to wipe away anything from last frame
-    screen.fill("purple")
+    # screen.fill("purple")
 
-    pygame.draw.circle(screen, "red", player_pos, 40)
+    # pygame.draw.circle(screen, "red", player_pos, 40)
+
+
+    screen.blit(photo1,(0,0))
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:

@@ -12,7 +12,7 @@ def init(src: str):
             if not f.lower().endswith((".png", ".jpg", ".jpeg")):
                 log.warning(f"{f}  Unknown file type")
                 continue
-            photoList.append(f)
+            photoList.append(os.path.join(src,f))
 
             # try:
             #     y, m, d = getDateFromFile(root, f)
