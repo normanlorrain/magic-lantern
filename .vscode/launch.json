@@ -1,0 +1,32 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Test: with sample photos",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "slideshow",
+      "args": ["${workspaceFolder}/tests/photos"]
+      // "console": "integratedTerminal"
+    },
+    {
+      "name": "Test: Help",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "slideshow",
+      "args": ["--help"]
+      // "console": "integratedTerminal"
+    },
+    {
+      "name": "Python Debugger: Current File",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "args": ["test"]
+    }
+  ]
+}

@@ -1,8 +1,11 @@
 import os
+import itertools
 import logging as log
 
 
-photoList = []
+_photoList = []
+
+_photoIterator = None
 
 
 def init(src: str):
@@ -12,10 +15,12 @@ def init(src: str):
             if not f.lower().endswith((".png", ".jpg", ".jpeg")):
                 log.warning(f"{f}  Unknown file type")
                 continue
-            photoList.append(os.path.join(src,f))
+            _photoList.append(os.path.join(src, f))
 
-            # try:
-            #     y, m, d = getDateFromFile(root, f)
-            # except ValueError as e:
-            #     log.warning(f"{f}, {e}, (File not processed)")
-            #     continue
+    global _photoIterator
+    _photoIterator = itertools.cycle(_photoList)
+    pass
+
+
+def getNextPhoto():
+    return next(_photoIterator)
