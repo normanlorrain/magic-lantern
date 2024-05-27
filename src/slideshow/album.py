@@ -2,10 +2,12 @@ import os
 import itertools
 import logging as log
 
+from slideshow.photo import Photo
 
-_photoList = []
 
-_photoIterator = None
+_photoFileList = []
+
+_photoFileIterator = None
 
 
 def init(src: str):
@@ -15,12 +17,13 @@ def init(src: str):
             if not f.lower().endswith((".png", ".jpg", ".jpeg")):
                 log.warning(f"{f}  Unknown file type")
                 continue
-            _photoList.append(os.path.join(src, f))
+            _photoFileList.append(os.path.join(src, f))
 
-    global _photoIterator
-    _photoIterator = itertools.cycle(_photoList)
+    global _photoFileIterator
+    _photoFileIterator = itertools.cycle(_photoFileList)
     pass
 
 
 def getNextPhoto():
-    return next(_photoIterator)
+    photoFile = next(_photoFileIterator)
+    return Photo(photoFile)

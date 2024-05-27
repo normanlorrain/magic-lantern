@@ -20,9 +20,10 @@ def init(path):
     )
 
     album.init(path)
-    surfaceList.append(pygame.image.load(album.getNextPhoto()))
-    surfaceList.append(pygame.image.load(album.getNextPhoto()))
-    surfaceList.append(pygame.image.load(album.getNextPhoto()))
+
+    for i in range(3):
+        photo = album.getNextPhoto()
+        surfaceList.append(photo.getSurface())
 
 
 def run():
