@@ -1,3 +1,5 @@
+import pygame
+
 WIDTH, HEIGHT = (1280, 720)
 
-display = None
+displaySurface: pygame.Surface = None

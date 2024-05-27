@@ -1,29 +1,24 @@
-# Example file showing a circle moving on screen
+import time
 import pygame
 
 from slideshow.screen import WIDTH, HEIGHT
 from slideshow import album
 from slideshow import screen
 
-surfaceList = []
+photoList = []
 
 
 def init(path):
 
     # pygame setup
     pygame.init()
-    screen.display = pygame.display.set_mode((WIDTH, HEIGHT))
-    dt = 0
-
-    player_pos = pygame.Vector2(
-        screen.display.get_width() / 2, screen.display.get_height() / 2
-    )
+    screen.displaySurface = pygame.display.set_mode((WIDTH, HEIGHT))
 
     album.init(path)
 
-    for i in range(3):
-        photo = album.getNextPhoto()
-        surfaceList.append(photo.getSurface())
+    # for i in range(3):
+    #     photo = album.getNextPhoto()
+    #     photoList.append(photo)
 
 
 def run():
@@ -34,35 +29,24 @@ def run():
     while running:
 
         # poll for events
-        # pygame.QUIT event means the user clicked X to close your window
+        # pygame.QUIT event means the user clicked X to close your displaySurface
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-
-        # fill the screen with a color to wipe away anything from last frame
-        # screen.fill("purple")
-
-        # pygame.draw.circle(screen, "red", player_pos, 40)
-
-        for surface in surfaceList:
-            screen.display.blit(surface, (0, 0))
-
         keys = pygame.key.get_pressed()
-        # if keys[pygame.K_w]:
-        #     player_pos.y -= 300 * dt
-        # if keys[pygame.K_s]:
-        #     player_pos.y += 300 * dt
-        # if keys[pygame.K_a]:
-        #     player_pos.x -= 300 * dt
-        # if keys[pygame.K_d]:
-        #     player_pos.x += 300 * dt
+        if keys[pygame.K_q]:
+            running = False
+
+        # for photo in photoList:
+        photo = album.getNextPhoto()
+        screen.displaySurface.blit(photo.getSurface(), photo.transform())
 
         # flip() the display to put your work on screen
         pygame.display.flip()
 
         # limits FPS to 60
-        # dt is delta time in seconds since last frame, used for framerate-
-        # independent physics.
-        dt = clock.tick(60) / 1000
+        # clock.tick(0.5)
+        time.sleep(1)
+        screen.displaySurface.fill((0, 0, 0))
 
     pygame.quit()
