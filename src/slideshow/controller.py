@@ -7,7 +7,7 @@ from slideshow import screen
 photoList = []
 
 PHOTO_EVENT = pygame.event.custom_type()
-PHOTO_INTERVAL = 1000
+PHOTO_INTERVAL = 3000
 LOOP_INTERVAL = 100  # msec
 
 
@@ -28,7 +28,7 @@ def showNewPhoto():
 
 
 def run():
-    # Creates an event periodically
+    # Creates a periodically repeating event on the event queue
     pygame.time.set_timer(PHOTO_EVENT, PHOTO_INTERVAL)
 
     showNewPhoto()
@@ -39,6 +39,9 @@ def run():
         if event.type == pygame.QUIT:
             break
         if event.type == pygame.KEYDOWN:
-            if event.unicode == "q":
+            if event.key == pygame.K_q:
                 break
+            if event.key in [pygame.K_n, pygame.K_RIGHT]:
+                showNewPhoto()
+        pygame.event.clear()
     pygame.quit()
