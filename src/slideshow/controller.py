@@ -12,7 +12,9 @@ def init(path):
 
     # pygame setup
     pygame.init()
-    screen.displaySurface = pygame.display.set_mode((WIDTH, HEIGHT))
+    screen.displaySurface = pygame.display.set_mode(
+        (0, 0), pygame.FULLSCREEN
+    )  # (WIDTH, HEIGHT))
 
     album.init(path)
 
@@ -33,10 +35,13 @@ def run():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_q]:
-            running = False
 
+            if event.type == pygame.KEYDOWN:
+                if event.unicode == "q":
+                    running = False
+
+        # Blank the screen
+        screen.displaySurface.fill((0, 0, 0))
         # for photo in photoList:
         photo = album.getNextPhoto()
         screen.displaySurface.blit(photo.getSurface(), photo.transform())
@@ -45,8 +50,7 @@ def run():
         pygame.display.flip()
 
         # limits FPS to 60
-        # clock.tick(0.5)
-        time.sleep(1)
-        screen.displaySurface.fill((0, 0, 0))
+        clock.tick(0.5)
+        # time.sleep(1)
 
     pygame.quit()
