@@ -16,7 +16,7 @@ def init(path):
     album.init(path)
 
 
-def showPhoto():
+def showNewPhoto():
     # Blank the screen
     screen.displaySurface.fill((0, 0, 0))
     # for photo in photoList:
@@ -28,12 +28,14 @@ def showPhoto():
 
 
 def run():
+    # Creates an event periodically
     pygame.time.set_timer(PHOTO_EVENT, PHOTO_INTERVAL)
-    showPhoto()
+
+    showNewPhoto()
     while True:
         event = pygame.event.wait(LOOP_INTERVAL)
         if event.type == PHOTO_EVENT:
-            showPhoto()
+            showNewPhoto()
         if event.type == pygame.QUIT:
             break
         if event.type == pygame.KEYDOWN:
