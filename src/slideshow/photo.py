@@ -1,6 +1,5 @@
 import pygame
-
-from slideshow.screen import WIDTH, HEIGHT
+from slideshow import screen
 
 
 class Photo:
@@ -10,7 +9,13 @@ class Photo:
         self.y = 0
         self.direction = (0, -1)
         self.velocity = 0
-        self.surface = pygame.image.load(self.filename).convert()
+        image = pygame.image.load(self.filename)
+
+        rect = pygame.Rect(0, 0, image.get_width(), image.get_height())
+        self.rect = rect.fit(screen.rect())
+
+        image = pygame.transform.scale(image, self.rect.size)
+        self.surface = image.convert()
 
     def transform(self):
         return (self.x, self.y)

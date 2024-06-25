@@ -1,7 +1,6 @@
 import time
 import pygame
 
-from slideshow.screen import WIDTH, HEIGHT
 from slideshow import album
 from slideshow import screen
 
@@ -10,12 +9,7 @@ photoList = []
 
 def init(path):
 
-    # pygame setup
-    pygame.init()
-    screen.displaySurface = pygame.display.set_mode(
-        (0, 0), pygame.FULLSCREEN
-    )  # (WIDTH, HEIGHT))
-
+    screen.init()
     album.init(path)
 
     # for i in range(3):
@@ -33,6 +27,7 @@ def run():
         # poll for events
         # pygame.QUIT event means the user clicked X to close your displaySurface
         for event in pygame.event.get():
+            print(event)
             if event.type == pygame.QUIT:
                 running = False
 
@@ -47,6 +42,7 @@ def run():
         screen.displaySurface.blit(photo.getSurface(), photo.transform())
 
         # flip() the display to put your work on screen
+        print("flip")
         pygame.display.flip()
 
         # limits FPS to 60
