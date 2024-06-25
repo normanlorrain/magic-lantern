@@ -19,11 +19,15 @@ class Photo:
         # Fit the rectangle to the screen
         imageFit = imageRect.fit(screen.rect())
 
-        # Scale the image to the rectangle
-        image = pygame.transform.scale(image, imageFit.size)
-        self.surface = image.convert()
+        self.x = imageFit.x
+        self.y = imageFit.y
 
-    def transform(self):
+        # Scale the image to the rectangle
+        scaledImage = pygame.transform.scale(image, imageFit.size)
+
+        self.surface = scaledImage.convert()
+
+    def coordinates(self):
         return (self.x, self.y)
 
     def getSurface(self):

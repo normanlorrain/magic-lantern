@@ -21,7 +21,7 @@ def showNewPhoto():
     screen.displaySurface.fill((0, 0, 0))
     # for photo in photoList:
     photo = album.getNextPhoto()
-    screen.displaySurface.blit(photo.getSurface(), photo.transform())
+    screen.displaySurface.blit(photo.getSurface(), photo.coordinates())
 
     # flip() the display to put your work on screen
     pygame.display.flip()
@@ -39,7 +39,7 @@ def run():
         if event.type == pygame.QUIT:
             break
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_q:
+            if event.key in [pygame.K_q, pygame.K_ESCAPE]:
                 break
             if event.key in [pygame.K_n, pygame.K_RIGHT]:
                 showNewPhoto()
