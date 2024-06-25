@@ -1,19 +1,18 @@
 import pygame
 
-# WIDTH, HEIGHT = (1280, 720)
-
-# displaySurface: pygame.Surface = None
+WIDTH, HEIGHT = (1280, 720)
 
 
 def init():
+    global displaySurface
+    global WIDTH, HEIGHT
+
     # pygame setup
     pygame.init()
 
-    global displaySurface
-    displaySurface = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-    # displaySurface = pygame.display.set_mode( (WIDTH, HEIGHT))
+    # displaySurface = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+    displaySurface = pygame.display.set_mode((WIDTH, HEIGHT))
 
-    global WIDTH, HEIGHT
     WIDTH, HEIGHT = displaySurface.get_size()
     pass
 
