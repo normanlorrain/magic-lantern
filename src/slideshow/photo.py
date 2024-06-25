@@ -9,12 +9,18 @@ class Photo:
         self.y = 0
         self.direction = (0, -1)
         self.velocity = 0
+
+        # Load the image
         image = pygame.image.load(self.filename)
 
-        rect = pygame.Rect(0, 0, image.get_width(), image.get_height())
-        self.rect = rect.fit(screen.rect())
+        # Get the boundary rectangle
+        imageRect = pygame.Rect((0, 0), image.get_size())
 
-        image = pygame.transform.scale(image, self.rect.size)
+        # Fit the rectangle to the screen
+        imageFit = imageRect.fit(screen.rect())
+
+        # Scale the image to the rectangle
+        image = pygame.transform.scale(image, imageFit.size)
         self.surface = image.convert()
 
     def transform(self):
