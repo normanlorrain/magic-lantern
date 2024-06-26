@@ -14,9 +14,9 @@ LOOP_INTERVAL = 100  # msec
 pauseState = False
 
 
-def init(path):
+def init(path, fullscreen):
 
-    screen.init()
+    screen.init(fullscreen)
     text.init()
     album.init(path)
 

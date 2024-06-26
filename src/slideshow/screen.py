@@ -3,15 +3,17 @@ import pygame
 WIDTH, HEIGHT = (1280, 720)
 
 
-def init():
+def init(fullscreen):
     global displaySurface
     global WIDTH, HEIGHT
 
     # pygame setup
     pygame.init()
     print(f"Support for all image formats: {pygame.image.get_extended()}")
-    # displaySurface = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-    displaySurface = pygame.display.set_mode((WIDTH, HEIGHT))
+    if fullscreen:
+        displaySurface = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+    else:
+        displaySurface = pygame.display.set_mode((WIDTH, HEIGHT))
 
     WIDTH, HEIGHT = displaySurface.get_size()
     pass
