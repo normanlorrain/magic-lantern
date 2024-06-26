@@ -1,4 +1,3 @@
-import time
 import pygame
 
 from slideshow import album

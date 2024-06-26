@@ -6,6 +6,12 @@ build-backend = "hatchling.build"
 name = "slideshow"
 version = "0.0.1"
 readme = "README.md"
+dependencies = [
+  'click',
+  'pillow',
+  'pygame',
+  'exifread',
+]
 
 
 [project.scripts]
