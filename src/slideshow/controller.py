@@ -27,6 +27,8 @@ def showNewPhoto():
     # for photo in photoList:
     photo = album.getNextPhoto()
     screen.displaySurface.blit(photo.getSurface(), photo.coordinates())
+    screen.displaySurface.blit(text.createMessage(str(photo.datetime)), (0, 0))
+
     # flip() the display to put your work on screen
     pygame.display.flip()
 
