@@ -33,10 +33,13 @@ def showNewPhoto():
 
 def pause():
     if pauseState:
+        pygame.time.set_timer(PHOTO_EVENT, 0)
+
         screen.displaySurface.blit(text.createMessage("PAUSE"), (0, 0))
         pygame.display.flip()
     else:
         showNewPhoto()
+        pygame.time.set_timer(PHOTO_EVENT, PHOTO_INTERVAL)
 
 
 def run():
@@ -47,6 +50,8 @@ def run():
     showNewPhoto()
     while True:
         event = pygame.event.wait(LOOP_INTERVAL)
+        if event.type == pygame.NOEVENT:
+            continue
         print(event)
         if event.type == PHOTO_EVENT:
             if not pauseState:
@@ -61,5 +66,5 @@ def run():
             if event.key == pygame.K_SPACE:
                 pauseState = not pauseState
                 pause()
-        pygame.event.clear()
+        # pygame.event.clear()
     pygame.quit()
