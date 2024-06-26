@@ -1,6 +1,8 @@
 import pygame
 from PIL import Image
 from PIL.ExifTags import TAGS
+import exifread
+
 
 from slideshow import screen
 
@@ -30,22 +32,33 @@ class Photo:
 
         self.surface = scaledImage.convert()
 
-        im = Image.open(self.filename)
-        exif = im.getexif()
-        self.datetime = ""
-        for tagid in exif:
-            # getting the tag name instead of tag id
-            tagname = TAGS.get(tagid, tagid)
+        with open(filename, "rb") as file_handle:
+            # Return Exif tags
+            tags = exifread.process_file(file_handle)
 
-            # passing the tagid to get its respective value
-            value = exif.get(tagid)
+        if "EXIF DateTimeOriginal" in tags:
+            self.datetime = tags["EXIF DateTimeOriginal"]
+        else:
+            self.datetime = ""
 
-            # printing the final result
-            print(f"{tagname:25}: {value}")
+        # im = Image.open(self.filename)
+        # exif = im.getexif()
+        # self.datetime = ""
+        # for tagid in exif:
+        #     # getting the tag name instead of tag id
+        #     tagname = TAGS.get(tagid, tagid)
+        #     if tagname == tagid:
+        #         continue  # tag wasn't found so don't print
 
-            if tagname == "DateTime":
-                self.datetime = value
-        pass
+        #     # passing the tagid to get its respective value
+        #     value = exif.get(tagid)
+
+        #     # printing the final result
+        #     print(f"{tagname:25}: {value}")
+
+        #     if tagname == "DateTime":
+        #         self.datetime = value
+        # pass
 
     def coordinates(self):
         return (self.x, self.y)
