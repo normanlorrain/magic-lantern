@@ -35,13 +35,25 @@ def showNewPhoto():
 
     # flip() the display to put your work on screen
     pygame.display.flip()
+    return photo
 
 
-def pause():
+def pause(photo):
     if pauseState:
         pygame.time.set_timer(PHOTO_EVENT, 0)
 
         screen.displaySurface.blit(text.createMessage("PAUSE"), (0, 0))
+
+        filename = text.createMessage(str(photo.filename))
+        x = screen.WIDTH - filename.get_width()
+        y = screen.HEIGHT - filename.get_height()
+        screen.displaySurface.blit(filename, (x, y))
+
+        datetime = text.createMessage(str(photo.datetime))
+        x = 0
+        y = screen.HEIGHT - datetime.get_height()
+        screen.displaySurface.blit(datetime, (0, y))
+
         pygame.display.flip()
     else:
         showNewPhoto()
@@ -54,7 +66,7 @@ def run():
     # Creates a periodically repeating event on the event queue
     pygame.time.set_timer(PHOTO_EVENT, PHOTO_INTERVAL)
 
-    showNewPhoto()
+    photo = showNewPhoto()
     while True:
         event = pygame.event.wait(LOOP_INTERVAL)
         if event.type == pygame.NOEVENT:
@@ -62,18 +74,18 @@ def run():
         print(event)
         if event.type == PHOTO_EVENT:
             if not pauseState:
-                showNewPhoto()
+                photo = showNewPhoto()
         if event.type in [pygame.WINDOWCLOSE, pygame.QUIT]:
             break
         if event.type == pygame.KEYDOWN:
             if event.key in [pygame.K_q, pygame.K_ESCAPE]:
                 break
             if event.key in [pygame.K_n, pygame.K_RIGHT]:
-                showNewPhoto()
+                photo = showNewPhoto()
             if event.key == pygame.K_i:
                 infoState = not infoState
             if event.key == pygame.K_SPACE:
                 pauseState = not pauseState
-                pause()
+                pause(photo)
         # pygame.event.clear()
     pygame.quit()
