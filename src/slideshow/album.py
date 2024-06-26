@@ -1,4 +1,5 @@
 import os
+import random
 import itertools
 import logging as log
 
@@ -19,6 +20,7 @@ def init(src: os.path):
                 continue
             _photoFileList.append(os.path.join(root, f))
 
+    random.shuffle(_photoFileList)
     global _photoFileIterator
     _photoFileIterator = itertools.cycle(_photoFileList)
     pass
@@ -27,3 +29,8 @@ def init(src: os.path):
 def getNextPhoto():
     photoFile = next(_photoFileIterator)
     return Photo(photoFile)
+
+
+# def getPreviousPhoto():
+#     photoFile = prev(_photoFileIterator)
+#     return Photo(photoFile)
