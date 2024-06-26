@@ -12,6 +12,7 @@ PHOTO_INTERVAL = 3000
 LOOP_INTERVAL = 100  # msec
 
 pauseState = False
+infoState = False
 
 
 def init(path, fullscreen):
@@ -28,8 +29,9 @@ def showNewPhoto():
     photo = album.getNextPhoto()
     screen.displaySurface.blit(photo.getSurface(), photo.coordinates())
 
-    datetime = text.createMessage(str(photo.datetime))
-    screen.displaySurface.blit(datetime, (0, screen.HEIGHT - datetime.get_height()))
+    if infoState:
+        datetime = text.createMessage(str(photo.datetime))
+        screen.displaySurface.blit(datetime, (0, screen.HEIGHT - datetime.get_height()))
 
     # flip() the display to put your work on screen
     pygame.display.flip()
@@ -48,6 +50,7 @@ def pause():
 
 def run():
     global pauseState
+    global infoState
     # Creates a periodically repeating event on the event queue
     pygame.time.set_timer(PHOTO_EVENT, PHOTO_INTERVAL)
 
@@ -67,6 +70,8 @@ def run():
                 break
             if event.key in [pygame.K_n, pygame.K_RIGHT]:
                 showNewPhoto()
+            if event.key == pygame.K_i:
+                infoState = not infoState
             if event.key == pygame.K_SPACE:
                 pauseState = not pauseState
                 pause()
