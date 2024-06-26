@@ -10,14 +10,14 @@ _photoFileList = []
 _photoFileIterator = None
 
 
-def init(src: str):
-    for root, dirs, files in os.walk(src):
+def init(src: os.path):
+    for root, dirs, files in os.walk(os.path.normpath(src)):
         log.info(f"In {root}")
         for f in files:
             if not f.lower().endswith((".png", ".jpg", ".jpeg")):
                 log.warning(f"{f}  Unknown file type")
                 continue
-            _photoFileList.append(os.path.join(src, f))
+            _photoFileList.append(os.path.join(root, f))
 
     global _photoFileIterator
     _photoFileIterator = itertools.cycle(_photoFileList)

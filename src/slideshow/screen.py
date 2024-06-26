@@ -10,8 +10,8 @@ def init():
     # pygame setup
     pygame.init()
 
-    displaySurface = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-    # displaySurface = pygame.display.set_mode((WIDTH, HEIGHT))
+    # displaySurface = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+    displaySurface = pygame.display.set_mode((WIDTH, HEIGHT))
 
     WIDTH, HEIGHT = displaySurface.get_size()
     pass
