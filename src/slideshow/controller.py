@@ -19,11 +19,11 @@ NEXT = auto()
 PREVIOUS = auto()
 
 
-def init(path, fullscreen):
+def init(path, fullscreen, shuffle):
 
     screen.init(fullscreen)
     text.init()
-    album.init(path)
+    album.init(path, shuffle)
 
 
 def showNewPhoto(direction=NEXT):
