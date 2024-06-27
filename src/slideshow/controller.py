@@ -10,7 +10,7 @@ photoList = []
 
 PHOTO_EVENT = pygame.event.custom_type()
 PHOTO_INTERVAL = 3000
-LOOP_INTERVAL = 100  # msec
+LOOP_INTERVAL = 1000  # msec
 
 pauseState = False
 showYearState = True
