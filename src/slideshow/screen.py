@@ -16,7 +16,7 @@ def init(fullscreen):
         displaySurface = pygame.display.set_mode((WIDTH, HEIGHT))
 
     WIDTH, HEIGHT = displaySurface.get_size()
-    pass
+    pygame.mouse.set_visible(False)
 
 
 def rect():
