@@ -13,7 +13,7 @@ PHOTO_INTERVAL = 3000
 LOOP_INTERVAL = 100  # msec
 
 pauseState = False
-infoState = False
+showYearState = True
 
 NEXT = auto()
 PREVIOUS = auto()
@@ -66,7 +66,7 @@ def showMetaData():
         y = screen.HEIGHT - datetime.get_height() - pad
         screen.displaySurface.blit(datetime, (x, y))
 
-    if infoState:
+    if showYearState:
         year = text.createMessage(str(photo.datetime)[0:4], text.HEADING, (163, 48, 42))
         x = screen.WIDTH - year.get_width() - pad
         y = 0 + pad
@@ -86,6 +86,16 @@ def pause():
         pygame.time.set_timer(PHOTO_EVENT, PHOTO_INTERVAL)
 
 
+def year():
+    global showYearState
+    showYearState = not showYearState
+    if not showYearState:  # Remove the year by redrawing
+        screen.displaySurface.fill((0, 0, 0))
+        photo = album.getCurrentPhoto()
+        screen.displaySurface.blit(photo.getSurface(), photo.coordinates())
+    showMetaData()
+
+
 def next():
     showNewPhoto()
     if not pauseState:
@@ -100,7 +110,7 @@ def previous():
 
 def run():
     global pauseState
-    global infoState
+    global showYearState
     # Creates a periodically repeating event on the event queue
     pygame.time.set_timer(PHOTO_EVENT, PHOTO_INTERVAL)
 
@@ -122,8 +132,8 @@ def run():
                 next()
             if event.key in [pygame.K_p, pygame.K_LEFT]:
                 previous()
-            if event.key == pygame.K_i:
-                infoState = not infoState
+            if event.key == pygame.K_y:
+                year()
             if event.key == pygame.K_SPACE:
                 pause()
 
