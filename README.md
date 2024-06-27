@@ -1,6 +1,8 @@
 # Slideshow
 todo
 
+possible names: balopticon , anscomatic 
+
 
 ## Linux 
 - click
@@ -35,3 +37,15 @@ If you get a failure, install per [instructions](https://www.pygame.org/wiki/Com
 
 
 I also needed to install -U cython for the above to work. Your mileage may vary, depending on the state of the installed versions of these libraries.
+
+
+# Fixing images
+## ImageMagick
+
+### Fix photo orientation
+
+mogrify -auto-orient *.jpg
+
+### Fix missing dates
+e.g.: 
+exiftool -datetimeoriginal="2009:08:08 00:00:00" -overwrite_original -m *
