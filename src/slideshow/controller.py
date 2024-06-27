@@ -1,3 +1,5 @@
+from enum import auto
+
 import pygame
 
 from slideshow import album
@@ -13,6 +15,9 @@ LOOP_INTERVAL = 100  # msec
 pauseState = False
 infoState = False
 
+NEXT = auto()
+PREVIOUS = auto()
+
 
 def init(path, fullscreen):
 
@@ -21,11 +26,15 @@ def init(path, fullscreen):
     album.init(path)
 
 
-def showNewPhoto():
+def showNewPhoto(direction=NEXT):
     # Blank the screen
     screen.displaySurface.fill((0, 0, 0))
-    # for photo in photoList:
-    photo = album.getNextPhoto()
+
+    if direction == NEXT:
+        photo = album.getNextPhoto()
+    if direction == PREVIOUS:
+        photo = album.getPreviousPhoto()
+
     screen.displaySurface.blit(photo.getSurface(), photo.coordinates())
 
     if infoState:
@@ -81,6 +90,8 @@ def run():
                 break
             if event.key in [pygame.K_n, pygame.K_RIGHT]:
                 photo = showNewPhoto()
+            if event.key in [pygame.K_p, pygame.K_LEFT]:
+                photo = showNewPhoto(PREVIOUS)
             if event.key == pygame.K_i:
                 infoState = not infoState
             if event.key == pygame.K_SPACE:
