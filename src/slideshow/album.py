@@ -39,3 +39,7 @@ def getPreviousPhoto():
     if _photoIndex < 0:
         _photoIndex = _photoCount - 1
     return Photo(_photoFileList[_photoIndex])
+
+
+def getCurrentPhoto():
+    return Photo(_photoFileList[_photoIndex])

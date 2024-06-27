@@ -37,19 +37,21 @@ def showNewPhoto(direction=NEXT):
 
     screen.displaySurface.blit(photo.getSurface(), photo.coordinates())
 
-    if infoState:
-        datetime = text.createMessage(str(photo.datetime))
-        screen.displaySurface.blit(datetime, (0, screen.HEIGHT - datetime.get_height()))
+    showMetaData()
 
     # flip() the display to put your work on screen
     pygame.display.flip()
-    return photo
 
 
-def pause(photo):
+# if infoState:
+#     datetime = text.createMessage(str(photo.datetime))
+#     screen.displaySurface.blit(datetime, (0, screen.HEIGHT - datetime.get_height()))
+
+
+def showMetaData():
+
     if pauseState:
-        pygame.time.set_timer(PHOTO_EVENT, 0)
-
+        photo = album.getCurrentPhoto()
         screen.displaySurface.blit(text.createMessage("PAUSE"), (0, 0))
 
         filename = text.createMessage(str(photo.filename))
@@ -62,7 +64,16 @@ def pause(photo):
         y = screen.HEIGHT - datetime.get_height()
         screen.displaySurface.blit(datetime, (0, y))
 
-        pygame.display.flip()
+    pygame.display.flip()
+
+
+def pause():
+    global pauseState
+    pauseState = not pauseState
+    if pauseState:
+        pygame.time.set_timer(PHOTO_EVENT, 0)
+        showMetaData()
+
     else:
         showNewPhoto()
         pygame.time.set_timer(PHOTO_EVENT, PHOTO_INTERVAL)
@@ -74,7 +85,7 @@ def run():
     # Creates a periodically repeating event on the event queue
     pygame.time.set_timer(PHOTO_EVENT, PHOTO_INTERVAL)
 
-    photo = showNewPhoto()
+    showNewPhoto()
     while True:
         event = pygame.event.wait(LOOP_INTERVAL)
         if event.type == pygame.NOEVENT:
@@ -82,20 +93,20 @@ def run():
         print(event)
         if event.type == PHOTO_EVENT:
             if not pauseState:
-                photo = showNewPhoto()
+                showNewPhoto()
         if event.type in [pygame.WINDOWCLOSE, pygame.QUIT]:
             break
         if event.type == pygame.KEYDOWN:
             if event.key in [pygame.K_q, pygame.K_ESCAPE]:
                 break
             if event.key in [pygame.K_n, pygame.K_RIGHT]:
-                photo = showNewPhoto()
+                showNewPhoto()
             if event.key in [pygame.K_p, pygame.K_LEFT]:
-                photo = showNewPhoto(PREVIOUS)
+                showNewPhoto(PREVIOUS)
             if event.key == pygame.K_i:
                 infoState = not infoState
             if event.key == pygame.K_SPACE:
-                pauseState = not pauseState
-                pause(photo)
+                pause()
+
         # pygame.event.clear()
     pygame.quit()
