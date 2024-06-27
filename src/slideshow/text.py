@@ -1,16 +1,21 @@
+from enum import auto
+
 import pygame
 
-font = None
+font = {}
+
+NORMAL = auto()
+HEADING = auto()
 
 
 def init():
-    global font
     pygame.font.init()
-    font = pygame.font.SysFont("freesansbold", 36)
+    font[NORMAL] = pygame.font.SysFont("freesansbold", 36)
+    font[HEADING] = pygame.font.SysFont("freesansbold", 72)
     # fonts = pygame.font.get_fonts()
     # pass
 
 
-def createMessage(msg):
-    textSurface = font.render(msg, True, (0, 255, 0))
+def createMessage(msg, style=NORMAL, colour=(46, 176, 80)):
+    textSurface = font[style].render(msg, True, colour)
     return textSurface
