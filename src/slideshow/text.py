@@ -6,6 +6,8 @@ font = {}
 
 NORMAL = auto()
 HEADING = auto()
+GREEN = (46, 176, 80)
+RED = (163, 48, 42)
 
 
 def init():
@@ -16,6 +18,6 @@ def init():
     # pass
 
 
-def createMessage(msg, style=NORMAL, colour=(46, 176, 80)):
+def createMessage(msg, style=NORMAL, colour=GREEN):
     textSurface = font[style].render(msg, True, colour)
     return textSurface

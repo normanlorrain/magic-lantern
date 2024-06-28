@@ -67,7 +67,7 @@ def showMetaData():
         screen.displaySurface.blit(datetime, (x, y))
 
     if showYearState:
-        year = text.createMessage(str(photo.datetime)[0:4], text.HEADING, (163, 48, 42))
+        year = text.createMessage(str(photo.datetime)[0:4], text.HEADING, text.GREEN)
         x = screen.WIDTH - year.get_width() - pad
         y = 0 + pad
         screen.displaySurface.blit(year, (x, y))
