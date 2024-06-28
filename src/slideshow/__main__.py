@@ -1,3 +1,4 @@
 from slideshow import cli
+import cProfile
 
-cli()
+cProfile.run("cli()", sort="time")
