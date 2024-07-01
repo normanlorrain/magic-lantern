@@ -11,6 +11,7 @@ _photoCount = 0
 
 
 def init(src: os.path, shuffle: bool = False):
+    global _photoFileList
     for root, dirs, files in os.walk(os.path.normpath(src)):
         log.info(f"In {root}")
         for f in files:
@@ -21,6 +22,8 @@ def init(src: os.path, shuffle: bool = False):
 
     if shuffle:
         random.shuffle(_photoFileList)
+    else:
+        _photoFileList = sorted(_photoFileList)
     global _photoCount
     _photoCount = len(_photoFileList)
 
