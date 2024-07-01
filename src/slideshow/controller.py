@@ -5,6 +5,7 @@ import pygame
 from slideshow import album
 from slideshow import screen
 from slideshow import text
+from slideshow.photo import PhotoException
 
 photoList = []
 
@@ -30,11 +31,17 @@ def showNewPhoto(direction=NEXT):
     # Blank the screen
     screen.displaySurface.fill((0, 0, 0))
 
-    if direction == NEXT:
-        photo = album.getNextPhoto()
-    if direction == PREVIOUS:
-        photo = album.getPreviousPhoto()
+    while True:
+        try:
+            if direction == NEXT:
+                photo = album.getNextPhoto()
+            if direction == PREVIOUS:
+                photo = album.getPreviousPhoto()
+            break
+        except PhotoException as e:
+            print(f"Bad photo file: {e.filename}")
 
+    print(f"{photo.filename}")
     screen.displaySurface.blit(photo.getSurface(), photo.coordinates())
 
     showMetaData()
@@ -42,10 +49,6 @@ def showNewPhoto(direction=NEXT):
     # flip() the display to put your work on screen
     pygame.display.flip()
 
-
-# if infoState:
-#     datetime = text.createMessage(str(photo.datetime))
-#     screen.displaySurface.blit(datetime, (0, screen.HEIGHT - datetime.get_height()))
 
 pad = 10
 
@@ -119,7 +122,7 @@ def run():
         event = pygame.event.wait(LOOP_INTERVAL)
         if event.type == pygame.NOEVENT:
             continue
-        print(event)
+        # print(event)
         if event.type == PHOTO_EVENT:
             if not pauseState:
                 showNewPhoto()

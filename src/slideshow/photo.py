@@ -7,6 +7,11 @@ import exifread
 from slideshow import screen
 
 
+class PhotoException(Exception):
+    def __init__(self, filename):
+        self.filename = filename
+
+
 class Photo:
     def __init__(self, filename) -> None:
         self.filename = filename
@@ -16,7 +21,10 @@ class Photo:
         self.velocity = 0
 
         # Load the image
-        image = pygame.image.load(self.filename)
+        try:
+            image = pygame.image.load(self.filename)
+        except:
+            raise PhotoException(self.filename)
 
         # Get the boundary rectangle
         imageRect = pygame.Rect((0, 0), image.get_size())
