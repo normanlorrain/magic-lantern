@@ -22,6 +22,15 @@
       // "console": "integratedTerminal"
     },
     {
+      "name": "Test: with config file",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "slideshow",
+      "args": ["-c", "${workspaceFolder}/tests/configs/slideshow.toml"]
+      // "env": { "SLIDESHOW_PROFILE": "active if this variable exists" }
+      // "console": "integratedTerminal"
+    },
+    {
       "name": "Python Debugger: Current File",
       "type": "debugpy",
       "request": "launch",

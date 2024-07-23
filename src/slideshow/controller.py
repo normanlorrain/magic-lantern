@@ -7,8 +7,6 @@ from slideshow import screen
 from slideshow import text
 from slideshow.photo import PhotoException
 
-photoList = []
-
 PHOTO_EVENT = pygame.event.custom_type()
 PHOTO_INTERVAL = 3000
 LOOP_INTERVAL = 1000  # msec
@@ -20,11 +18,10 @@ NEXT = auto()
 PREVIOUS = auto()
 
 
-def init(path, fullscreen, shuffle):
+def init(config):
 
-    screen.init(fullscreen)
+    screen.init(config)
     text.init()
-    album.init(path, shuffle)
 
 
 def showNewPhoto(direction=NEXT):

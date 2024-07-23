@@ -1,0 +1,18 @@
+[[albums]]
+order="sequence"
+folder=[ "tests/photos_numbers"]
+weight=10
+[[albums]]
+order="atomic"
+folder=[ "test/photos_atomic"]
+weight=20
+[[albums]]
+order="random"
+folder=[ "test/photos_paintings"]
+weight=20
+[[albums]]
+order="sequence"
+folder=["test/pdfs"]
+
+
+
