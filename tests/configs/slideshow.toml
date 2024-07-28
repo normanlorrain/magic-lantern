@@ -1,21 +1,21 @@
 [[albums]]
 order="sequence"
-folder=[ "tests/photos/numbers"]
+folder="tests/photos/numbers"
 weight=10
 
 [[albums]]
 order="atomic"
-folder=[ "test/photos/atomic"]
+folder="test/photos/atomic"
 weight=20
 
 [[albums]]
 order="random"
-folder=[ "test/photos/paintings"]
+folder="test/photos/paintings"
 weight=20
 
 [[albums]]
 order="sequence"
-folder=["test/pdfs"]
+folder="test/pdfs"
 
 
 

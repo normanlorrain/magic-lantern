@@ -14,7 +14,7 @@ class Order(enum.StrEnum):
 
 
 class Album:
-    def __init__(self, order: Order, src: os.path, weight: int):
+    def __init__(self, order: Order, src: os.path, weight: int = 0):
         """
         Initializes the album with the given source directory.
 
@@ -22,9 +22,12 @@ class Album:
             src (os.path): The path to the source directory.
             shuffle (bool, optional): Whether to shuffle the photos. Defaults to False.
         """
+        self._order = order
+        self._path = src
+        self._weight = weight
 
         self._photoFileList = []
-        self.self._photoIndex = 0
+        self._photoIndex = 0
         self._photoCount = 0
         # Walk through the source directory and its subdirectories
         for root, dirs, files in os.walk(os.path.normpath(src)):
@@ -37,7 +40,7 @@ class Album:
                 self._photoFileList.append(os.path.join(root, f))
 
         # Shuffle or sort the list of photos
-        if shuffle:
+        if self._order == Order.RANDOM:
             random.shuffle(self._photoFileList)
         else:
             self._photoFileList = sorted(self._photoFileList)
@@ -46,18 +49,18 @@ class Album:
         global _photoCount
         _photoCount = len(self._photoFileList)
 
-    def getNextPhoto():
+    def getNextPhoto(self):
 
         self._photoIndex += 1
         if self._photoIndex >= _photoCount:
             self._photoIndex = 0
         return Photo(self._photoFileList[self._photoIndex])
 
-    def getPreviousPhoto():
+    def getPreviousPhoto(self):
         self._photoIndex -= 1
         if self._photoIndex < 0:
             self._photoIndex = _photoCount - 1
         return Photo(self._photoFileList[self._photoIndex])
 
-    def getCurrentPhoto():
+    def getCurrentPhoto(self):
         return Photo(self._photoFileList[self._photoIndex])
