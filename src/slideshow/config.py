@@ -1,5 +1,5 @@
 import tomllib
-from slideshow.album import Album
+from slideshow.album import Album, Order
 
 
 def init(configFile):
@@ -17,11 +17,11 @@ def loadConfig(configFile):
 def createAlbums(dictConfig: dict):
     albumList = []
     for dictAlbum in dictConfig["albums"]:
-        album = Album(
-            order=dictAlbum["order"],
-            path=dictAlbum["folder"],
-            weight=dictAlbum.get("weight", 0),
-        )
+        order = dictAlbum["order"]
+        path = dictAlbum["folder"]
+        weight = dictAlbum.get("weight", 0)
+
+        album = Album(order, path, weight)
         albumList.append(album)
     return albumList
 
