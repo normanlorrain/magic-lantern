@@ -19,7 +19,7 @@ def createAlbums(dictConfig: dict):
     for dictAlbum in dictConfig["albums"]:
         album = Album(
             order=dictAlbum["order"],
-            src=dictAlbum["folder"],
+            path=dictAlbum["folder"],
             weight=dictAlbum.get("weight", 0),
         )
         albumList.append(album)
