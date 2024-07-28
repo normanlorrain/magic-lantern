@@ -3,10 +3,10 @@ from slideshow.album import Album, Order
 
 
 def init(configFile):
-    global _cfg
+    global _dictConfig
     global _albumList
-    _cfg = loadConfig(configFile)
-    _albumList = createAlbums(_cfg)
+    _dictConfig = loadConfig(configFile)
+    _albumList = createAlbums(_dictConfig)
 
 
 def loadConfig(configFile):

@@ -1,21 +1,23 @@
+# folder paths are relative to the location of this config file
+
 [[albums]]
 order="sequence"
-folder="tests/photos/numbers"
+folder="photos/numbers"
 weight=10
 
 [[albums]]
 order="atomic"
-folder="test/photos/atomic"
+folder="photos/atomic"
 weight=20
 
 [[albums]]
 order="random"
-folder="test/photos/paintings"
+folder="photos/paintings"
 weight=20
 
 [[albums]]
 order="sequence"
-folder="test/pdfs"
+folder="pdfs"
 
 
 
