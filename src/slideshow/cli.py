@@ -34,8 +34,8 @@ def slideshow(config_file, fullscreen, shuffle, path):
         raise click.ClickException("Must specify a PATH or a config file.")
 
     config.init(config_file, fullscreen, shuffle, path)
+    screen.init()  # Needs to be before the rest, so Pygame gets initalized.
     album.init()
-    screen.init()
     text.init()
     controller.init()
     controller.run()

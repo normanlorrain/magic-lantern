@@ -29,7 +29,7 @@ class Album:
         self._weight = weight
 
         self._photoFileList = []
-        self._photoIndex = 0
+        self._photoIndex = -1
         self._photoCount = 0
         # Walk through the source directory and its subdirectories
         for root, dirs, files in os.walk(path):
@@ -44,38 +44,39 @@ class Album:
         # Shuffle or sort the list of photos
         if self._order == Order.RANDOM:
             random.shuffle(self._photoFileList)
-        else:
-            self._photoFileList = sorted(self._photoFileList)
+        # else:
+        #     self._photoFileList.sort()
 
         # Update the photo count
         self._photoCount = len(self._photoFileList)
 
     def getNextPhoto(self):
-
         self._photoIndex += 1
         if self._photoIndex >= self._photoCount:
-            self._photoIndex = 0
+            self._photoIndex = -1
+            if self._order == Order.ATOMIC:
+                return None  # We've reached the end; signal caller
         return Photo(self._photoFileList[self._photoIndex])
 
-    def getPreviousPhoto(self):
-        self._photoIndex -= 1
-        if self._photoIndex < 0:
-            self._photoIndex = self._photoCount - 1
-        return Photo(self._photoFileList[self._photoIndex])
+    # def getPreviousPhoto(self):
+    #     self._photoIndex -= 1
+    #     if self._photoIndex < 0:
+    #         self._photoIndex = self._photoCount - 1
+    #     return Photo(self._photoFileList[self._photoIndex])
 
-    def getCurrentPhoto(self):
-        return Photo(self._photoFileList[self._photoIndex])
+    # def getCurrentPhoto(self):
+    #     return Photo(self._photoFileList[self._photoIndex])
 
 
-_albumList: list[Album] = []
-_albumIndex: int = 0
-_albumCount: int = 0
+_photoList: list[Album] = []
+_photoIndex: int = -1
+_photoCount: int = 0
 
 
 def init():
-    global _albumList
-    global _albumCount
-    global _albumIndex
+    albumList: list[Album] = []
+    albumWeights: list[int] = []
+    count = 0
 
     for dictAlbum in config._dictConfig[config.ALBUMS]:
 
@@ -92,20 +93,47 @@ def init():
             raise Exception(f"Bad Config: weight {weight} should be integer")
 
         album = Album(order, path, weight)
-        _albumList.append(album)
+        albumList.append(album)
+        albumWeights.append(weight)
+        count += album._photoCount
 
-    _albumCount = len(_albumList)
-    _albumIndex = 0
+    # Build a list of photos from random albums
+    global _photoList
+    global _photoCount
+    for album in random.choices(albumList, albumWeights, k=count * 10):
+        if album._order == Order.ATOMIC:
+            while photo := album.getNextPhoto():
+                _photoList.append(photo)
+        else:
+            _photoList.append(album.getNextPhoto())
+    _photoCount = len(_photoList)
+
+    for photo in _photoList:
+        print(photo.filename)
 
 
 def getNextPhoto():
-
-    return _albumList[_albumIndex].getNextPhoto()
+    global _photoList
+    global _photoIndex
+    global _photoCount
+    _photoIndex += 1
+    if _photoIndex >= _photoCount:
+        _photoIndex = 0
+    return _photoList[_photoIndex]
 
 
 def getPreviousPhoto():
-    return _albumList[_albumIndex].getPreviousPhoto()
+    global _photoList
+    global _photoIndex
+    global _photoCount
+    _photoIndex -= 1
+    if _photoIndex < 0:
+        _photoIndex = 0
+    return _photoList[_photoIndex]
 
 
 def getCurrentPhoto():
-    return _albumList[_albumIndex].getCurrentPhoto()
+    global _photoList
+    global _photoIndex
+    global _photoCount
+    return _photoList[_photoIndex]
