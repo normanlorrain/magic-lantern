@@ -1,16 +1,17 @@
 import pygame
+from slideshow import config
 
 WIDTH, HEIGHT = (1280, 720)
 
 
-def init(fullscreen):
+def init():
     global displaySurface
     global WIDTH, HEIGHT
 
     # pygame setup
     pygame.init()
     print(f"Support for all image formats: {pygame.image.get_extended()}")
-    if fullscreen:
+    if config._fullscreen:
         displaySurface = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
     else:
         displaySurface = pygame.display.set_mode((WIDTH, HEIGHT))

@@ -18,10 +18,8 @@ NEXT = auto()
 PREVIOUS = auto()
 
 
-def init(config):
-
-    screen.init(config)
-    text.init()
+def init():
+    pass
 
 
 def showNewPhoto(direction=NEXT):

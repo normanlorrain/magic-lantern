@@ -6,6 +6,7 @@ import itertools
 import logging as log
 
 from slideshow.photo import Photo
+from slideshow import config
 
 
 class Order(enum.StrEnum):
@@ -64,3 +65,47 @@ class Album:
 
     def getCurrentPhoto(self):
         return Photo(self._photoFileList[self._photoIndex])
+
+
+_albumList: list[Album] = []
+_albumIndex: int = 0
+_albumCount: int = 0
+
+
+def init():
+    global _albumList
+    global _albumCount
+    global _albumIndex
+
+    for dictAlbum in config._dictConfig[config.ALBUMS]:
+
+        order = dictAlbum[config.ORDER]
+        if order not in Order:
+            raise Exception(f"Bad Config: {order} not in {[e.value for e in Order]}")
+
+        path = config._configRoot / dictAlbum[config.FOLDER]
+        if not path.exists():
+            raise Exception(f"bad Config: invalid path: {path}")
+
+        weight = dictAlbum.get(config.WEIGHT, 0)
+        if not isinstance(weight, int):
+            raise Exception(f"Bad Config: weight {weight} should be integer")
+
+        album = Album(order, path, weight)
+        _albumList.append(album)
+
+    _albumCount = len(_albumList)
+    _albumIndex = 0
+
+
+def getNextPhoto():
+
+    return _albumList[_albumIndex].getNextPhoto()
+
+
+def getPreviousPhoto():
+    return _albumList[_albumIndex].getPreviousPhoto()
+
+
+def getCurrentPhoto():
+    return _albumList[_albumIndex].getCurrentPhoto()

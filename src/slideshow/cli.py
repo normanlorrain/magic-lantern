@@ -1,14 +1,27 @@
 import click
+import pathlib
 
-from slideshow import controller
-from slideshow import config
+from slideshow import config, album, screen, text, controller
 
 
 @click.command()
-@click.option("-c", "--config-file", help="Configuration file.  PATH is ignored.")
+@click.option(
+    "-c",
+    "--config-file",
+    type=click.Path(
+        exists=True, resolve_path=True, file_okay=True, path_type=pathlib.Path
+    ),
+    help="Configuration file.  PATH is ignored.",
+)
 @click.option("-f", "--fullscreen", is_flag=True, help="Full screen mode")
 @click.option("-s", "--shuffle", is_flag=True, help="shuffle the photos")
-@click.argument("path", type=click.Path(exists=True), required=False)
+@click.argument(
+    "path",
+    type=click.Path(
+        exists=True, resolve_path=True, dir_okay=True, path_type=pathlib.Path
+    ),
+    required=False,
+)
 def slideshow(config_file, fullscreen, shuffle, path):
     """Slideshow generator. Specify a PATH or use -c to specify a config file."""
     if path:
@@ -17,18 +30,14 @@ def slideshow(config_file, fullscreen, shuffle, path):
             click.echo(
                 "Warning: -c and PATH are mutually exclusive. PATH will be ignored"
             )
-    if config_file:
-        configuration = config.load_config(config_file)
-    else:
-        configuration = config.create_config(path)
-
     if config_file == None and path == None:
         raise click.ClickException("Must specify a PATH or a config file.")
 
-    config.fullscreen = fullscreen
-    config.shuffle = shuffle
-
-    controller.init(config)
+    config.init(config_file, fullscreen, shuffle, path)
+    album.init()
+    screen.init()
+    text.init()
+    controller.init()
     controller.run()
 
 
