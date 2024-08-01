@@ -6,6 +6,17 @@ import exifread
 
 from slideshow import screen
 
+_photoCache: dict = {}
+
+
+def createPhoto(path: str):
+    if path in _photoCache:
+        return _photoCache[path]
+    else:
+        photo = Photo(path)
+        _photoCache[path] = photo
+        return _photoCache[path]
+
 
 class PhotoException(Exception):
     def __init__(self, filename):

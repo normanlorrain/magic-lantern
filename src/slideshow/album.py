@@ -5,7 +5,7 @@ import enum
 import itertools
 import logging as log
 
-from slideshow.photo import Photo
+from slideshow.photo import createPhoto, Photo
 from slideshow import config
 
 
@@ -55,7 +55,7 @@ class Album:
             self._photoIndex = 0
             if self._order == Order.ATOMIC:
                 return None  # We've reached the end; signal caller
-        photo = Photo(self._photoFileList[self._photoIndex])
+        photo = createPhoto(self._photoFileList[self._photoIndex])
         self._photoIndex += 1
         return photo
 
@@ -100,13 +100,13 @@ def init():
                 continue
             while photo := album.getNextPhoto():
                 _photoList.append(photo)
+                print(photo.filename)
         else:
-            _photoList.append(album.getNextPhoto())
+            photo = album.getNextPhoto()
+            _photoList.append(photo)
+            print(photo.filename)
         previousAlbum = album
     _photoCount = len(_photoList)
-
-    for photo in _photoList:
-        print(photo.filename)
 
 
 def getNextPhoto():
