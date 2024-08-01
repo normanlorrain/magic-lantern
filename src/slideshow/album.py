@@ -29,7 +29,7 @@ class Album:
         self._weight = weight
 
         self._photoFileList = []
-        self._photoIndex = -1
+        self._photoIndex = 0
         self._photoCount = 0
         # Walk through the source directory and its subdirectories
         for root, dirs, files in os.walk(path):
@@ -51,12 +51,13 @@ class Album:
         self._photoCount = len(self._photoFileList)
 
     def getNextPhoto(self):
-        self._photoIndex += 1
         if self._photoIndex >= self._photoCount:
-            self._photoIndex = -1
+            self._photoIndex = 0
             if self._order == Order.ATOMIC:
                 return None  # We've reached the end; signal caller
-        return Photo(self._photoFileList[self._photoIndex])
+        photo = Photo(self._photoFileList[self._photoIndex])
+        self._photoIndex += 1
+        return photo
 
     # def getPreviousPhoto(self):
     #     self._photoIndex -= 1
