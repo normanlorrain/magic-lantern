@@ -10,12 +10,10 @@ _photoCache: dict = {}
 
 
 def createPhoto(path: str):
-    if path in _photoCache:
-        return _photoCache[path]
-    else:
+    if path not in _photoCache:
         photo = Photo(path)
         _photoCache[path] = photo
-        return _photoCache[path]
+    return _photoCache[path]
 
 
 class PhotoException(Exception):

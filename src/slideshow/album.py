@@ -93,7 +93,7 @@ def init():
     global _photoList
     global _photoCount
     previousAlbum = None
-    for album in random.choices(albumList, albumWeights, k=totalPhotos * 10):
+    for album in random.choices(albumList, albumWeights, k=totalPhotos * 100):
         if album._order == Order.ATOMIC:
             if previousAlbum == album:
                 print("preventing atomic album from repeating")

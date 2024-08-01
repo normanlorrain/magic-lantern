@@ -19,7 +19,7 @@ PREVIOUS = auto()
 
 
 def init():
-    pass
+    pygame.key.set_repeat(500, 100)
 
 
 def showNewPhoto(direction=NEXT):
