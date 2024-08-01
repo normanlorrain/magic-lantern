@@ -59,17 +59,8 @@ class Album:
         self._photoIndex += 1
         return photo
 
-    # def getPreviousPhoto(self):
-    #     self._photoIndex -= 1
-    #     if self._photoIndex < 0:
-    #         self._photoIndex = self._photoCount - 1
-    #     return Photo(self._photoFileList[self._photoIndex])
 
-    # def getCurrentPhoto(self):
-    #     return Photo(self._photoFileList[self._photoIndex])
-
-
-_photoList: list[Album] = []
+_photoList: list[Photo] = []
 _photoIndex: int = -1
 _photoCount: int = 0
 
@@ -77,7 +68,7 @@ _photoCount: int = 0
 def init():
     albumList: list[Album] = []
     albumWeights: list[int] = []
-    count = 0
+    totalPhotos = 0
 
     for dictAlbum in config._dictConfig[config.ALBUMS]:
 
@@ -96,17 +87,22 @@ def init():
         album = Album(order, path, weight)
         albumList.append(album)
         albumWeights.append(weight)
-        count += album._photoCount
+        totalPhotos += album._photoCount
 
     # Build a list of photos from random albums
     global _photoList
     global _photoCount
-    for album in random.choices(albumList, albumWeights, k=count * 10):
+    previousAlbum = None
+    for album in random.choices(albumList, albumWeights, k=totalPhotos * 10):
         if album._order == Order.ATOMIC:
+            if previousAlbum == album:
+                print("preventing atomic album from repeating")
+                continue
             while photo := album.getNextPhoto():
                 _photoList.append(photo)
         else:
             _photoList.append(album.getNextPhoto())
+        previousAlbum = album
     _photoCount = len(_photoList)
 
     for photo in _photoList:
