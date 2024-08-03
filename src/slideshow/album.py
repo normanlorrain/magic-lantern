@@ -2,7 +2,6 @@ import os
 import pathlib
 import random
 import enum
-import itertools
 import logging as log
 
 from slideshow.photo import createPhoto, Photo
