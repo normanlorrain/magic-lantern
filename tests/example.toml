@@ -3,21 +3,22 @@
 [[albums]]
 order="sequence" # These are picked in sequence
 folder="photos/numbers"
-weight=20
+weight=1
 
 [[albums]]
 order="atomic" # These are "sticky"; they appear as a group, sequencially
 folder="photos/atomic"
-weight=10
+weight=1
 
 [[albums]]
 order="random" # These appear randomly 
 folder="photos/paintings"
-weight=30
+weight=1
 
 [[albums]]
 order="sequence"
 folder="pdfs"
+
 
 
 
