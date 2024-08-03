@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Test: with sample photos",
+      "name": "Test: with single PATH",
       "type": "debugpy",
       "request": "launch",
       "module": "slideshow",

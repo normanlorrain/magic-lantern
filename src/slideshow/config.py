@@ -1,7 +1,6 @@
 import pathlib
 import os
 import enum
-
 import tomllib
 
 _configRoot: pathlib.Path = None
@@ -19,7 +18,12 @@ class Order(enum.StrEnum):
     RANDOM = "random"
 
 
-def init(configFile: pathlib.Path, fullscreen: bool, shuffle: bool, path: pathlib.Path):
+def init(
+    configFile: pathlib.Path | None,
+    fullscreen: bool,
+    shuffle: bool,
+    path: pathlib.Path,
+):
     global _dictConfig
     global _fullscreen
     global _configRoot
