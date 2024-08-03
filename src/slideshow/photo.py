@@ -45,7 +45,7 @@ class Photo:
         self.y = imageFit.y
 
         # Scale the image to the rectangle
-        scaledImage = pygame.transform.scale(image, imageFit.size)
+        scaledImage = pygame.transform.smoothscale(image, imageFit.size)
 
         self.surface = scaledImage.convert()
 
