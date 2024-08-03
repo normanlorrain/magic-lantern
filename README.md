@@ -1,7 +1,7 @@
 # Slideshow
 todo
 
-possible names: balopticon , anscomatic 
+possible names: balopticon , anscomatic , magic-lantern
 
 
 ## Linux 

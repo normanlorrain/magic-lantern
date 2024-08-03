@@ -12,7 +12,7 @@ PHOTO_INTERVAL = 5000
 LOOP_INTERVAL = 1000  # msec
 
 pauseState = False
-showYearState = True
+showYearState = False
 
 NEXT = auto()
 PREVIOUS = auto()
