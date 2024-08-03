@@ -6,6 +6,7 @@ import logging as log
 
 from slideshow.photo import createPhoto, Photo
 from slideshow import config
+from slideshow import pdf
 
 
 class Order(enum.StrEnum):
@@ -34,11 +35,17 @@ class Album:
         for root, dirs, files in os.walk(path):
             log.info(f"In {root}")
             for f in files:
-                # Filter out files with unknown extensions
-                if not f.lower().endswith((".png", ".jpg", ".jpeg")):
-                    log.warning(f"{f}  Unknown file type")
+                if f.lower().endswith(".pdf"):
+                    log.info(f"{f}  PDF file")
+                    for pageAsPhoto in pdf.convert(root, f):
+                        self._photoFileList.append(pageAsPhoto)
                     continue
-                self._photoFileList.append(os.path.join(root, f))
+                # Filter out files with unknown extensions
+                if f.lower().endswith((".png", ".jpg", ".jpeg")):
+                    self._photoFileList.append(os.path.join(root, f))
+                    continue
+
+                log.warning(f"{f}  Unknown file type")
 
         # Shuffle or sort the list of photos
         if self._order == Order.RANDOM:
@@ -79,7 +86,7 @@ def init():
         if not path.exists():
             raise Exception(f"bad Config: invalid path: {path}")
 
-        weight = dictAlbum.get(config.WEIGHT, 0)
+        weight = dictAlbum.get(config.WEIGHT, 1)
         if not isinstance(weight, int):
             raise Exception(f"Bad Config: weight {weight} should be integer")
 
