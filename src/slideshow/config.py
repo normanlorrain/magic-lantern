@@ -1,7 +1,8 @@
 import pathlib
+import os
+import enum
 
 import tomllib
-from slideshow.album import Album, Order
 
 _configRoot: pathlib.Path = None
 _fullscreen: bool = False
@@ -10,6 +11,12 @@ ALBUMS = "albums"
 ORDER = "order"
 FOLDER = "folder"
 WEIGHT = "weight"
+
+
+class Order(enum.StrEnum):
+    SEQUENCE = "sequence"
+    ATOMIC = "atomic"
+    RANDOM = "random"
 
 
 def init(configFile: pathlib.Path, fullscreen: bool, shuffle: bool, path: pathlib.Path):
@@ -21,6 +28,7 @@ def init(configFile: pathlib.Path, fullscreen: bool, shuffle: bool, path: pathli
         _configRoot = configFile.parent
         _dictConfig = loadConfig(configFile)
     else:  # create a simple album
+        _configRoot = os.getcwd()
         _dictConfig = createConfig(path, shuffle)
     _fullscreen = fullscreen
 
@@ -31,5 +39,7 @@ def loadConfig(configFile):
 
 
 def createConfig(path, shuffle):
-    album = Album(path, shuffle)
-    return [album]
+
+    return {
+        ALBUMS: [{ORDER: "random" if shuffle else "sequence", FOLDER: path, WEIGHT: 1}]
+    }

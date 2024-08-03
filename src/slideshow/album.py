@@ -1,18 +1,12 @@
 import os
 import pathlib
 import random
-import enum
 import logging as log
 
 from slideshow.photo import createPhoto, Photo
 from slideshow import config
+from slideshow.config import Order
 from slideshow import pdf
-
-
-class Order(enum.StrEnum):
-    SEQUENCE = "sequence"
-    ATOMIC = "atomic"
-    RANDOM = "random"
 
 
 class Album:
@@ -106,11 +100,11 @@ def init():
                 continue
             while photo := album.getNextPhoto():
                 _photoList.append(photo)
-                print(photo.filename)
+                # print(photo.filename)
         else:
             photo = album.getNextPhoto()
             _photoList.append(photo)
-            print(photo.filename)
+            # print(photo.filename)
         previousAlbum = album
     _photoCount = len(_photoList)
 
