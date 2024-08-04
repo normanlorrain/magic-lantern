@@ -1,7 +1,7 @@
 import os
-from slideshow import cli
+from magic_lantern import cli
 
-if "SLIDESHOW_PROFILE" in os.environ:
+if "magic_lantern_PROFILE" in os.environ:
     import cProfile
 
     cProfile.run("cli()", sort="time")

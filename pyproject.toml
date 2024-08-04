@@ -15,7 +15,7 @@ dependencies = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/slideshow"]
+packages = ["src/magic_lantern"]
 
 [project.scripts]
-magic-lantern = "slideshow:cli"
+magic-lantern = "magic_lantern:cli"

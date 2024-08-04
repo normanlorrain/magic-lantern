@@ -3,10 +3,10 @@ import pathlib
 import random
 import logging as log
 
-from slideshow.photo import createPhoto, Photo
-from slideshow import config
-from slideshow.config import Order
-from slideshow import pdf
+from magic_lantern.photo import createPhoto, Photo
+from magic_lantern import config
+from magic_lantern.config import Order
+from magic_lantern import pdf
 
 
 class Album:

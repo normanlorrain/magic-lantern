@@ -1,4 +1,4 @@
-# Slideshow
+# magic_lantern
 todo
 
 possible names: balopticon , anscomatic , magic-lantern

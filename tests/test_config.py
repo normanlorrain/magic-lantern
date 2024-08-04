@@ -1,6 +1,6 @@
 import pytest
 
-from slideshow import config
+from magic_lantern import config
 
 TEST_CFG = {
     "albums": [
@@ -23,5 +23,5 @@ def testCreateConfig(pytestconfig):
 
 
 # def testInit(pytestconfig):
-#     config.init(pytestconfig.rootpath / "tests/configs/slideshow.toml")
+#     config.init(pytestconfig.rootpath / "tests/configs/magic_lantern.toml")
 #     pass

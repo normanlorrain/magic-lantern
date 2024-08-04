@@ -1,5 +1,5 @@
 import pygame
-from slideshow import config
+from magic_lantern import config
 
 WIDTH, HEIGHT = (1280, 720)
 

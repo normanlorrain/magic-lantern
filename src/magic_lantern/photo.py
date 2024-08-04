@@ -4,7 +4,7 @@ from PIL.ExifTags import TAGS
 import exifread
 
 
-from slideshow import screen
+from magic_lantern import screen
 
 _photoCache: dict = {}
 

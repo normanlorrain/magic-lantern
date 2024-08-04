@@ -1,7 +1,7 @@
 import click
 import pathlib
 
-from slideshow import config, album, screen, text, controller
+from magic_lantern import config, album, screen, text, controller
 
 
 @click.command()
@@ -22,10 +22,10 @@ from slideshow import config, album, screen, text, controller
     ),
     required=False,
 )
-def slideshow(config_file, fullscreen, shuffle, path):
-    """Slideshow generator. Specify a PATH or use -c to specify a config file."""
+def magic_lantern(config_file, fullscreen, shuffle, path):
+    """magic_lantern generator. Specify a PATH or use -c to specify a config file."""
     if path:
-        click.echo(f"Slideshow: {path}")
+        click.echo(f"magic_lantern: {path}")
         if config_file:
             click.echo(
                 "Warning: -c and PATH are mutually exclusive. PATH will be ignored"
@@ -42,4 +42,4 @@ def slideshow(config_file, fullscreen, shuffle, path):
 
 
 def cli():
-    slideshow()
+    magic_lantern()

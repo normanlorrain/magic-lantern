@@ -2,10 +2,10 @@ from enum import auto
 
 import pygame
 
-from slideshow import album
-from slideshow import screen
-from slideshow import text
-from slideshow.photo import PhotoException
+from magic_lantern import album
+from magic_lantern import screen
+from magic_lantern import text
+from magic_lantern.photo import PhotoException
 
 PHOTO_EVENT = pygame.event.custom_type()
 PHOTO_INTERVAL = 5000
@@ -124,7 +124,7 @@ def run():
         if event.type in [pygame.WINDOWCLOSE, pygame.QUIT]:
             break
         if event.type == pygame.KEYDOWN:
-            if event.key in [pygame.K_q ]:
+            if event.key in [pygame.K_q]:
                 break
             if event.key in [pygame.K_n, pygame.K_RIGHT]:
                 next()
