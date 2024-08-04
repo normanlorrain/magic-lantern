@@ -9,7 +9,7 @@
       "type": "debugpy",
       "request": "launch",
       "module": "slideshow",
-      "args": ["${workspaceFolder}/tests/photos"]
+      "args": ["${workspaceFolder}/tests/images"]
       // "env": { "SLIDESHOW_PROFILE": "active if this variable exists" }
       // "console": "integratedTerminal"
     },
