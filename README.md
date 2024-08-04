@@ -12,6 +12,8 @@ See
 
 `magic-lantern --help` . 
 
+TODO: notes on metadata display, app behaviour
+
 ## Configuration 
 You can provide a simple path to a collection of images, or you can supply a configuration file.  See the example in `tests`.  
 

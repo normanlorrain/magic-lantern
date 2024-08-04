@@ -8,7 +8,7 @@ version = "0.0.1"
 authors = [
   { name="Norman Lorrain", email="normanlorrain@gmail.com" },
 ]
-description = "A presentation tool for kiosks, digital signage, slideshows."
+description = "A presentation tool for kiosks, digital signage, slide shows."
 readme = "README.md"
 requires-python = ">=3.12"
 classifiers = [
