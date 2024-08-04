@@ -4,9 +4,9 @@ from slideshow import config
 
 TEST_CFG = {
     "albums": [
-        {"order": "sequence", "folder": "photos/numbers", "weight": 10},
-        {"order": "atomic", "folder": "photos/atomic", "weight": 20},
-        {"order": "random", "folder": "photos/paintings", "weight": 20},
+        {"order": "sequence", "folder": "images/numbers", "weight": 10},
+        {"order": "atomic", "folder": "images/atomic", "weight": 20},
+        {"order": "random", "folder": "images/paintings", "weight": 20},
         {"order": "sequence", "folder": "pdfs"},
     ]
 }
@@ -17,9 +17,8 @@ def testLoadConfig(pytestconfig):
     pass
 
 
-def testCreateAlbums(pytestconfig):
-    config._configRoot = pytestconfig.rootpath / "tests"
-    albums = config.createAlbums(TEST_CFG)
+def testCreateConfig(pytestconfig):
+    cfg = config.createConfig("/a/b/c", True)
     pass
 
 
