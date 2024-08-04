@@ -19,7 +19,7 @@ def init():
     for dictAlbum in config._dictConfig[config.ALBUMS]:
 
         order = dictAlbum[config.ORDER]
-        if order not in Order:
+        if order not in [e.value for e in Order]:
             raise Exception(f"Bad Config: {order} not in {[e.value for e in Order]}")
 
         path = config._configRoot / dictAlbum[config.FOLDER]
