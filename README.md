@@ -1,5 +1,5 @@
 # magic-lantern
-A presentation tool for kiosks, digital signage, slideshows.
+A presentation tool for kiosks, digital signage, slide shows.
 
 Supports *png* and *jpg*.  *PDF* files are also supported; each page is internally exported to an image file.
 ## Installation

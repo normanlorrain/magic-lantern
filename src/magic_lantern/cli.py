@@ -11,7 +11,7 @@ from magic_lantern import config, slideshow, screen, text, controller
     type=click.Path(
         exists=True, resolve_path=True, file_okay=True, path_type=pathlib.Path
     ),
-    help="Configuration file.  PATH is ignored.",
+    help="Configuration file.",
 )
 @click.option("-f", "--fullscreen", is_flag=True, help="Full screen mode")
 @click.option("-s", "--shuffle", is_flag=True, help="shuffle the photos")
@@ -23,7 +23,7 @@ from magic_lantern import config, slideshow, screen, text, controller
     required=False,
 )
 def magic_lantern(config_file, fullscreen, shuffle, path):
-    """magic_lantern generator. Specify a PATH or use -c to specify a config file."""
+    """A slide show generator. Specify a PATH containing image files or use -c to specify a config file."""
     if path:
         click.echo(f"magic_lantern: {path}")
         if config_file:
