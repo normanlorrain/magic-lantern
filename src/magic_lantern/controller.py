@@ -2,7 +2,7 @@ from enum import auto
 
 import pygame
 
-from magic_lantern import album
+from magic_lantern import slideshow
 from magic_lantern import screen
 from magic_lantern import text
 from magic_lantern.photo import PhotoException
@@ -29,9 +29,9 @@ def showNewPhoto(direction=NEXT):
     while True:
         try:
             if direction == NEXT:
-                photo = album.getNextPhoto()
+                photo = slideshow.getNextPhoto()
             if direction == PREVIOUS:
-                photo = album.getPreviousPhoto()
+                photo = slideshow.getPreviousPhoto()
             break
         except PhotoException as e:
             print(f"Bad photo file: {e.filename}")
@@ -49,7 +49,7 @@ pad = 10
 
 
 def showMetaData():
-    photo = album.getCurrentPhoto()
+    photo = slideshow.getCurrentPhoto()
     if pauseState:
 
         screen.displaySurface.blit(text.createMessage("PAUSE"), (pad, pad))
@@ -89,7 +89,7 @@ def year():
     showYearState = not showYearState
     if not showYearState:  # Remove the year by redrawing
         screen.displaySurface.fill((0, 0, 0))
-        photo = album.getCurrentPhoto()
+        photo = slideshow.getCurrentPhoto()
         screen.displaySurface.blit(photo.getSurface(), photo.coordinates())
     showMetaData()
 

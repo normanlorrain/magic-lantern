@@ -1,7 +1,7 @@
 import click
 import pathlib
 
-from magic_lantern import config, album, screen, text, controller
+from magic_lantern import config, slideshow, screen, text, controller
 
 
 @click.command()
@@ -35,7 +35,7 @@ def magic_lantern(config_file, fullscreen, shuffle, path):
 
     config.init(config_file, fullscreen, shuffle, path)
     screen.init()  # Needs to be before the rest, so Pygame gets initalized.
-    album.init()
+    slideshow.init()
     text.init()
     controller.init()
     controller.run()
