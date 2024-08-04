@@ -1,6 +1,4 @@
 import pygame
-from PIL import Image
-from PIL.ExifTags import TAGS
 import exifread
 
 
