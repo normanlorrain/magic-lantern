@@ -58,25 +58,6 @@ class Photo:
         else:
             self.datetime = ""
 
-        # im = Image.open(self.filename)
-        # exif = im.getexif()
-        # self.datetime = ""
-        # for tagid in exif:
-        #     # getting the tag name instead of tag id
-        #     tagname = TAGS.get(tagid, tagid)
-        #     if tagname == tagid:
-        #         continue  # tag wasn't found so don't print
-
-        #     # passing the tagid to get its respective value
-        #     value = exif.get(tagid)
-
-        #     # printing the final result
-        #     print(f"{tagname:25}: {value}")
-
-        #     if tagname == "DateTime":
-        #         self.datetime = value
-        # pass
-
     def coordinates(self):
         return (self.x, self.y)
 
