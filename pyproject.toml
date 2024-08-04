@@ -5,13 +5,28 @@ build-backend = "hatchling.build"
 [project]
 name = "magic-lantern"
 version = "0.0.1"
+authors = [
+  { name="Norman Lorrain", email="normanlorrain@gmail.com" },
+]
+description = "A presentation tool for kiosks, digital signage, slideshows."
 readme = "README.md"
+requires-python = ">=3.12"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
 dependencies = [
   'click',
   'pygame',
   'exifread',
   'pymupdf'
 ]
+
+
+[project.urls]
+Homepage = "https://github.com/normanlorrain/slideshow"
+
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/magic_lantern"]
