@@ -1,17 +1,28 @@
-# magic_lantern
-todo
+# magic-lantern
+A presentation tool for kiosks, digital signage, slideshows.
 
-possible names: balopticon , anscomatic , magic-lantern
+Supports *png* and *jpg*.  *PDF* files are also supported; each page is internally exported to an image file.
+## Installation
 
+`pip install magic-lantern`
 
-## Linux 
+## Usage
+
+See 
+
+`magic-lantern --help` . 
+
+## Configuration 
+You can provide a simple path to a collection of images, or you can supply a configuration file.  See the example in `tests`.  
+
+## Linux requirements
 - click
 - pygame
   - libsdl2-dev
   - python3-dev
 
 
-## Pygame  
+### Pygame  
 I had to install pygame to get the full image features.  
 
 To test if necessary, to this 
@@ -40,6 +51,10 @@ I also needed to install -U cython for the above to work. Your mileage may vary,
 
 
 # Fixing images
+
+Some notes on tweaking images if necessary.
+
+
 ## ImageMagick
 
 ### Fix photo orientation
