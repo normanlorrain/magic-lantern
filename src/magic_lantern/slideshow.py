@@ -22,7 +22,7 @@ def init():
         if order not in [e.value for e in Order]:
             raise Exception(f"Bad Config: {order} not in {[e.value for e in Order]}")
 
-        path = config._configRoot / dictAlbum[config.FOLDER]
+        path = config.configRoot / dictAlbum[config.FOLDER]
         if not path.exists():
             raise Exception(f"bad Config: invalid path: {path}")
 

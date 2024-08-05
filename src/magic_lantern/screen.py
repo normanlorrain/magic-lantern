@@ -11,7 +11,7 @@ def init():
     # pygame setup
     pygame.init()
     print(f"Support for all image formats: {pygame.image.get_extended()}")
-    if config._fullscreen:
+    if config.fullscreen:
         displaySurface = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
     else:
         displaySurface = pygame.display.set_mode((WIDTH, HEIGHT))
