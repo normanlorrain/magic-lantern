@@ -9,7 +9,9 @@ Supports *png* and *jpg*.  *PDF* files are also supported; each page is internal
 
 ### Debian
 
+```
 pipx install magic-lantern
+```
 
 ## Usage
 
