@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Test: with single PATH",
+      "name": "Test: DIRECTORY",
       "type": "debugpy",
       "request": "launch",
       "module": "magic_lantern",
@@ -22,7 +22,7 @@
       // "console": "integratedTerminal"
     },
     {
-      "name": "Test: with config file",
+      "name": "Test: config FILE",
       "type": "debugpy",
       "request": "launch",
       "module": "magic_lantern",
