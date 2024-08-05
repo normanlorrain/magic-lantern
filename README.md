@@ -19,7 +19,12 @@ See
 
 `magic-lantern --help` . 
 
-TODO: notes on metadata display, app behaviour
+When running, use the following keys to control the slideshow:
+- **space bar**: play / pause
+- **q**: quit
+- **p**, **left arrow**: previous image
+- **n**, **right arrow**: previous image
+- **y**, display of year (on/off)
 
 ## Configuration 
 You can provide a simple path to a collection of images, or you can supply a configuration file.  See the example in `tests`.  
