@@ -36,6 +36,11 @@ You can provide a simple path to a collection of images, or you can supply a con
 
 # Notes
 
+## Running over ssh
+```
+export DISPLAY=:0
+```
+
 ## Fixing photo orientation 
 [ImageMagick](https://imagemagick.org/script/mogrify.php)
 
