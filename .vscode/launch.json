@@ -30,6 +30,15 @@
       // "env": { "magic_lantern_PROFILE": "active if this variable exists" }
       // "console": "integratedTerminal"
     },
+        {
+      "name": "Test: interval option",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "magic_lantern",
+      "args": ["-i", "1", "${workspaceFolder}/tests/images"]
+      // "env": { "magic_lantern_PROFILE": "active if this variable exists" }
+      // "console": "integratedTerminal"
+    },
     {
       "name": "Python Debugger: Current File",
       "type": "debugpy",

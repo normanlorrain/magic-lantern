@@ -3,8 +3,10 @@ import os
 import enum
 import tomllib
 
+_dictConfig = None
 configRoot: pathlib.Path = None
 fullscreen: bool = False
+interval: int = 5
 
 ALBUMS = "albums"
 ORDER = "order"
@@ -20,13 +22,18 @@ class Order(enum.StrEnum):
 
 def init(
     configFile: pathlib.Path | None,
-    full_screen: bool,
+    fullscreen_: bool,
     shuffle: bool,
+    interval_: int,
     path: pathlib.Path,
 ):
     global _dictConfig
-    global fullscreen
     global configRoot
+    global fullscreen
+    global interval
+
+    fullscreen = fullscreen_
+    interval = interval_
 
     if configFile:
         configRoot = configFile.parent
@@ -34,7 +41,6 @@ def init(
     else:  # create a simple album
         configRoot = os.getcwd()
         _dictConfig = createConfig(path, shuffle)
-    fullscreen = full_screen
 
 
 def loadConfig(configFile):

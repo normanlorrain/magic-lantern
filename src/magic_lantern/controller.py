@@ -5,10 +5,11 @@ import pygame
 from magic_lantern import slideshow
 from magic_lantern import screen
 from magic_lantern import text
+from magic_lantern import config
 from magic_lantern.photo import PhotoException
 
 PHOTO_EVENT = pygame.event.custom_type()
-PHOTO_INTERVAL = 5000
+PHOTO_INTERVAL = None
 LOOP_INTERVAL = 1000  # msec
 
 pauseState = False
@@ -19,6 +20,8 @@ PREVIOUS = auto()
 
 
 def init():
+    global PHOTO_INTERVAL
+    PHOTO_INTERVAL = config.interval * 1000  # msec
     pygame.key.set_repeat(500, 100)
 
 
