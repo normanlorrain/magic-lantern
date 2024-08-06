@@ -24,9 +24,10 @@ class Photo:
         self.filename = filename
         self.x = 0
         self.y = 0
-        self.direction = (0, -1)
-        self.velocity = 0
 
+        self.imageLoaded = False
+
+    def loadImage(self):
         # Load the image
         try:
             image = pygame.image.load(self.filename)
@@ -47,7 +48,7 @@ class Photo:
 
         self.surface = scaledImage.convert()
 
-        with open(filename, "rb") as file_handle:
+        with open(self.filename, "rb") as file_handle:
             # Return Exif tags
             tags = exifread.process_file(file_handle)
 
@@ -55,9 +56,14 @@ class Photo:
             self.datetime = tags["EXIF DateTimeOriginal"]
         else:
             self.datetime = ""
+        self.imageLoaded = True
 
     def coordinates(self):
+        if not self.imageLoaded:
+            self.loadImage()
         return (self.x, self.y)
 
     def getSurface(self):
+        if not self.imageLoaded:
+            self.loadImage()
         return self.surface
