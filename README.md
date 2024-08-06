@@ -30,17 +30,17 @@ When running, use the following keys to control the slideshow:
 You can provide a simple path to a collection of images, or you can supply a configuration file.  See the example in `tests`.  
 
 
-# Fixing images
+# Notes
 
-Some notes on tweaking images if necessary.
+## Fixing photo orientation 
+[ImageMagick](https://imagemagick.org/script/mogrify.php)
 
-
-## ImageMagick
-
-### Fix photo orientation
-
-mogrify -auto-orient *.jpg
-
-### Fix missing dates
+```mogrify -auto-orient *.jpg
+```
+## Fixing missing dates
 e.g.: 
-exiftool -datetimeoriginal="2009:08:08 00:00:00" -overwrite_original -m *
+
+```exiftool -datetimeoriginal="2009:08:08 00:00:00" -overwrite_original -m *```
+
+## Origin of the name
+[Magic lantern](https://en.wikipedia.org/wiki/Magic_lantern)
