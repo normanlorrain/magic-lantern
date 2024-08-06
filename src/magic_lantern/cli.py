@@ -11,6 +11,7 @@ from magic_lantern import config, slideshow, screen, text, controller
 @click.command(
     epilog="See https://github.com/normanlorrain/magic-lantern for more details."
 )
+@click.version_option()
 @click.option(
     "-c",
     "--config-file",
