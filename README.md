@@ -5,7 +5,9 @@ Supports *png* and *jpg*.  *PDF* files are also supported; each page is internal
 ## Installation
 
 ### Windows
-`pip install magic-lantern`
+```
+pip install magic-lantern
+```
 
 ### Debian
 
@@ -17,7 +19,9 @@ pipx install magic-lantern
 
 See 
 
-`magic-lantern --help` . 
+```
+magic-lantern --help
+```
 
 When running, use the following keys to control the slideshow:
 - **space bar**: play / pause
@@ -35,12 +39,16 @@ You can provide a simple path to a collection of images, or you can supply a con
 ## Fixing photo orientation 
 [ImageMagick](https://imagemagick.org/script/mogrify.php)
 
-```mogrify -auto-orient *.jpg
 ```
+mogrify -auto-orient *.jpg
+```
+
 ## Fixing missing dates
 e.g.: 
 
-```exiftool -datetimeoriginal="2009:08:08 00:00:00" -overwrite_original -m *```
+```
+exiftool -datetimeoriginal="2009:08:08 00:00:00" -overwrite_original -m *
+```
 
 ## Origin of the name
 [Magic lantern](https://en.wikipedia.org/wiki/Magic_lantern)
