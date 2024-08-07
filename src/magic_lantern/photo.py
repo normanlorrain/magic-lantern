@@ -44,7 +44,9 @@ class Photo:
         self.y = imageFit.y
 
         # Scale the image to the rectangle
-        scaledImage = pygame.transform.smoothscale(image, imageFit.size)
+        scaledImage = pygame.transform.smoothscale(
+            image.convert(), imageFit.size
+        )  # call convert to upscale any 8-bit images
 
         self.surface = scaledImage.convert()
 

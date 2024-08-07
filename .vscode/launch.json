@@ -38,6 +38,14 @@
       "args": ["-i", "1", "${workspaceFolder}/tests/images"]
       // "env": { "magic_lantern_PROFILE": "active if this variable exists" }
       // "console": "integratedTerminal"
+    },        {
+      "name": "Test: LOCAL",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "magic_lantern",
+      "args": ["-c", "C:/Users/norma/Downloads/waiting room/2024-08-07 - photos/show.toml"]
+      // "env": { "magic_lantern_PROFILE": "active if this variable exists" }
+      // "console": "integratedTerminal"
     },
     {
       "name": "Python Debugger: Current File",
