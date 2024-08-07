@@ -10,17 +10,18 @@ from magic_lantern import pdf
 
 
 class Album:
-    def __init__(self, order: Order, path: pathlib.Path, weight: int = 0):
-        """
-        Initializes the album with the given source directory.
-
-        Args:
-            src (os.path): The path to the source directory.
-            shuffle (bool, optional): Whether to shuffle the photos. Defaults to False.
-        """
+    def __init__(self, order: Order, path: pathlib.Path, weight: int, interval: int):
         self._order = order
         self._path = path
-        self._weight = weight
+
+        if weight:
+            self.weight = weight
+        else:
+            self.weight = config.weight
+        if interval:
+            self.interval = interval
+        else:
+            self.interval = config.interval
 
         self._photoFileList = []
         self._photoIndex = 0

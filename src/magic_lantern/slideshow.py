@@ -26,13 +26,17 @@ def init():
         if not path.exists():
             raise Exception(f"bad Config: invalid path: {path}")
 
-        weight = dictAlbum.get(config.WEIGHT, 1)
-        if not isinstance(weight, int):
+        weight = dictAlbum.get(config.WEIGHT, None)
+        if weight and not isinstance(weight, int):
             raise Exception(f"Bad Config: weight {weight} should be integer")
 
-        album = Album(order, path, weight)
+        interval = dictAlbum.get(config.INTERVAL, None)
+        if interval and not isinstance(interval, int):
+            raise Exception(f"Bad Config: interval {interval} should be integer")
+
+        album = Album(order, path, weight, interval)
         albumList.append(album)
-        albumWeights.append(weight)
+        albumWeights.append(album.weight)
         totalPhotos += album._photoCount
 
     # Build a list of photos from random albums
