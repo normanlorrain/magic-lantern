@@ -2,12 +2,15 @@ import pathlib
 import os
 import enum
 import tomllib
+import sys
 
-_dictConfig = None
+this_mod = sys.modules[__name__]
+
 configRoot: pathlib.Path = None
 fullscreen: bool = False
 interval: int = 5
 
+IGNORE = "ignore"
 ALBUMS = "albums"
 ORDER = "order"
 FOLDER = "folder"
@@ -27,7 +30,7 @@ def init(
     interval_: int,
     path: pathlib.Path,
 ):
-    global _dictConfig
+
     global configRoot
     global fullscreen
     global interval
@@ -41,6 +44,10 @@ def init(
     else:  # create a simple album
         configRoot = os.getcwd()
         _dictConfig = createConfig(path, shuffle)
+
+    for i in _dictConfig:
+        setattr(this_mod, i, _dictConfig[i])
+    pass
 
 
 def loadConfig(configFile):

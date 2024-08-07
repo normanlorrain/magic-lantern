@@ -16,7 +16,7 @@ def init():
     albumWeights: list[int] = []
     totalPhotos = 0
 
-    for dictAlbum in config._dictConfig[config.ALBUMS]:
+    for dictAlbum in config.albums:
 
         order = dictAlbum[config.ORDER]
         if order not in [e.value for e in Order]:
