@@ -27,6 +27,7 @@ class Album:
         self._photoCount = 0
         # Walk through the source directory and its subdirectories
         for root, dirs, files in os.walk(path):
+            dirs[:] = [d for d in dirs if d not in config.exclude]
             log.info(f"In {root}")
             for f in files:
                 if f.lower().endswith(".pdf"):

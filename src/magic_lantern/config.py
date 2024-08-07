@@ -10,7 +10,7 @@ configRoot: pathlib.Path = None
 fullscreen: bool = False
 interval: int = 5
 
-IGNORE = "ignore"
+EXCLUDE = "exclude"
 ALBUMS = "albums"
 ORDER = "order"
 FOLDER = "folder"
