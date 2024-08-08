@@ -13,7 +13,7 @@ TEST_CFG = {
 
 
 def testLoadConfig(pytestconfig):
-    cfg = config.loadConfig(pytestconfig.rootpath / "tests/example.toml")
+    cfg = config.loadConfig(pytestconfig.rootpath / "tests/example 1.toml")
     pass
 
 
