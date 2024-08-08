@@ -50,29 +50,29 @@ exclude=["_archive","archive","old","_old"]
 interval=3
 
 # Default weighting applied to each album
-weight=21
+weight=1
 ```
 
-The remainder of the file organises the slide show by ***albums***.  Each album points to a directory containing images to include in the slide show.  Images are added automatically. Images can be separated into different albums depending on their intended behaviour in the display sequence.
+The remainder of the file organises the slide show by ***albums***.  Each album points to a directory containing images to include in the slide show.  Images are added automatically. Images can be separated into different albums depending on their intended behaviour.
+
+Options given here override the defaults provided previously.
 
 ```toml
 [[albums]]
-order="sequence" # These are picked in sequence
 folder="images/numbers"
-weight=1
+order="sequence" # These are picked in sequence
 
 [[albums]]
-order="atomic" # These are "sticky"; they appear as a group, sequencially
 folder="images/atomic"
-weight=1
+order="atomic" # These are "sticky"; they appear as a group, sequentially
 
 [[albums]]
-order="random" # These appear randomly 
 folder="images/paintings"
-weight=1
+order="random" # These appear randomly 
+weight=2
 ```
 
-When the slide show is generated, an image is taken from each album, randomly.  There is some control on this, based on provided weights.
+When the slide show is generated, each image is taken from each album, chosen [randomly](https://docs.python.org/3/library/random.html#random.choices), according the the given weights.
 
 
 # Notes
