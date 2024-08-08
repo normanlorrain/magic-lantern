@@ -53,6 +53,11 @@ def init(
     if not hasattr(this_mod, WEIGHT):
         setattr(this_mod, WEIGHT, 1)
 
+    # If the config file doesn't specify a weight, set it here.
+    # Each album can set it's own weight which will override this.
+    if not hasattr(this_mod, EXCLUDE):
+        setattr(this_mod, EXCLUDE, [])
+
     # If the config file doesn't specify an interval, set it here.
     # Each album can set it's own interval which will override this.
     if not hasattr(this_mod, INTERVAL):
