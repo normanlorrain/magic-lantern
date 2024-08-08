@@ -60,8 +60,9 @@ def init(
 
     # This is passed from the command line, and thus overrides any setting that
     # came from the config file above.
-    global interval
-    interval = interval_
+    if interval_:
+        global interval
+        interval = interval_
 
 
 def loadConfig(configFile):

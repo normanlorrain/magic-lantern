@@ -44,7 +44,7 @@
       "request": "launch",
       "module": "magic_lantern",
       // "args": ["-c", "C:/Users/norma/Downloads/waiting room/2024-08-07 - photos/show.toml"]
-      "args": ["-f","-i", "2","-c", "/media/passport/waiting room/2024-08-07 - photos/show.toml"]
+      "args": ["-f","-c", "/media/passport/waiting room/2024-08-07 - photos/show.toml"]
       // "env": { "magic_lantern_PROFILE": "active if this variable exists" }
       // "console": "integratedTerminal"
     },

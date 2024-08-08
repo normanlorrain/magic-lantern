@@ -39,19 +39,19 @@ def showNewPhoto(direction=NEXT):
         except PhotoException as e:
             print(f"Bad photo file: {e.filename}")
 
-    print(f"{photo.filename}")
+    print(f"{photo.filename} interval:{photo.interval}")
     screen.displaySurface.blit(photo.getSurface(), photo.coordinates())
 
     showMetaData()
 
     # flip() the display to put your work on screen
     pygame.display.flip()
-
-
-pad = 10
+    global PHOTO_INTERVAL
+    PHOTO_INTERVAL = photo.interval * 1000  # msec
 
 
 def showMetaData():
+    pad = 10
     photo = slideshow.getCurrentPhoto()
     if pauseState:
 
@@ -112,10 +112,11 @@ def previous():
 def run():
     global pauseState
     global showYearState
-    # Creates a periodically repeating event on the event queue
-    pygame.time.set_timer(PHOTO_EVENT, PHOTO_INTERVAL)
 
     showNewPhoto()
+
+    # Creates a periodically repeating event on the event queue
+    pygame.time.set_timer(PHOTO_EVENT, PHOTO_INTERVAL)
     while True:
         event = pygame.event.wait(LOOP_INTERVAL)
         if event.type == pygame.NOEVENT:
@@ -124,6 +125,8 @@ def run():
         if event.type == PHOTO_EVENT:
             if not pauseState:
                 showNewPhoto()
+                pygame.time.set_timer(PHOTO_EVENT, PHOTO_INTERVAL)
+
         if event.type in [pygame.WINDOWCLOSE, pygame.QUIT]:
             break
         if event.type == pygame.KEYDOWN:

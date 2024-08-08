@@ -35,8 +35,6 @@ from magic_lantern import config, slideshow, screen, text, controller
     "--interval",
     type=click.IntRange(min=1, max=None),
     required=False,
-    default=5,
-    show_default=True,
     help="Interval (seconds) between images.",
 )
 @click.argument(

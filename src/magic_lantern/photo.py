@@ -5,6 +5,7 @@ import exifread
 from magic_lantern import screen
 
 _photoCache: dict = {}
+intervalDict: dict = {}
 
 
 def createPhoto(path: str):
@@ -24,7 +25,7 @@ class Photo:
         self.filename = filename
         self.x = 0
         self.y = 0
-
+        self.interval = intervalDict[filename]
         self.imageLoaded = False
 
     def loadImage(self):
