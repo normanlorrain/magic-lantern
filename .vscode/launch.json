@@ -22,11 +22,19 @@
       // "console": "integratedTerminal"
     },
     {
-      "name": "Test: config FILE",
+      "name": "example 1.toml",
       "type": "debugpy",
       "request": "launch",
       "module": "magic_lantern",
-      "args": ["-c", "${workspaceFolder}/tests/example.toml"]
+      "args": ["-c", "${workspaceFolder}/tests/example 1.toml"]
+      // "env": { "magic_lantern_PROFILE": "active if this variable exists" }
+      // "console": "integratedTerminal"
+    },    {
+      "name": "example 2.toml",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "magic_lantern",
+      "args": ["-c", "${workspaceFolder}/tests/example 2.toml"]
       // "env": { "magic_lantern_PROFILE": "active if this variable exists" }
       // "console": "integratedTerminal"
     },
