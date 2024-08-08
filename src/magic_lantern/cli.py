@@ -2,10 +2,11 @@ import click
 import pathlib
 import os
 
+
 # suppresses Pygame message on import
 os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "hide"
 
-from magic_lantern import config, slideshow, screen, text, controller
+from magic_lantern import log, config, slideshow, screen, text, controller
 
 
 @click.command(
@@ -56,6 +57,7 @@ def magic_lantern(config_file, fullscreen, shuffle, interval, directory):
         click.echo(f"magic_lantern: {directory}")
 
     config.init(config_file, fullscreen, shuffle, interval, directory)
+    log.init()
     screen.init()  # Needs to be before the rest, so Pygame gets initalized.
     slideshow.init()
     text.init()

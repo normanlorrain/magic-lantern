@@ -1,5 +1,6 @@
 import pygame
 from magic_lantern import config
+from magic_lantern import log
 
 WIDTH, HEIGHT = (1280, 720)
 
@@ -10,7 +11,7 @@ def init():
 
     # pygame setup
     pygame.init()
-    print(f"Support for all image formats: {pygame.image.get_extended()}")
+    log.debug(f"Support for all image formats: {pygame.image.get_extended()}")
     if config.fullscreen:
         displaySurface = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
     else:

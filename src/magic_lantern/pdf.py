@@ -2,6 +2,8 @@ import os
 import pymupdf
 import tempfile
 
+from magic_lantern import log
+
 _tempDir = None
 
 
@@ -15,7 +17,7 @@ def convert(pathName, fileName):
             ignore_cleanup_errors=False,
             delete=False,
         )
-        print(f"Temp Dir: {_tempDir.name}")
+        log.debug(f"Temp Dir: {_tempDir.name}")
     doc = pymupdf.open(os.path.join(pathName, fileName))  # open document
     for page in doc:  # iterate through the pages
         pix = page.get_pixmap(dpi=600)  # render page to an image

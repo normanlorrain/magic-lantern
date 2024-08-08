@@ -4,6 +4,7 @@ from magic_lantern.photo import Photo
 from magic_lantern.album import Album
 from magic_lantern.config import Order
 from magic_lantern import config
+from magic_lantern import log
 
 
 _photoList: list[Photo] = []
@@ -46,15 +47,13 @@ def init():
     for album in random.choices(albumList, albumWeights, k=totalPhotos * 100):
         if album._order == Order.ATOMIC:
             if previousAlbum == album:
-                print("preventing atomic album from repeating")
+                log.debug("preventing atomic album from repeating")
                 continue
             while photo := album.getNextPhoto():
                 _photoList.append(photo)
-                # print(photo.filename)
         else:
             photo = album.getNextPhoto()
             _photoList.append(photo)
-            # print(photo.filename)
         previousAlbum = album
     _photoCount = len(_photoList)
 

@@ -6,6 +6,7 @@ from magic_lantern import slideshow
 from magic_lantern import screen
 from magic_lantern import text
 from magic_lantern import config
+from magic_lantern import log
 from magic_lantern.photo import PhotoException
 
 PHOTO_EVENT = pygame.event.custom_type()
@@ -37,9 +38,9 @@ def showNewPhoto(direction=NEXT):
                 photo = slideshow.getPreviousPhoto()
             break
         except PhotoException as e:
-            print(f"Bad photo file: {e.filename}")
+            log.warn(f"Bad photo file: {e.filename}")
 
-    print(f"{photo.filename} interval:{photo.interval}")
+    log.debug(f"{photo.filename} interval:{photo.interval}")
     screen.displaySurface.blit(photo.getSurface(), photo.coordinates())
 
     showMetaData()
@@ -121,7 +122,6 @@ def run():
         event = pygame.event.wait(LOOP_INTERVAL)
         if event.type == pygame.NOEVENT:
             continue
-        # print(event)
         if event.type == PHOTO_EVENT:
             if not pauseState:
                 showNewPhoto()

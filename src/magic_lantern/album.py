@@ -13,7 +13,7 @@ class Album:
     def __init__(self, order: Order, path: pathlib.Path, weight: int, interval: int):
         self._order = order
         self._path = path
-
+        log.debug(f"Creating Album from {path}.")
         if weight:
             self.weight = weight
         else:
@@ -29,7 +29,6 @@ class Album:
         # Walk through the source directory and its subdirectories
         for root, dirs, files in os.walk(path):
             dirs[:] = [d for d in dirs if d not in config.exclude]
-            log.info(f"In {root}")
             for f in files:
                 if f.lower().endswith(".pdf"):
                     log.info(f"{f}  PDF file")
