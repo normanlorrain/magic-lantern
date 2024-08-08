@@ -3,7 +3,7 @@ A presentation tool for kiosks, digital signage, slide shows.
 
 Supports *png* and *jpg*.  *PDF* files are also supported; each page is internally converted to an image file.
 
-You can specify a single directory/folder for the images, or organise them into folders and provide a configuration file to control the sequence of images. This sequence is called the "*slide show*"
+You can specify a single directory/folder for the images, or organise them into folders and provide a configuration file to control the sequence of images. This sequence is called the "*slide show*".
 
 
 
