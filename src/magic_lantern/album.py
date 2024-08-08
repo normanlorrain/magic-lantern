@@ -3,7 +3,7 @@ import pathlib
 import random
 import logging as log
 
-from magic_lantern.photo import createPhoto, Photo, intervalDict
+from magic_lantern.photo import createPhoto, getPhoto, Photo
 from magic_lantern import config
 from magic_lantern.config import Order
 from magic_lantern import pdf
@@ -33,14 +33,16 @@ class Album:
             for f in files:
                 if f.lower().endswith(".pdf"):
                     log.info(f"{f}  PDF file")
-                    for pageAsPhoto in pdf.convert(root, f):
-                        intervalDict[pageAsPhoto] = self.interval
-                        self._photoFileList.append(pageAsPhoto)
+                    for pdfPageImageFile in pdf.convert(root, f):
+                        createPhoto(pdfPageImageFile, self.interval)
+                        self._photoFileList.append(pdfPageImageFile)
                     continue
+
                 # Filter out files with unknown extensions
                 if f.lower().endswith((".png", ".jpg", ".jpeg")):
-                    intervalDict[os.path.join(root, f)] = self.interval
-                    self._photoFileList.append(os.path.join(root, f))
+                    imageFile = os.path.join(root, f)
+                    createPhoto(imageFile, self.interval)
+                    self._photoFileList.append(imageFile)
                     continue
 
                 log.warning(f"{f}  Unknown file type")
@@ -59,6 +61,6 @@ class Album:
             self._photoIndex = 0
             if self._order == Order.ATOMIC:
                 return None  # We've reached the end; signal caller
-        photo = createPhoto(self._photoFileList[self._photoIndex])
+        photo = getPhoto(self._photoFileList[self._photoIndex])
         self._photoIndex += 1
         return photo

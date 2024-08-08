@@ -5,13 +5,16 @@ import exifread
 from magic_lantern import screen
 
 _photoCache: dict = {}
-intervalDict: dict = {}
 
 
-def createPhoto(path: str):
+def createPhoto(path: str, interval: int):
     if path not in _photoCache:
-        photo = Photo(path)
+        photo = Photo(path, interval)
         _photoCache[path] = photo
+    return _photoCache[path]
+
+
+def getPhoto(path: str):
     return _photoCache[path]
 
 
@@ -21,11 +24,11 @@ class PhotoException(Exception):
 
 
 class Photo:
-    def __init__(self, filename) -> None:
+    def __init__(self, filename, interval) -> None:
         self.filename = filename
         self.x = 0
         self.y = 0
-        self.interval = intervalDict[filename]
+        self.interval = interval
         self.imageLoaded = False
 
     def loadImage(self):
