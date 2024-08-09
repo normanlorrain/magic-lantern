@@ -44,7 +44,7 @@ class Album:
                     self._photoFileList.append(imageFile)
                     continue
 
-                log.warning(f"{f}  Unknown file type")
+                log.debug(f"{f}  Unknown file type")
 
         # Shuffle or sort the list of photos
         if self._order == Order.RANDOM:

@@ -3,17 +3,17 @@ from pathlib import Path
 
 # set up logging to file - see previous section for more details
 LONGFORMAT = (
-    "%(filename)s:%(lineno)s : "
-    "%(message)25s :: "
-    "%(name)s:%(levelname)s:"
-    "%(asctime)s: "
+    "%(filename)s:%(lineno)s\t"
+    "%(message)25s\t"
+    "%(name)s\t%(levelname)s\t"
+    "%(asctime)s"
 )
 SHORTFORMAT = "%(filename)s:%(lineno)s - %(message)s"
 
 # Root logger gets everything.  Handlers defined below will filter it out...
-
 getLogger("").setLevel(DEBUG)
 
+# The exifread package is very chatty for this application.  Not everything has EXIF data.
 getLogger("exifread").setLevel(ERROR)
 
 
