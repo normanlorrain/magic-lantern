@@ -11,6 +11,7 @@ fullscreen: bool = False
 interval: int = 5
 
 EXCLUDE = "exclude"
+FULLSCREEN = "fullscreen"
 ALBUMS = "albums"
 ORDER = "order"
 FOLDER = "folder"
@@ -31,9 +32,6 @@ def init(
     interval_: int,
     path: pathlib.Path,
 ):
-    # Save the command line option here
-    global fullscreen
-    fullscreen = fullscreen_
 
     # This is the folder that the slides are found in
     global configRoot
@@ -53,8 +51,7 @@ def init(
     if not hasattr(this_mod, WEIGHT):
         setattr(this_mod, WEIGHT, 1)
 
-    # If the config file doesn't specify a weight, set it here.
-    # Each album can set it's own weight which will override this.
+    # If the config file doesn't specify exclude, set it here.
     if not hasattr(this_mod, EXCLUDE):
         setattr(this_mod, EXCLUDE, [])
 
@@ -68,6 +65,12 @@ def init(
     if interval_:
         global interval
         interval = interval_
+
+    # This is passed from the command line, and thus overrides any setting that
+    # came from the config file above.
+    if fullscreen_:
+        global fullscreen
+        fullscreen = fullscreen_
 
 
 def loadConfig(configFile):

@@ -37,6 +37,13 @@
       "args": ["-c", "${workspaceFolder}/tests/example 2.toml"]
       // "env": { "magic_lantern_PROFILE": "active if this variable exists" }
       // "console": "integratedTerminal"
+    }, {
+      "name": "example 3.toml",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "magic_lantern",
+      "args": ["-c", "${workspaceFolder}/tests/example 3.toml"]
+
     },
         {
       "name": "Test: interval option",
