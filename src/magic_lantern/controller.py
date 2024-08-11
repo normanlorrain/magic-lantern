@@ -7,7 +7,7 @@ from magic_lantern import screen
 from magic_lantern import text
 from magic_lantern import config
 from magic_lantern import log
-from magic_lantern.photo import PhotoException
+from magic_lantern.slide import SlideException
 
 PHOTO_EVENT = pygame.event.custom_type()
 PHOTO_INTERVAL = None
@@ -26,50 +26,50 @@ def init():
     pygame.key.set_repeat(500, 100)
 
 
-def showNewPhoto(direction=NEXT):
+def showNewSlide(direction=NEXT):
     # Blank the screen
     screen.displaySurface.fill((0, 0, 0))
 
     while True:
         try:
             if direction == NEXT:
-                photo = slideshow.getNextPhoto()
+                slide = slideshow.getNextSlide()
             if direction == PREVIOUS:
-                photo = slideshow.getPreviousPhoto()
+                slide = slideshow.getPreviousSlide()
             break
-        except PhotoException as e:
-            log.warn(f"Bad photo file: {e.filename}")
+        except SlideException as e:
+            log.warn(f"Bad slide file: {e.filename}")
 
-    log.debug(f"{photo.filename} interval:{photo.interval}")
-    screen.displaySurface.blit(photo.getSurface(), photo.coordinates())
+    log.debug(f"{slide.filename} interval:{slide.interval}")
+    screen.displaySurface.blit(slide.getSurface(), slide.coordinates())
 
     showMetaData()
 
     # flip() the display to put your work on screen
     pygame.display.flip()
     global PHOTO_INTERVAL
-    PHOTO_INTERVAL = photo.interval * 1000  # msec
+    PHOTO_INTERVAL = slide.interval * 1000  # msec
 
 
 def showMetaData():
     pad = 10
-    photo = slideshow.getCurrentPhoto()
+    slide = slideshow.getCurrentSlide()
     if pauseState:
 
         screen.displaySurface.blit(text.createMessage("PAUSE"), (pad, pad))
 
-        filename = text.createMessage(str(photo.filename))
+        filename = text.createMessage(str(slide.filename))
         x = screen.WIDTH - filename.get_width() - pad
         y = screen.HEIGHT - filename.get_height() - pad
         screen.displaySurface.blit(filename, (x, y))
 
-        datetime = text.createMessage(str(photo.datetime))
+        datetime = text.createMessage(str(slide.datetime))
         x = 0 + pad
         y = screen.HEIGHT - datetime.get_height() - pad
         screen.displaySurface.blit(datetime, (x, y))
 
     if showYearState:
-        year = text.createMessage(str(photo.datetime)[0:4], text.HEADING, text.GREEN)
+        year = text.createMessage(str(slide.datetime)[0:4], text.HEADING, text.GREEN)
         x = screen.WIDTH - year.get_width() - pad
         y = 0 + pad
         screen.displaySurface.blit(year, (x, y))
@@ -84,7 +84,7 @@ def pause():
         showMetaData()
 
     else:
-        showNewPhoto()
+        showNewSlide()
         pygame.time.set_timer(PHOTO_EVENT, PHOTO_INTERVAL)
 
 
@@ -93,19 +93,19 @@ def year():
     showYearState = not showYearState
     if not showYearState:  # Remove the year by redrawing
         screen.displaySurface.fill((0, 0, 0))
-        photo = slideshow.getCurrentPhoto()
-        screen.displaySurface.blit(photo.getSurface(), photo.coordinates())
+        slide = slideshow.getCurrentSlide()
+        screen.displaySurface.blit(slide.getSurface(), slide.coordinates())
     showMetaData()
 
 
 def next():
-    showNewPhoto()
+    showNewSlide()
     if not pauseState:
         pygame.time.set_timer(PHOTO_EVENT, PHOTO_INTERVAL)
 
 
 def previous():
-    showNewPhoto(PREVIOUS)
+    showNewSlide(PREVIOUS)
     if not pauseState:
         pygame.time.set_timer(PHOTO_EVENT, PHOTO_INTERVAL)
 
@@ -114,7 +114,7 @@ def run():
     global pauseState
     global showYearState
 
-    showNewPhoto()
+    showNewSlide()
 
     # Creates a periodically repeating event on the event queue
     pygame.time.set_timer(PHOTO_EVENT, PHOTO_INTERVAL)
@@ -124,8 +124,8 @@ def run():
             continue
         if event.type == PHOTO_EVENT:
             if not pauseState:
-                showNewPhoto()
-                log.debug(f"Next photo in {PHOTO_INTERVAL} msec")
+                showNewSlide()
+                log.debug(f"Next slide in {PHOTO_INTERVAL} msec")
                 pygame.time.set_timer(PHOTO_EVENT, PHOTO_INTERVAL)
 
         if event.type in [pygame.WINDOWCLOSE, pygame.QUIT]:

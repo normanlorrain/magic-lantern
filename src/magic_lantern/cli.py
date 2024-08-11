@@ -30,7 +30,7 @@ from magic_lantern import log, config, slideshow, screen, text, controller
     "-f", "--fullscreen", is_flag=True, show_default=True, help="Full screen mode"
 )
 @click.option(
-    "-s", "--shuffle", is_flag=True, show_default=True, help="Shuffle the photos"
+    "-s", "--shuffle", is_flag=True, show_default=True, help="Shuffle the slides"
 )
 @click.option(
     "-i",

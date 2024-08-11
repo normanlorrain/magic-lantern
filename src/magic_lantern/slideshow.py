@@ -1,21 +1,21 @@
 import random
 
-from magic_lantern.photo import Photo
+from magic_lantern.slide import Slide
 from magic_lantern.album import Album
 from magic_lantern.config import Order
 from magic_lantern import config
 from magic_lantern import log
 
 
-_photoList: list[Photo] = []
-_photoIndex: int = -1
-_photoCount: int = 0
+_slideList: list[Slide] = []
+_slideIndex: int = -1
+_slideCount: int = 0
 
 
 def init():
     albumList: list[Album] = []
     albumWeights: list[int] = []
-    totalPhotos = 0
+    totalSlides = 0
 
     for dictAlbum in config.albums:
 
@@ -38,48 +38,48 @@ def init():
         album = Album(order, path, weight, interval)
         albumList.append(album)
         albumWeights.append(album.weight)
-        totalPhotos += album._photoCount
+        totalSlides += album._slideCount
 
-    # Build a list of photos from random albums
-    global _photoList
-    global _photoCount
+    # Build a list of slides from random albums
+    global _slideList
+    global _slideCount
     previousAlbum = None
-    for album in random.choices(albumList, albumWeights, k=totalPhotos * 100):
+    for album in random.choices(albumList, albumWeights, k=totalSlides * 100):
         if album._order == Order.ATOMIC:
             if previousAlbum == album:
                 log.debug("preventing atomic album from repeating")
                 continue
-            while photo := album.getNextPhoto():
-                _photoList.append(photo)
+            while slide := album.getNextSlide():
+                _slideList.append(slide)
         else:
-            photo = album.getNextPhoto()
-            _photoList.append(photo)
+            slide = album.getNextSlide()
+            _slideList.append(slide)
         previousAlbum = album
-    _photoCount = len(_photoList)
+    _slideCount = len(_slideList)
 
 
-def getNextPhoto():
-    global _photoList
-    global _photoIndex
-    global _photoCount
-    _photoIndex += 1
-    if _photoIndex >= _photoCount:
-        _photoIndex = 0
-    return _photoList[_photoIndex]
+def getNextSlide():
+    global _slideList
+    global _slideIndex
+    global _slideCount
+    _slideIndex += 1
+    if _slideIndex >= _slideCount:
+        _slideIndex = 0
+    return _slideList[_slideIndex]
 
 
-def getPreviousPhoto():
-    global _photoList
-    global _photoIndex
-    global _photoCount
-    _photoIndex -= 1
-    if _photoIndex < 0:
-        _photoIndex = 0
-    return _photoList[_photoIndex]
+def getPreviousSlide():
+    global _slideList
+    global _slideIndex
+    global _slideCount
+    _slideIndex -= 1
+    if _slideIndex < 0:
+        _slideIndex = 0
+    return _slideList[_slideIndex]
 
 
-def getCurrentPhoto():
-    global _photoList
-    global _photoIndex
-    global _photoCount
-    return _photoList[_photoIndex]
+def getCurrentSlide():
+    global _slideList
+    global _slideIndex
+    global _slideCount
+    return _slideList[_slideIndex]

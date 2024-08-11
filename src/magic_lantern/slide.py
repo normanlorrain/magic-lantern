@@ -5,29 +5,29 @@ import exifread
 
 from magic_lantern import screen, log
 
-_photoCache: dict = {}
+_slideCache: dict = {}
 
 
-def createPhoto(path: str, interval: int):
-    if path in _photoCache:
-        photo = _photoCache[path]
+def createSlide(path: str, interval: int):
+    if path in _slideCache:
+        slide = _slideCache[path]
     else:
-        photo = Photo(path, interval)
-        _photoCache[path] = photo
-    log.info(f"{photo.path.name}")
+        slide = Slide(path, interval)
+        _slideCache[path] = slide
+    log.info(f"{slide.path.name}")
     return
 
 
-def getPhoto(path: str):
-    return _photoCache[path]
+def getSlide(path: str):
+    return _slideCache[path]
 
 
-class PhotoException(Exception):
+class SlideException(Exception):
     def __init__(self, filename):
         self.filename = filename
 
 
-class Photo:
+class Slide:
     def __init__(self, filename, interval) -> None:
         self.filename = filename
         self.path = pathlib.Path(self.filename)
@@ -42,7 +42,7 @@ class Photo:
         try:
             image = pygame.image.load(self.filename)
         except:
-            raise PhotoException(self.filename)
+            raise SlideException(self.filename)
 
         # Get the boundary rectangle
         imageRect = pygame.Rect((0, 0), image.get_size())

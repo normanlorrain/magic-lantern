@@ -3,7 +3,7 @@ import pathlib
 import random
 import logging as log
 
-from magic_lantern.photo import createPhoto, getPhoto, Photo
+from magic_lantern.slide import createSlide, getSlide, Slide
 from magic_lantern import config
 from magic_lantern.config import Order
 from magic_lantern import pdf
@@ -23,9 +23,9 @@ class Album:
         else:
             self.interval = config.interval
 
-        self._photoFileList = []
-        self._photoIndex = 0
-        self._photoCount = 0
+        self._slideFileList = []
+        self._slideIndex = 0
+        self._slideCount = 0
         # Walk through the source directory and its subdirectories
         for root, dirs, files in os.walk(path):
             dirs[:] = [d for d in dirs if d not in config.exclude]
@@ -33,33 +33,33 @@ class Album:
                 if f.lower().endswith(".pdf"):
                     log.info(f"{f}  PDF file")
                     for pdfPageImageFile in pdf.convert(root, f):
-                        createPhoto(pdfPageImageFile, self.interval)
-                        self._photoFileList.append(pdfPageImageFile)
+                        createSlide(pdfPageImageFile, self.interval)
+                        self._slideFileList.append(pdfPageImageFile)
                     continue
 
                 # Filter out files with unknown extensions
                 if f.lower().endswith((".png", ".jpg", ".jpeg")):
                     imageFile = os.path.join(root, f)
-                    createPhoto(imageFile, self.interval)
-                    self._photoFileList.append(imageFile)
+                    createSlide(imageFile, self.interval)
+                    self._slideFileList.append(imageFile)
                     continue
 
                 log.debug(f"{f}  Unknown file type")
 
-        # Shuffle or sort the list of photos
+        # Shuffle or sort the list of slides
         if self._order == Order.RANDOM:
-            random.shuffle(self._photoFileList)
+            random.shuffle(self._slideFileList)
         # else:
-        #     self._photoFileList.sort()
+        #     self._slideFileList.sort()
 
-        # Update the photo count
-        self._photoCount = len(self._photoFileList)
+        # Update the slide count
+        self._slideCount = len(self._slideFileList)
 
-    def getNextPhoto(self):
-        if self._photoIndex >= self._photoCount:
-            self._photoIndex = 0
+    def getNextSlide(self):
+        if self._slideIndex >= self._slideCount:
+            self._slideIndex = 0
             if self._order == Order.ATOMIC:
                 return None  # We've reached the end; signal caller
-        photo = getPhoto(self._photoFileList[self._photoIndex])
-        self._photoIndex += 1
-        return photo
+        slide = getSlide(self._slideFileList[self._slideIndex])
+        self._slideIndex += 1
+        return slide
