@@ -1,4 +1,5 @@
 import random
+from pathlib import Path
 
 from magic_lantern.slide import Slide
 from magic_lantern.album import Album
@@ -23,7 +24,9 @@ def init():
         if order not in [e.value for e in Order]:
             raise Exception(f"Bad Config: {order} not in {[e.value for e in Order]}")
 
-        path = config.configRoot / dictAlbum[config.FOLDER]
+        path = Path(dictAlbum[config.FOLDER])
+        if not path.is_absolute():
+            path = config.configRoot / path
         if not path.exists():
             raise Exception(f"bad Config: invalid path: {path}")
 
