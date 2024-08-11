@@ -59,7 +59,7 @@ def magic_lantern(config_file, fullscreen, shuffle, interval, directory):
 
     config.init(config_file, fullscreen, shuffle, interval, directory)
     log.init()
-    log.debug(f"Application started {sys.argv}")
+    log.info(f"Application started {sys.argv}")
     screen.init()  # Needs to be before the rest, so Pygame gets initalized.
     slideshow.init()
     text.init()

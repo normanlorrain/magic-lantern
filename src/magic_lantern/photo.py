@@ -1,17 +1,21 @@
+import pathlib
+
 import pygame
 import exifread
 
-
-from magic_lantern import screen
+from magic_lantern import screen, log
 
 _photoCache: dict = {}
 
 
 def createPhoto(path: str, interval: int):
-    if path not in _photoCache:
+    if path in _photoCache:
+        photo = _photoCache[path]
+    else:
         photo = Photo(path, interval)
         _photoCache[path] = photo
-    return _photoCache[path]
+    log.info(f"{photo.path.name}")
+    return
 
 
 def getPhoto(path: str):
@@ -26,12 +30,14 @@ class PhotoException(Exception):
 class Photo:
     def __init__(self, filename, interval) -> None:
         self.filename = filename
+        self.path = pathlib.Path(self.filename)
         self.x = 0
         self.y = 0
         self.interval = interval
         self.imageLoaded = False
 
     def loadImage(self):
+        log.debug(f"{self.path.name}")
         # Load the image
         try:
             image = pygame.image.load(self.filename)
@@ -70,6 +76,7 @@ class Photo:
         return (self.x, self.y)
 
     def getSurface(self):
+        log.info(f"{self.path.name}")
         if not self.imageLoaded:
             self.loadImage()
         return self.surface

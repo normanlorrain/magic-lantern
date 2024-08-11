@@ -4,7 +4,8 @@ from pathlib import Path
 # set up logging to file - see previous section for more details
 LONGFORMAT = (
     "%(filename)s:%(lineno)s\t"
-    "%(message)25s\t"
+    "%(funcName)s\t"
+    "%(message)s\t"
     "%(name)s\t%(levelname)s\t"
     "%(asctime)s"
 )

@@ -125,6 +125,7 @@ def run():
         if event.type == PHOTO_EVENT:
             if not pauseState:
                 showNewPhoto()
+                log.debug(f"Next photo in {PHOTO_INTERVAL} msec")
                 pygame.time.set_timer(PHOTO_EVENT, PHOTO_INTERVAL)
 
         if event.type in [pygame.WINDOWCLOSE, pygame.QUIT]:
