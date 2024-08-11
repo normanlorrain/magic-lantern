@@ -11,7 +11,6 @@
       "module": "magic_lantern",
       "args": ["${workspaceFolder}/tests/images"]
       // "env": { "magic_lantern_PROFILE": "active if this variable exists" }
-      // "console": "integratedTerminal"
     },
     {
       "name": "Test: Help",
@@ -19,7 +18,6 @@
       "request": "launch",
       "module": "magic_lantern",
       "args": ["--help"]
-      // "console": "integratedTerminal"
     },
     {
       "name": "example 1.toml",
@@ -27,16 +25,12 @@
       "request": "launch",
       "module": "magic_lantern",
       "args": ["-c", "${workspaceFolder}/tests/example 1.toml"]
-      // "env": { "magic_lantern_PROFILE": "active if this variable exists" }
-      // "console": "integratedTerminal"
     },    {
       "name": "example 2.toml",
       "type": "debugpy",
       "request": "launch",
       "module": "magic_lantern",
       "args": ["-c", "${workspaceFolder}/tests/example 2.toml"]
-      // "env": { "magic_lantern_PROFILE": "active if this variable exists" }
-      // "console": "integratedTerminal"
     }, {
       "name": "example 3.toml",
       "type": "debugpy",
@@ -51,17 +45,12 @@
       "request": "launch",
       "module": "magic_lantern",
       "args": ["-i", "1", "${workspaceFolder}/tests/images"]
-      // "env": { "magic_lantern_PROFILE": "active if this variable exists" }
-      // "console": "integratedTerminal"
     },        {
       "name": "Test: LOCAL",
       "type": "debugpy",
       "request": "launch",
       "module": "magic_lantern",
-      // "args": ["-c", "C:/Users/norma/Downloads/waiting room/2024-08-07 - photos/show.toml"]
       "args": ["-f","-c", "/media/passport/waiting room/2024-08-07 - photos/show.toml"]
-      // "env": { "magic_lantern_PROFILE": "active if this variable exists" }
-      // "console": "integratedTerminal"
     },
     {
       "name": "Python Debugger: Current File",
