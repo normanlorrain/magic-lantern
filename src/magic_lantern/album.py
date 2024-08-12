@@ -49,8 +49,8 @@ class Album:
         # Shuffle or sort the list of slides
         if self._order == Order.RANDOM:
             random.shuffle(self._slideFileList)
-        # else:
-        #     self._slideFileList.sort()
+        else:
+            self._slideFileList.sort()
 
         # Update the slide count
         self._slideCount = len(self._slideFileList)
