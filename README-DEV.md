@@ -51,7 +51,7 @@ Comment=testing
 
 ***.config/autostart/magic-lantern.desktop***
 
-```toml
+```ini
 [Desktop Entry]
 Exec=magic-lantern -c /home/norman/magic-lantern.toml
 Name=magic-lantern
