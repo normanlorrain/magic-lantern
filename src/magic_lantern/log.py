@@ -1,4 +1,7 @@
 from logging import *
+
+# import platform
+# import os
 from pathlib import Path
 
 # set up logging to file - see previous section for more details
@@ -19,6 +22,12 @@ getLogger("exifread").setLevel(ERROR)
 
 
 def init(filename=Path("magic_lantern.log")):
+    # Not sure if this is what we want.  TBD
+    # if platform.system() == "Windows":
+    #     filename = Path(os.getcwd()) / filename
+    # else:
+    #     filename = Path("/var/log") / filename
+
     filehandler = FileHandler(filename, mode="w", encoding="utf-8")
     filehandler.setLevel(DEBUG)
     filehandler.setFormatter(Formatter(LONGFORMAT))
