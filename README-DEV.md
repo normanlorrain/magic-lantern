@@ -50,3 +50,9 @@ If you get a failure, install per [instructions](https://www.pygame.org/wiki/Com
 
 
 I also needed to install -U cython for the above to work. Your mileage may vary, depending on the state of the installed versions of these libraries.
+
+
+# Some test images
+```
+git clone https://github.com/hampusborgos/country-flags.git
+```
