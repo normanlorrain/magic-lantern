@@ -40,11 +40,14 @@ You can provide a simple path to a collection of images, or you can supply a con
 
 The format is TOML.  Comments are preceded by ***#***.
 
-The first part of the file contains any default values.  They apply to all the subsequent albums if not overridden.  These are optional but are included in the example:
+The first part of the file contains any default/global values.  They apply to all the subsequent albums if not overridden.  These are optional but are included in the example:
 
 ```toml
 # Exclude the given list of dir names from the album image search.  
 exclude=["_archive","archive","old","_old"]
+
+# Turn on full screen mode
+fullscreen=true
 
 # Default interval if not otherwise specifed.  This is the delay between images in the slide show
 interval=3
