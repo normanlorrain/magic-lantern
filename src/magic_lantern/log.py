@@ -1,4 +1,5 @@
 from logging import *
+from logging.handlers import RotatingFileHandler
 
 # import platform
 # import os
@@ -6,11 +7,12 @@ from pathlib import Path
 
 # set up logging to file - see previous section for more details
 LONGFORMAT = (
-    "%(filename)s:%(lineno)s\t"
-    "%(funcName)s\t"
+    "%(asctime)s\t"
+    "%(levelname)s\t"
+    "%(filename)14s:%(lineno)s\t"
+    "%(funcName)-14s\t"
     "%(message)s\t"
-    "%(name)s\t%(levelname)s\t"
-    "%(asctime)s"
+    # "%(name)s\t"
 )
 SHORTFORMAT = "%(filename)s:%(lineno)s - %(message)s"
 
@@ -21,14 +23,16 @@ getLogger("").setLevel(DEBUG)
 getLogger("exifread").setLevel(ERROR)
 
 
-def init(filename=Path("magic_lantern.log")):
+def init(filename=Path("magic-lantern.log")):
     # Not sure if this is what we want.  TBD
     # if platform.system() == "Windows":
     #     filename = Path(os.getcwd()) / filename
     # else:
     #     filename = Path("/var/log") / filename
 
-    filehandler = FileHandler(filename, mode="w", encoding="utf-8")
+    filehandler = RotatingFileHandler(
+        filename, mode="w", maxBytes=100000, backupCount=1, encoding="utf-8"
+    )
     filehandler.setLevel(DEBUG)
     filehandler.setFormatter(Formatter(LONGFORMAT))
     getLogger("").addHandler(filehandler)

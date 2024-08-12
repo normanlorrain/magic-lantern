@@ -40,7 +40,7 @@ def showNewSlide(direction=NEXT):
         except SlideException as e:
             log.warn(f"Bad slide file: {e.filename}")
 
-    log.debug(f"{slide.filename} interval:{slide.interval}")
+    log.debug(f"{slide.path.name} interval:{slide.interval}")
     screen.displaySurface.blit(slide.getSurface(), slide.coordinates())
 
     showMetaData()
