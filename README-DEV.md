@@ -32,9 +32,9 @@ sudo apt install pipx openssh-server samba
 ```
 ## Ubuntu/Gnome
 
-`***~/.config/autostart/magic-lantern.desktop***`
+***~/.config/autostart/magic-lantern.desktop***
 
-```toml
+```ini
 [Desktop Entry]
 Type=Application
 Exec=magic-lantern /home/norman/country-flags/png1000px/
