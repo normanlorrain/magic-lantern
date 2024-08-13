@@ -1,4 +1,5 @@
-# Example configuration for magic-lantern
+# Example configuration for magic-lantern.
+# See README.md for more information.
 
 # Exclude the given list of dir names from the album image search.  
 exclude=["_archive","archive","old","_old"]

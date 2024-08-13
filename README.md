@@ -51,7 +51,7 @@ magic-lantern /usr/share/backgrounds
 ```
 magic-lantern -c ~/slideshow/example.toml
 ```
-See [example.toml](example.toml).  
+See [example.toml](docs/example.toml).  
 
 The configuration file can specify multiple ***albums*** to include in the slideshow.  The behaviour of each album can be unique.  The file contains two sections:
 
@@ -107,28 +107,3 @@ In TOML this specifies an array of key/value pairs.  Each of these entries defin
 - *default*: `"sequence"`
 
 
-
-
-# Notes
-
-## Running over ssh
-```bash
-export DISPLAY=:0
-```
-
-## Fixing photo orientation 
-[ImageMagick](https://imagemagick.org/script/mogrify.php)
-
-```bash
-mogrify -auto-orient *.jpg
-```
-
-## Fixing missing dates
-e.g.: 
-
-```bash
-exiftool -datetimeoriginal="2009:08:08 00:00:00" -overwrite_original -m *
-```
-
-## What's with the name?
-[Magic lantern](https://en.wikipedia.org/wiki/Magic_lantern)
