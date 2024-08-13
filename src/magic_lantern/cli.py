@@ -59,16 +59,21 @@ def magic_lantern(config_file, fullscreen, shuffle, interval, directory):
 
     config.init(config_file, fullscreen, shuffle, interval, directory)
     log.init()
-    try:
-        log.info(f"Application started {sys.argv}")
-        screen.init()  # Needs to be before the rest, so Pygame gets initalized.
-        slideshow.init()
-        text.init()
-        controller.init()
-        controller.run()
-    except Exception as e:
-        log.error(e)
+    log.info(f"Application started.  Command:")
+    log.info(f"    {' '.join(sys.argv)}")
+    screen.init()  # Needs to be before the rest, so Pygame gets initalized.
+    slideshow.init()
+    text.init()
+    controller.init()
+    controller.run()
 
 
 def cli():
-    magic_lantern()
+    try:
+        magic_lantern()
+    except SystemExit:
+        log.info("System Exit")
+    except KeyboardInterrupt:
+        log.info("Ctrl-C / Ctrl-Break")
+    except Exception as e:
+        log.error(e)

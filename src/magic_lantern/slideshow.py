@@ -43,6 +43,9 @@ def init():
         albumWeights.append(album.weight)
         totalSlides += album._slideCount
 
+    if totalSlides == 0:
+        raise Exception("No images found for slide show.")
+
     # Build a list of slides from random albums
     global _slideList
     global _slideCount

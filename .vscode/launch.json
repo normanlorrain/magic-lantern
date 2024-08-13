@@ -46,11 +46,11 @@
       "module": "magic_lantern",
       "args": ["-i", "1", "${workspaceFolder}/tests/images"]
     },        {
-      "name": "Test: LOCAL",
+      "name": "Test: EMPTY LOCAL",
       "type": "debugpy",
       "request": "launch",
       "module": "magic_lantern",
-      "args": ["-f","-c", "/media/passport/waiting room/2024-08-07 - photos/show.toml"]
+      "args": ["-f","~/Music"]
     },
     {
       "name": "Python Debugger: Current File",
