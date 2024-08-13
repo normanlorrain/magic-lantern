@@ -55,7 +55,7 @@ See [example.toml](example.toml).
 
 The configuration file can specify multiple ***albums*** to include in the slideshow.  The behaviour of each album can be unique.  The file contains two sections:
 
-- The first part of the file contains any default/global values.  They apply to all the subsequent albums if not overridden.  These are optional but are included in the example:
+- The first part of the file contains any default/global values.  They apply to all the subsequent albums if not overridden.  These are optional but are included in the example.
 
 - The remainder of the file defines the albums.  Each album points to a directory containing images to include in the slide show.  Images are added automatically. Images can be separated into different albums depending on their intended behaviour. 
 Options given here override the defaults provided previously.
