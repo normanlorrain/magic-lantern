@@ -10,8 +10,13 @@ You can specify a single directory/folder for the images, or organise them into 
 ## Installation
 
 ### Windows
-```PowerShell    
-pip install magic-lantern
+
+[pipx](https://pipx.pypa.io/stable/), via [Scoop](https://scoop.sh/)
+
+```
+scoop install pipx
+pipx ensurepath
+pipx install magic-lantern
 ```
 
 ### Debian
