@@ -72,7 +72,7 @@ def cli():
     try:
         magic_lantern()
     except SystemExit:
-        log.info("System Exit")
+        log.debug("System Exit")
     except KeyboardInterrupt:
         log.info("Ctrl-C / Ctrl-Break")
     except Exception as e:
