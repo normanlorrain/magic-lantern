@@ -41,46 +41,72 @@ When running, use the following keys to control the slideshow:
 - **y**, display of year (on/off)
 
 ## Configuration 
-You can provide a simple path to a collection of images, or you can supply a configuration file.  See the example in `tests`.  
+You can provide a simple path to a collection of images...
 
-The format is TOML.  Comments are preceded by ***#***.
-
-The first part of the file contains any default/global values.  They apply to all the subsequent albums if not overridden.  These are optional but are included in the example:
-
-```toml
-# Exclude the given list of dir names from the album image search.  
-exclude=["_archive","archive","old","_old"]
-
-# Turn on full screen mode
-fullscreen=true
-
-# Default interval if not otherwise specifed.  This is the delay between images in the slide show
-interval=3
-
-# Default weighting applied to each album
-weight=1
+```
+magic-lantern /usr/share/backgrounds
 ```
 
-The remainder of the file organises the slide show by ***albums***.  Each album points to a directory containing images to include in the slide show.  Images are added automatically. Images can be separated into different albums depending on their intended behaviour.
+... or you can supply a configuration file:
+```
+magic-lantern -c ~/slideshow/example.toml
+```
+See [example.toml](example.toml).  
 
+The configuration file can specify multiple ***albums*** to include in the slideshow.  The behaviour of each album can be unique.  The file contains two sections:
+
+- The first part of the file contains any default/global values.  They apply to all the subsequent albums if not overridden.  These are optional but are included in the example:
+
+- The remainder of the file defines the albums.  Each album points to a directory containing images to include in the slide show.  Images are added automatically. Images can be separated into different albums depending on their intended behaviour. 
 Options given here override the defaults provided previously.
 
-```toml
-[[albums]]
-folder="images/numbers"
-order="sequence" # These are picked in sequence
+### TOML configuration keys
 
-[[albums]]
-folder="images/atomic"
-order="atomic" # These are "sticky"; they appear as a group, sequentially
+This is a list of keys, their scope, etc., defined in the configuration file:
 
-[[albums]]
-folder="images/paintings"
-order="random" # These appear randomly 
-weight=2
-```
+#### exclude
+- *scope*: global 
+- *type*: list of strings
+- *value*: list the folders to exclude from the image search
+- *default*: empty list.  All png/jpg/pdf files will be included.
 
-When the slide show is generated, each image is taken from each album, chosen [randomly](https://docs.python.org/3/library/random.html#random.choices), according the the given weights.
+#### fullscreen
+- *scope*: global
+- *type*: bool
+- *value*: turn on full-screen mode
+- *default*: false
+
+#### weight
+- *scope*: global and album
+- *type*: integer
+- *value*: give the weight to an album when choosing them randomly. When the slide show is generated, each image is taken from each album, chosen [randomly](https://docs.python.org/3/library/random.html#random.choices), according the the given weights.
+
+- *default*: 1
+
+#### interval
+- *scope*: global and album
+- *type*: integer
+- *value*: give the time in seconds after a slide before the next one. 
+- *default*: 5
+
+#### [[albums]]
+In TOML this specifies an array of key/value pairs.  Each of these entries define each album being configured. 
+
+#### folder
+- *scope*: album
+- *type*: string
+- *value*: points to the path of the directory containing the album.  Can be an absolute path, or relative to the configuration file.
+
+#### order
+- *scope*: album
+- *type*: one of
+    - `"sequence"`: photos in this album are picked in sequence
+    - `"random"`: photos in this album are picked randomly
+    - `"atomic"`: photos in this album are picked in sequence, and grouped together.  Once each image has been displayed, the slide show resumes with the next.
+- *value*: defines the behaviour of the slideshow for each album.
+- *default*: `"sequence"`
+
+
 
 
 # Notes
