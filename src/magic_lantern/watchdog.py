@@ -33,5 +33,6 @@ def quit():
 
 class EventHandler(FileSystemEventHandler):
     def on_any_event(self, event: FileSystemEvent) -> None:
-        log.info(f"Filesystem changes detected: {event}")
+        log.debug(f"Filesystem changes detected: {event}")
+        log.info(f"File was {event.event_type}")
         pygame.event.post(pygame.event.Event(WATCHDOG_EVENT))
