@@ -15,11 +15,6 @@ def init():
     _observer = Observer()
     for dictAlbum in config.albums:
         path = Path(dictAlbum[config.FOLDER])
-        if not path.is_absolute():
-            path = config.configRoot / path
-        if not path.exists():
-            raise Exception(f"bad Config: invalid path: {path}")
-
         event_handler = EventHandler()
         _observer.schedule(event_handler, path, recursive=True)
         log.info(f"monitoring: {path}")
