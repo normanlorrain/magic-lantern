@@ -28,32 +28,26 @@ def init():
     totalSlides = 0
 
     for dictAlbum in config.albums:
+        try:
+            order = dictAlbum[config.ORDER]
+            if order not in [e.value for e in Order]:
+                raise Exception(
+                    f"Bad Config: {order} not in {[e.value for e in Order]}"
+                )
 
-        order = dictAlbum[config.ORDER]
-        if order not in [e.value for e in Order]:
-            raise Exception(f"Bad Config: {order} not in {[e.value for e in Order]}")
+            path = dictAlbum[config.FOLDER]
+            weight = dictAlbum.get(config.WEIGHT, None)
+            interval = dictAlbum.get(config.INTERVAL, None)
 
-        path = Path(dictAlbum[config.FOLDER])
-        if not path.is_absolute():
-            path = config.configRoot / path
-        if not path.exists():
-            raise Exception(f"bad Config: invalid path: {path}")
-
-        weight = dictAlbum.get(config.WEIGHT, None)
-        if weight and not isinstance(weight, int):
-            raise Exception(f"Bad Config: weight {weight} should be integer")
-
-        interval = dictAlbum.get(config.INTERVAL, None)
-        if interval and not isinstance(interval, int):
-            raise Exception(f"Bad Config: interval {interval} should be integer")
-
-        album = Album(order, path, weight, interval)
-        if album._slideCount > 0:
-            albumList.append(album)
-            albumWeights.append(album.weight)
-            totalSlides += album._slideCount
-        else:
-            log.warn(f"Album {path} is empty")
+            album = Album(order, path, weight, interval)
+            if album._slideCount > 0:
+                albumList.append(album)
+                albumWeights.append(album.weight)
+                totalSlides += album._slideCount
+            else:
+                raise Exception(f"Album {path} is empty")
+        except Exception as e:
+            log.error(e)
 
     if totalSlides == 0:
         raise Exception("No images found for slide show.")
