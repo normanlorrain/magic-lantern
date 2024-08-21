@@ -1,7 +1,13 @@
+import sys
 import click
 import pathlib
 import os
 
+from magic_lantern import log
+
+log.init()
+log.info(f"Application started.  Command:")
+log.info(f"    {' '.join(sys.argv)}")
 
 # suppresses Pygame message on import
 os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "hide"
@@ -69,4 +75,4 @@ def cli():
     except KeyboardInterrupt:
         log.info("Ctrl-C / Ctrl-Break")
     except Exception as e:
-        log.error(e)
+        log.exception("Uncaught exception. End of program.")

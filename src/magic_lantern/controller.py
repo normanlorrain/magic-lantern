@@ -24,9 +24,7 @@ PREVIOUS = auto()
 
 
 def init():
-    log.init()
-    log.info(f"Application started.  Command:")
-    log.info(f"    {' '.join(sys.argv)}")
+
     screen.init()  # Needs to be before the rest, so Pygame gets initalized.
     slideshow.init()
     text.init()
