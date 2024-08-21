@@ -1,7 +1,6 @@
 import click
 import pathlib
 import os
-import sys
 
 
 # suppresses Pygame message on import
@@ -58,12 +57,6 @@ def magic_lantern(config_file, fullscreen, shuffle, interval, directory):
         click.echo(f"magic_lantern: {directory}")
 
     config.init(config_file, fullscreen, shuffle, interval, directory)
-    log.init()
-    log.info(f"Application started.  Command:")
-    log.info(f"    {' '.join(sys.argv)}")
-    screen.init()  # Needs to be before the rest, so Pygame gets initalized.
-    slideshow.init()
-    text.init()
     controller.init()
     controller.run()
 

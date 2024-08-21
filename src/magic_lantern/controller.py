@@ -1,3 +1,4 @@
+import sys
 from enum import auto
 
 import pygame
@@ -21,6 +22,12 @@ PREVIOUS = auto()
 
 
 def init():
+    log.init()
+    log.info(f"Application started.  Command:")
+    log.info(f"    {' '.join(sys.argv)}")
+    screen.init()  # Needs to be before the rest, so Pygame gets initalized.
+    slideshow.init()
+    text.init()
     global PHOTO_INTERVAL
     PHOTO_INTERVAL = config.interval * 1000  # msec
     pygame.key.set_repeat(500, 100)
