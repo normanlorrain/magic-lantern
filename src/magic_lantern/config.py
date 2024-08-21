@@ -4,6 +4,8 @@ import enum
 import tomllib
 import sys
 
+from magic_lantern import log
+
 this_mod = sys.modules[__name__]
 
 configRoot: pathlib.Path = None
@@ -41,6 +43,19 @@ def init(
     else:  # create a simple album
         configRoot = os.getcwd()
         _dictConfig = createConfig(path, shuffle)
+
+    # Validate the albums. Make a copy first, then loop
+    # and update with validated fields
+    albumList = list(_dictConfig[ALBUMS])
+    _dictConfig[ALBUMS].clear()
+    for album in albumList:
+        try:
+            validateAlbumPath(album)
+            validateAlbumOrder(album)
+            validateAlbumParams(album)
+            _dictConfig[ALBUMS].append(album)
+        except ValidationError as e:
+            log.error(e)
 
     for i in _dictConfig:
         setattr(this_mod, i, _dictConfig[i])
@@ -83,3 +98,35 @@ def createConfig(path, shuffle):
     return {
         ALBUMS: [{ORDER: "random" if shuffle else "sequence", FOLDER: path, WEIGHT: 1}]
     }
+
+
+class ValidationError(Exception):
+    pass
+
+
+def validateAlbumParams(album):
+    for key in [WEIGHT, INTERVAL]:
+        if key in album:
+            if type(album[key]) != int:
+                raise ValidationError(
+                    "Configuration: bad value for {key} in album {path}"
+                )
+
+
+def validateAlbumOrder(album):
+    if ORDER in album:
+        if album[ORDER] not in [e.value for e in Order]:
+            raise ValidationError(
+                "Configuration: bad value for {ORDER} in album {path}"
+            )
+
+
+def validateAlbumPath(album: dict):
+    path = pathlib.Path(album[FOLDER])
+    if not path.is_absolute():
+        path = configRoot / path
+
+    if path.exists():
+        album[FOLDER] = path
+    else:
+        raise ValidationError(f"Configuration: invalid path: {path}")
