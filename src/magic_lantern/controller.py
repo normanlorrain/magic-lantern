@@ -38,20 +38,25 @@ def showNewSlide(direction=NEXT):
     # Blank the screen
     screen.displaySurface.fill((0, 0, 0))
 
+    # Since files can be modified without our knowing,
+    # we wrap this in a try block, until we are
+    # successful
     while True:
         try:
             if direction == NEXT:
                 slide = slideshow.getNextSlide()
             if direction == PREVIOUS:
                 slide = slideshow.getPreviousSlide()
+
+            log.debug(f"{slide.path.name} interval:{slide.interval}")
+            screen.displaySurface.blit(slide.getSurface(), slide.coordinates())
+
+            showMetaData()
+
             break
+
         except SlideException as e:
             log.warn(f"Bad slide file: {e.filename}")
-
-    log.debug(f"{slide.path.name} interval:{slide.interval}")
-    screen.displaySurface.blit(slide.getSurface(), slide.coordinates())
-
-    showMetaData()
 
     # flip() the display to put your work on screen
     pygame.display.flip()
