@@ -12,6 +12,7 @@ from magic_lantern import watchdog
 from magic_lantern.slide import SlideException
 
 PHOTO_EVENT = pygame.event.custom_type()
+RELOAD_EVENT = pygame.event.custom_type()
 PHOTO_INTERVAL = None
 LOOP_INTERVAL = 1000  # msec
 
@@ -150,8 +151,16 @@ def run():
                 year()
             if event.key == pygame.K_SPACE:
                 pause()
+
+        # To filter noisy watchdog events, set a timer
+        # and only do a reload if the timer expires.
+        # Repeated events reset this timer.
         if event.type == watchdog.WATCHDOG_EVENT:
-            init()
+            pygame.time.set_timer(RELOAD_EVENT, PHOTO_INTERVAL)
+        if event.type == RELOAD_EVENT:
+            pygame.time.set_timer(RELOAD_EVENT, 0)
+            log.info("Slideshow files changed. Reloading slide show.")
+            slideshow.init()
 
         # pygame.event.clear()
     pygame.quit()
