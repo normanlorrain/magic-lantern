@@ -8,6 +8,7 @@ from magic_lantern import screen
 from magic_lantern import text
 from magic_lantern import config
 from magic_lantern import log
+from magic_lantern import watchdog
 from magic_lantern.slide import SlideException
 
 PHOTO_EVENT = pygame.event.custom_type()
@@ -28,6 +29,7 @@ def init():
     screen.init()  # Needs to be before the rest, so Pygame gets initalized.
     slideshow.init()
     text.init()
+    watchdog.init()
     global PHOTO_INTERVAL
     PHOTO_INTERVAL = config.interval * 1000  # msec
     pygame.key.set_repeat(500, 100)
@@ -148,6 +150,8 @@ def run():
                 year()
             if event.key == pygame.K_SPACE:
                 pause()
+        if event.type == watchdog.WATCHDOG_EVENT:
+            init()
 
         # pygame.event.clear()
     pygame.quit()

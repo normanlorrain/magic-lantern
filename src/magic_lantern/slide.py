@@ -8,6 +8,10 @@ from magic_lantern import screen, log
 _slideCache: dict = {}
 
 
+def init():
+    _slideCache.clear()
+
+
 def createSlide(path: str, interval: int):
     if path in _slideCache:
         slide = _slideCache[path]

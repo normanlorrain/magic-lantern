@@ -1,12 +1,12 @@
 import random
 from pathlib import Path
 
+from magic_lantern import slide as slidemodule
 from magic_lantern.slide import Slide
 from magic_lantern.album import Album
 from magic_lantern.config import Order
 from magic_lantern import config
 from magic_lantern import log
-
 
 _slideList: list[Slide] = []
 _slideIndex: int = -1
@@ -14,6 +14,15 @@ _slideCount: int = 0
 
 
 def init():
+    slidemodule.init()
+
+    global _slideList
+    _slideList.clear()
+    global _slideIndex
+    _slideIndex = -1
+    global _slideCount
+    _slideCount = 0
+
     albumList: list[Album] = []
     albumWeights: list[int] = []
     totalSlides = 0
@@ -47,8 +56,6 @@ def init():
         raise Exception("No images found for slide show.")
 
     # Build a list of slides from random albums
-    global _slideList
-    global _slideCount
     previousAlbum = None
     for album in random.choices(albumList, albumWeights, k=totalSlides * 100):
         if album._order == Order.ATOMIC:
