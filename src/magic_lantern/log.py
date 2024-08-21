@@ -5,6 +5,9 @@ from logging.handlers import RotatingFileHandler
 # import os
 from pathlib import Path
 
+DEBUG_LOG = "magic-lantern-debug.log"
+ERROR_LOG = "magic-lantern-error.log"
+
 # set up logging to file - see previous section for more details
 LONGFORMAT = (
     "%(asctime)s\t"
@@ -23,20 +26,32 @@ getLogger("").setLevel(DEBUG)
 getLogger("exifread").setLevel(ERROR)
 
 
-def init(filename=Path("magic-lantern.log")):
+def init():
     # Not sure if this is what we want.  TBD
     # if platform.system() == "Windows":
     #     filename = Path(os.getcwd()) / filename
     # else:
     #     filename = Path("/var/log") / filename
 
-    filehandler = RotatingFileHandler(
-        filename, mode="w", maxBytes=100000, backupCount=1, encoding="utf-8"
+    debugHandler = RotatingFileHandler(
+        Path(DEBUG_LOG), mode="w", maxBytes=100000, backupCount=1, encoding="utf-8"
     )
-    filehandler.setLevel(DEBUG)
-    filehandler.setFormatter(Formatter(LONGFORMAT))
-    getLogger("").addHandler(filehandler)
-    info(f"Logging to {filename.absolute()}")
+    debugHandler.setLevel(DEBUG)
+    debugHandler.setFormatter(Formatter(LONGFORMAT))
+    getLogger("").addHandler(debugHandler)
+
+    errorHandler = RotatingFileHandler(
+        Path(ERROR_LOG),
+        mode="w",
+        maxBytes=100000,
+        backupCount=1,
+        encoding="utf-8",
+    )
+    errorHandler.setLevel(DEBUG)
+    errorHandler.setFormatter(Formatter(LONGFORMAT))
+    getLogger("").addHandler(errorHandler)
+
+    info(f"Logging to {DEBUG_LOG} and {ERROR_LOG}")
 
 
 # define a Handler which writes to sys.stderr
