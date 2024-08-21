@@ -48,9 +48,12 @@ def init():
             raise Exception(f"Bad Config: interval {interval} should be integer")
 
         album = Album(order, path, weight, interval)
-        albumList.append(album)
-        albumWeights.append(album.weight)
-        totalSlides += album._slideCount
+        if album._slideCount > 0:
+            albumList.append(album)
+            albumWeights.append(album.weight)
+            totalSlides += album._slideCount
+        else:
+            log.warn(f"Album {path} is empty")
 
     if totalSlides == 0:
         raise Exception("No images found for slide show.")
