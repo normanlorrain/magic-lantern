@@ -47,7 +47,7 @@ def init():
         backupCount=1,
         encoding="utf-8",
     )
-    errorHandler.setLevel(DEBUG)
+    errorHandler.setLevel(ERROR)
     errorHandler.setFormatter(Formatter(LONGFORMAT))
     getLogger("").addHandler(errorHandler)
 

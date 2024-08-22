@@ -6,8 +6,8 @@ import os
 from magic_lantern import log
 
 log.init()
-log.info(f"Application started.  Command:")
-log.info(f"    {' '.join(sys.argv)}")
+log.info(f"Application started.")
+log.info(f"Args: {' '.join(sys.argv)}")
 
 # suppresses Pygame message on import
 os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "hide"
@@ -71,8 +71,8 @@ def cli():
     try:
         magic_lantern()
     except SystemExit:
-        log.debug("System Exit")
+        log.info("Application ended normally (System Exit)")
     except KeyboardInterrupt:
-        log.info("Ctrl-C / Ctrl-Break")
+        log.warn("Application ended (KeyboardInterrupt)")
     except Exception as e:
-        log.exception("Uncaught exception. End of program.")
+        log.exception("Application ended. (UNCAUGHT EXCEPTION)")
