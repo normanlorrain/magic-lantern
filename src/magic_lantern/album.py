@@ -3,7 +3,7 @@ import pathlib
 import random
 import logging as log
 
-from magic_lantern.slide import createSlide, getSlide, Slide
+from magic_lantern.slide import createSlide, getSlide
 from magic_lantern import config
 from magic_lantern.config import Order
 from magic_lantern import pdf

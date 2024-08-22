@@ -1,8 +1,5 @@
 from logging import *
 from logging.handlers import RotatingFileHandler
-
-# import platform
-# import os
 from pathlib import Path
 
 DEBUG_LOG = "magic-lantern-debug.log"
