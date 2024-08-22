@@ -17,7 +17,7 @@ LONGFORMAT = (
     "%(message)s\t"
     # "%(name)s\t"
 )
-SHORTFORMAT = "%(filename)s:%(lineno)s - %(message)s"
+SHORTFORMAT = "%(filename)s:%(lineno)s\t%(message)s"
 
 # Root logger gets everything.  Handlers defined below will filter it out...
 getLogger("").setLevel(DEBUG)
