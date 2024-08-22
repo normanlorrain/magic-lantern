@@ -1,8 +1,7 @@
 import random
 from pathlib import Path
 
-from magic_lantern import slide as slidemodule
-from magic_lantern.slide import Slide
+from magic_lantern.slide import Slide, clearCache
 from magic_lantern.album import Album
 from magic_lantern.config import Order
 from magic_lantern import config
@@ -14,7 +13,7 @@ _slideCount: int = 0
 
 
 def init():
-    slidemodule.init()
+    clearCache()
 
     global _slideList
     _slideList.clear()
