@@ -1,18 +1,12 @@
 import sys
 import click
 import pathlib
-import os
 
-from magic_lantern import log
+from magic_lantern import log, config, controller
 
 log.init()
 log.info(f"Application started.")
 log.info(f"Args: {' '.join(sys.argv)}")
-
-# suppresses Pygame message on import
-os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "hide"
-
-from magic_lantern import log, config, slideshow, screen, text, controller
 
 
 @click.command(
@@ -56,11 +50,11 @@ def magic_lantern(config_file, fullscreen, shuffle, interval, directory):
     if config_file == None and directory == None:
         raise click.ClickException("Must specify a DIRECTORY or a config file.")
     if config_file and directory:
-        click.echo(
+        log.warn(
             "Warning: -c and DIRECTORY are mutually exclusive. DIRECTORY will be ignored"
         )
     if directory:
-        click.echo(f"magic_lantern: {directory}")
+        log.info(f"Single directory slide show: {directory}")
 
     config.init(config_file, fullscreen, shuffle, interval, directory)
     controller.init()
