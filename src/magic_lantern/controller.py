@@ -28,7 +28,6 @@ PREVIOUS = auto()
 
 def init():
 
-    screen.init()  # Needs to be before the rest, so Pygame gets initalized.
     slideshow.init()
     text.init()
     watchdog.init()
