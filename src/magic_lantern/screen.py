@@ -5,6 +5,8 @@ from magic_lantern import log
 WIDTH, HEIGHT = (1280, 720)
 
 
+# Since the configuration isn't initialized yet, we need to explicitly
+# initialize here.
 def init():
     global displaySurface
     global WIDTH, HEIGHT
@@ -18,6 +20,8 @@ def init():
         displaySurface = pygame.display.set_mode((WIDTH, HEIGHT))
 
     WIDTH, HEIGHT = displaySurface.get_size()
+    log.info(f"Screen size {WIDTH} x {HEIGHT}")
+
     pygame.mouse.set_visible(False)
 
 

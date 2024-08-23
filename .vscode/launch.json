@@ -30,7 +30,7 @@
       "type": "debugpy",
       "request": "launch",
       "module": "magic_lantern",
-      "args": ["-c", "${workspaceFolder}/tests/example 2.toml"]
+      "args": ["-f", "-c", "${workspaceFolder}/tests/example 2.toml"]
     }, {
       "name": "example 3.toml",
       "type": "debugpy",
