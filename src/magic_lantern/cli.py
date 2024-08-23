@@ -4,7 +4,6 @@ import pathlib
 
 from magic_lantern import log, config, controller
 
-log.init()
 log.info(f"Application started.")
 log.info(f"Args: {' '.join(sys.argv)}")
 
