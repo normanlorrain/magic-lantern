@@ -4,7 +4,7 @@ import pygame
 
 from magic_lantern import log, config
 from watchdog.observers import Observer
-from watchdog.events import FileSystemEvent, FileSystemEventHandler
+from watchdog.events import *
 
 WATCHDOG_EVENT = pygame.event.custom_type()
 
@@ -28,6 +28,8 @@ def quit():
 
 class EventHandler(FileSystemEventHandler):
     def on_any_event(self, event: FileSystemEvent) -> None:
+        if isinstance(event, FileOpenedEvent):
+            return
         log.debug(f"Filesystem changes detected: {event}")
         log.info(f"File was {event.event_type}")
         pygame.event.post(pygame.event.Event(WATCHDOG_EVENT))
