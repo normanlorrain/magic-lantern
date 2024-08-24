@@ -3,8 +3,16 @@ from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
 
-DEBUG_LOG = "magic-lantern-debug.log"
-ERROR_LOG = "magic-lantern-error.log"
+DEBUG_LOG = Path("magic-lantern-debug.log")
+ERROR_LOG = Path("magic-lantern-error.log")
+
+
+DEBUG_LOG.unlink(missing_ok=True)
+ERROR_LOG.unlink(missing_ok=True)
+
+MAX_BYTES = 100000
+BACKUP_COUNT = 1
+
 
 # Not sure if this is what we want.  TBD
 # if platform.system() == "Windows":
@@ -39,7 +47,7 @@ getLogger("").addHandler(console)
 
 
 debugHandler = RotatingFileHandler(
-    Path(DEBUG_LOG), mode="w", maxBytes=100000, backupCount=1, encoding="utf-8"
+    Path(DEBUG_LOG), maxBytes=MAX_BYTES, backupCount=BACKUP_COUNT, encoding="utf-8"
 )
 debugHandler.setLevel(DEBUG)
 debugHandler.setFormatter(Formatter(LONGFORMAT))
@@ -47,9 +55,8 @@ getLogger("").addHandler(debugHandler)
 
 errorHandler = RotatingFileHandler(
     Path(ERROR_LOG),
-    mode="w",
-    maxBytes=100000,
-    backupCount=1,
+    maxBytes=MAX_BYTES,
+    backupCount=BACKUP_COUNT,
     encoding="utf-8",
 )
 errorHandler.setLevel(ERROR)

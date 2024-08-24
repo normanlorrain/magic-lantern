@@ -52,6 +52,17 @@
       "module": "magic_lantern",
       "args": ["-f","~/Music"]
     },
+
+    
+{
+      "name": "Profile",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "magic_lantern",
+      "env": {"MAGIC_LANTERN_PROFILE":"1"},
+      "args": ["-f","${workspaceFolder}/tests"]
+    },
+
     {
       "name": "Python Debugger: Current File",
       "type": "debugpy",
