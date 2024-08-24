@@ -68,28 +68,31 @@ def showNewSlide(direction=NEXT):
 
 
 def showMetaData():
-    pad = 10
-    slide = slideshow.getCurrentSlide()
-    if pauseState:
+    if pauseState or showYearState:
+        pad = 10
+        slide = slideshow.getCurrentSlide()
 
-        screen.displaySurface.blit(text.createMessage("PAUSE"), (pad, pad))
+        if pauseState:
+            screen.displaySurface.blit(text.createMessage("PAUSE"), (pad, pad))
 
-        filename = text.createMessage(str(slide.filename))
-        x = screen.WIDTH - filename.get_width() - pad
-        y = screen.HEIGHT - filename.get_height() - pad
-        screen.displaySurface.blit(filename, (x, y))
+            filename = text.createMessage(str(slide.filename))
+            x = screen.WIDTH - filename.get_width() - pad
+            y = screen.HEIGHT - filename.get_height() - pad
+            screen.displaySurface.blit(filename, (x, y))
 
-        datetime = text.createMessage(str(slide.datetime))
-        x = 0 + pad
-        y = screen.HEIGHT - datetime.get_height() - pad
-        screen.displaySurface.blit(datetime, (x, y))
+            datetime = text.createMessage(str(slide.datetime))
+            x = 0 + pad
+            y = screen.HEIGHT - datetime.get_height() - pad
+            screen.displaySurface.blit(datetime, (x, y))
 
-    if showYearState:
-        year = text.createMessage(str(slide.datetime)[0:4], text.HEADING, text.GREEN)
-        x = screen.WIDTH - year.get_width() - pad
-        y = 0 + pad
-        screen.displaySurface.blit(year, (x, y))
-    pygame.display.flip()
+        if showYearState:
+            year = text.createMessage(
+                str(slide.datetime)[0:4], text.HEADING, text.GREEN
+            )
+            x = screen.WIDTH - year.get_width() - pad
+            y = 0 + pad
+            screen.displaySurface.blit(year, (x, y))
+        pygame.display.flip()
 
 
 def pause():
