@@ -77,6 +77,7 @@ class Slide:
     def coordinates(self):
         if not self.imageLoaded:
             self.loadImage()
+        log.debug(f"Coordinates x,y: {self.x},{self.y}")
         return (self.x, self.y)
 
     def getSurface(self):
