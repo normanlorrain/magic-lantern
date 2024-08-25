@@ -27,11 +27,3 @@ def init():
 
 def rect():
     return pygame.Rect(0, 0, WIDTH, HEIGHT)
-
-
-def size():
-    return (WIDTH, HEIGHT)
-
-
-def aspect():
-    return WIDTH / HEIGHT
