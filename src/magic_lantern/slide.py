@@ -3,7 +3,7 @@ import pathlib
 import pygame
 import exifread
 
-from magic_lantern import screen, log
+from magic_lantern import screen, log, config
 
 _slideCache: dict = {}
 
@@ -63,15 +63,15 @@ class Slide:
         )  # call convert to upscale any 8-bit images
 
         self.surface = scaledImage.convert()
+        self.datetime = ""
+        if config.readExif:
+            with open(self.filename, "rb") as file_handle:
+                # Return Exif tags
+                tags = exifread.process_file(file_handle)
 
-        with open(self.filename, "rb") as file_handle:
-            # Return Exif tags
-            tags = exifread.process_file(file_handle)
+            if "EXIF DateTimeOriginal" in tags:
+                self.datetime = tags["EXIF DateTimeOriginal"]
 
-        if "EXIF DateTimeOriginal" in tags:
-            self.datetime = tags["EXIF DateTimeOriginal"]
-        else:
-            self.datetime = ""
         self.imageLoaded = True
 
     def coordinates(self):
