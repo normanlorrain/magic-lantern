@@ -64,7 +64,7 @@ class Slide:
 
         self.surface = scaledImage.convert()
         self.datetime = ""
-        if config.readExif:
+        if config.exif:
             with open(self.filename, "rb") as file_handle:
                 # Return Exif tags
                 tags = exifread.process_file(file_handle)
