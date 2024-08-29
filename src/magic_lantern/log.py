@@ -38,14 +38,6 @@ getLogger("").setLevel(DEBUG)
 # The exifread package is very chatty for this application.  Not everything has EXIF data.
 getLogger("exifread").setLevel(ERROR)
 
-# define a Handler which writes to sys.stderr
-console = StreamHandler()
-console.setLevel(INFO)
-console.setFormatter(Formatter(SHORTFORMAT))
-# add the handler to the root logger
-getLogger("").addHandler(console)
-
-
 debugHandler = RotatingFileHandler(
     Path(DEBUG_LOG), maxBytes=MAX_BYTES, backupCount=BACKUP_COUNT, encoding="utf-8"
 )
@@ -64,3 +56,12 @@ errorHandler.setFormatter(Formatter(LONGFORMAT))
 getLogger("").addHandler(errorHandler)
 
 info(f"Logging to {DEBUG_LOG} and {ERROR_LOG}")
+
+
+def initConsole():
+    # define a Handler which writes to sys.stderr
+    console = StreamHandler()
+    console.setLevel(INFO)
+    console.setFormatter(Formatter(SHORTFORMAT))
+    # add the handler to the root logger
+    getLogger("").addHandler(console)

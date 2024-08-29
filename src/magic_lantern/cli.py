@@ -46,6 +46,10 @@ log.info(f"Args: {' '.join(sys.argv)}")
 )
 def magic_lantern(config_file, fullscreen, shuffle, interval, directory):
     """A slide show generator. Specify a directory containing image files or use -c to specify a config file."""
+
+    # At this point "click" switches --version and --help have been dealth with.
+    log.initConsole()
+
     if config_file == None and directory == None:
         raise click.ClickException("Must specify a DIRECTORY or a config file.")
     if config_file and directory:
