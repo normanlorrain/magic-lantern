@@ -4,13 +4,13 @@ build-backend = "hatchling.build"
 
 [project]
 name = "magic-lantern"
-version = "0.0.6"
+version = "0.0.8"
 authors = [
   { name="Norman Lorrain", email="normanlorrain@gmail.com" },
 ]
 description = "A presentation tool for kiosks, digital signage, slide shows."
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.11"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
@@ -20,7 +20,8 @@ dependencies = [
   'click',
   'pygame',
   'exifread',
-  'pymupdf'
+  'pymupdf',
+  'watchdog'
 ]
 
 

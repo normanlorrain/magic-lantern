@@ -15,7 +15,6 @@ def convert(pathName, fileName):
             prefix=None,
             dir=None,
             ignore_cleanup_errors=False,
-            delete=False,
         )
         log.debug(f"Temp Dir: {_tempDir.name}")
     doc = pymupdf.open(os.path.join(pathName, fileName))  # open document
