@@ -10,7 +10,6 @@
       "request": "launch",
       "module": "magic_lantern",
       "args": ["${workspaceFolder}/tests/images"]
-      // "env": { "magic_lantern_PROFILE": "active if this variable exists" }
     },
     {
       "name": "Test: Help",
