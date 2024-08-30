@@ -59,7 +59,7 @@ def showNewSlide(direction=NEXT):
             break
 
         except SlideException as e:
-            log.warn(f"Bad slide file: {e.filename}")
+            log.warning(f"Bad slide file: {e.filename}")
 
     # flip() the display to put your work on screen
     pygame.display.flip()

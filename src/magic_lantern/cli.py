@@ -53,7 +53,7 @@ def magic_lantern(config_file, fullscreen, shuffle, interval, directory):
     if config_file == None and directory == None:
         raise click.ClickException("Must specify a DIRECTORY or a config file.")
     if config_file and directory:
-        log.warn(
+        log.warning(
             "Warning: -c and DIRECTORY are mutually exclusive. DIRECTORY will be ignored"
         )
     if directory:
@@ -70,6 +70,8 @@ def cli():
     except SystemExit:
         log.info("Application ended normally (System Exit)")
     except KeyboardInterrupt:
-        log.warn("Application ended (KeyboardInterrupt)")
+        log.warning("Application ended (KeyboardInterrupt)")
     except Exception as e:
-        log.exception("Application ended. (UNCAUGHT EXCEPTION)")
+        log.exception(
+            "Application ended. (UNCAUGHT EXCEPTION)",
+        )
