@@ -6,10 +6,15 @@ from magic_lantern.album import Album
 from magic_lantern.config import Order
 from magic_lantern import config
 from magic_lantern import log
+from magic_lantern.snafu import Snafu
 
 _slideList: list[Slide] = []
 _slideIndex: int = -1
 _slideCount: int = 0
+
+
+class SlideShowException(Exception):
+    pass
 
 
 def init():
@@ -30,7 +35,7 @@ def init():
         try:
             order = dictAlbum[config.ORDER]
             if order not in [e.value for e in Order]:
-                raise Exception(
+                raise SlideShowException(
                     f"Bad Config: {order} not in {[e.value for e in Order]}"
                 )
 
@@ -44,12 +49,12 @@ def init():
                 albumWeights.append(album.weight)
                 totalSlides += album._slideCount
             else:
-                raise Exception(f"Album {path} is empty")
-        except Exception as e:
+                raise SlideShowException(f"Album {path} is empty")
+        except SlideShowException as e:
             log.error(e)
 
     if totalSlides == 0:
-        raise Exception("No images found for slide show.")
+        raise Snafu("No images found for slide show.")
 
     # Build a list of slides from random albums
     previousAlbum = None

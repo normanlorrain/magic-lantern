@@ -2,7 +2,7 @@ import sys
 import click
 import pathlib
 
-from magic_lantern import log, config, controller
+from magic_lantern import log, config, controller, snafu
 
 log.info(f"Application started.")
 log.info(f"Args: {' '.join(sys.argv)}")
@@ -71,6 +71,8 @@ def cli():
         log.info("Application ended normally (System Exit)")
     except KeyboardInterrupt:
         log.warning("Application ended (KeyboardInterrupt)")
+    except snafu.Snafu as e:
+        log.error(e)
     except Exception as e:
         log.exception(
             "Application ended. (UNCAUGHT EXCEPTION)",
