@@ -129,7 +129,7 @@ def previous():
         pygame.time.set_timer(PHOTO_EVENT, PHOTO_INTERVAL)
 
 
-def run():
+def run() -> bool:
     global pauseState
     global showYearState
 
@@ -141,6 +141,7 @@ def run():
         event = pygame.event.wait(LOOP_INTERVAL)
         if event.type == pygame.NOEVENT:
             continue
+        # log.debug(f"{event}") # Noisy, e.g. mouse movements
         if event.type == PHOTO_EVENT:
             if not pauseState:
                 showNewSlide()
@@ -148,10 +149,12 @@ def run():
                 pygame.time.set_timer(PHOTO_EVENT, PHOTO_INTERVAL)
 
         if event.type in [pygame.WINDOWCLOSE, pygame.QUIT]:
-            break
+            log.debug(f"{event}")
+            return False
         if event.type == pygame.KEYDOWN:
             if event.key in [pygame.K_q]:
-                break
+                log.debug(f"{event}")
+                return False
             if event.key in [pygame.K_n, pygame.K_RIGHT]:
                 next()
             if event.key in [pygame.K_p, pygame.K_LEFT]:
@@ -169,7 +172,7 @@ def run():
         if event.type == RELOAD_EVENT:
             pygame.time.set_timer(RELOAD_EVENT, 0)
             log.info("Slideshow files changed. Reloading slide show.")
-            slideshow.init()
+            return True
 
         # pygame.event.clear()
-    pygame.quit()
+    # pygame.quit()

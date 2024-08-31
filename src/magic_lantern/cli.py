@@ -59,9 +59,11 @@ def magic_lantern(config_file, fullscreen, shuffle, interval, directory):
     if directory:
         log.info(f"Single directory slide show: {directory}")
 
-    config.init(config_file, fullscreen, shuffle, interval, directory)
-    controller.init()
-    controller.run()
+    runState = True
+    while runState:
+        config.init(config_file, fullscreen, shuffle, interval, directory)
+        controller.init()
+        runState = controller.run()
 
 
 def cli():
