@@ -50,6 +50,12 @@
       "request": "launch",
       "module": "magic_lantern",
       "args": ["-f","~/Music"]
+    },       {
+      "name": "Test: rotated",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "magic_lantern",
+      "args": ["-c","~/Downloads/pics.toml"]
     },
 
     

@@ -37,16 +37,33 @@ class Slide:
         self.path = pathlib.Path(self.filename)
         self.x = 0
         self.y = 0
+        self.exif_orientation = None
         self.interval = interval
         self.imageLoaded = False
 
     def loadImage(self):
         log.debug(f"{self.path.name}")
+        if config.exif:
+            with open(self.filename, "rb") as file_handle:
+                # Return Exif tags
+                tags = exifread.process_file(file_handle, details=False)
+
+            if "EXIF DateTimeOriginal" in tags:
+                self.datetime = tags["EXIF DateTimeOriginal"]
+            if "Image Orientation" in tags.keys():
+                self.exif_orientation = tags["Image Orientation"]
         # Load the image
         try:
             image = pygame.image.load(self.filename)
         except:
             raise SlideException(self.filename)
+
+        if 3 in self.exif_orientation.values:
+            image = pygame.transform.rotate(image, 180)
+        elif 6 in self.exif_orientation.values:
+            image = pygame.transform.rotate(image, 270)
+        elif 8 in self.exif_orientation.values:
+            image = pygame.transform.rotate(image, 90)
 
         # Get the boundary rectangle
         imageRect = pygame.Rect((0, 0), image.get_size())
@@ -64,13 +81,6 @@ class Slide:
 
         self.surface = scaledImage.convert()
         self.datetime = ""
-        if config.exif:
-            with open(self.filename, "rb") as file_handle:
-                # Return Exif tags
-                tags = exifread.process_file(file_handle)
-
-            if "EXIF DateTimeOriginal" in tags:
-                self.datetime = tags["EXIF DateTimeOriginal"]
 
         self.imageLoaded = True
 
