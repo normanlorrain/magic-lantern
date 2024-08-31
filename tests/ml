@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+cd /home/norman
+. /home/norman/Documents/magic-lantern/.venv/bin/activate
+magic-lantern /home/norman/country-flags/png1000px/
