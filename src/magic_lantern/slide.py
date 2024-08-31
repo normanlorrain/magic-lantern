@@ -61,6 +61,7 @@ class Slide:
             self.datetime = tags[EXIF_DATE]
         if EXIF_ORIENTATION in tags:
             self.exif_orientation = tags[EXIF_ORIENTATION]
+            log.debug(self.exif_orientation)
             if 3 in self.exif_orientation.values:
                 image = pygame.transform.rotate(image, 180)
             elif 6 in self.exif_orientation.values:
