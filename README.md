@@ -40,6 +40,15 @@ When running, use the following keys to control the slideshow:
 - **n**, **right arrow**: previous image
 - **y**, display of year (on/off)
 
+## Reset
+
+To reload the configuration and slide show: 
+```bash
+pkill -USR1 magic-lantern
+```
+
+This is useful if you have the app running automatically (e.g. Gnome autostart) and have updated the slide show.
+
 ## Configuration 
 You can provide a simple path to a collection of images...
 
