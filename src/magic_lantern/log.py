@@ -27,8 +27,8 @@ LONGFORMAT = (
     "%(levelname)s\t"
     "%(filename)14s:%(lineno)s\t"
     "%(funcName)-14s\t"
-    "%(message)s\t"
-    # "%(name)s\t"
+    "%(message)s"
+    # "\t%(name)s"
 )
 # SHORTFORMAT = "%(filename)s:%(lineno)s\t%(message)s"
 SHORTFORMAT = "%(message)s"

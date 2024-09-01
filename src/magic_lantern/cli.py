@@ -1,10 +1,12 @@
 import sys
 import click
 import pathlib
+from importlib.metadata import version
 
 from magic_lantern import log, config, controller, snafu
 
 log.info(f"Application started.")
+log.info(f"Version: {version(__package__)}")
 log.info(f"Args: {' '.join(sys.argv)}")
 
 
@@ -47,7 +49,7 @@ log.info(f"Args: {' '.join(sys.argv)}")
 def magic_lantern(config_file, fullscreen, shuffle, interval, directory):
     """A slide show generator. Specify a directory containing image files or use -c to specify a config file."""
 
-    # At this point "click" switches --version and --help have been dealth with.
+    # At this point "click" switches --version and --help have been dealt with.
     log.initConsole()
 
     if config_file == None and directory == None:
