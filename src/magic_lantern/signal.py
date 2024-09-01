@@ -13,7 +13,8 @@ def handler(signum, _):
 
 
 def init():
-    signal.signal(signal.SIGUSR1, handler)
-    log.info(f"Signal handler initialised. We are pid: {os.getpid()}")
-    log.info(f"To reset slideshow run:")
-    log.info("pkill -USR1 magic-lantern")
+    if os.name == "posix":
+        signal.signal(signal.SIGUSR1, handler)
+        log.info(f"Signal handler initialised. We are pid: {os.getpid()}")
+        log.info(f"To reset slideshow run:")
+        log.info("pkill -USR1 magic-lantern")
