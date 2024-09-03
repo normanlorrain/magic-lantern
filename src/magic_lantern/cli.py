@@ -11,7 +11,12 @@ log.info(f"Args: {' '.join(sys.argv)}")
 
 
 @click.command(
-    epilog="See https://github.com/normanlorrain/magic-lantern for more details."
+    epilog="""To reload the configuration, send it the USR1 signal:
+
+    pkill -USR1 magic-lantern
+\b    
+
+See https://github.com/normanlorrain/magic-lantern for more details."""
 )
 @click.version_option()
 @click.option(
