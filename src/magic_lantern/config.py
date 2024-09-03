@@ -19,7 +19,6 @@ ORDER = "order"
 FOLDER = "folder"
 WEIGHT = "weight"
 INTERVAL = "interval"
-EXIF = "exif"
 
 
 class Order(enum.StrEnum):
@@ -61,10 +60,6 @@ def init(
     for i in _dictConfig:
         setattr(this_mod, i, _dictConfig[i])
     pass
-
-    # If the config file doesn't specify EXIF, set it here.
-    if not hasattr(this_mod, EXIF):
-        setattr(this_mod, EXIF, False)
 
     # If the config file doesn't specify a weight, set it here.
     # Each album can set it's own weight which will override this.
