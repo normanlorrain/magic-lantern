@@ -10,6 +10,8 @@ git clone https://github.com/hampusborgos/country-flags.git
 
 
 ## Running over ssh
+
+Add this to `~/.bashrc`
 ```bash
 export DISPLAY=:0
 ```
