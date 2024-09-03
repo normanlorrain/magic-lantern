@@ -13,6 +13,9 @@ def init():
 
     # pygame setup
     pygame.init()
+    pygame.mixer.quit()  # Don't need
+    pygame.joystick.quit()  # Don't need
+
     log.debug(f"Support for all image formats: {pygame.image.get_extended()}")
     if config.fullscreen:
         displaySurface = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
