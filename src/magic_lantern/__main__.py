@@ -7,7 +7,7 @@ if "MAGIC_LANTERN_PROFILE" in os.environ:
     import cProfile
     from magic_lantern import log
 
-    log.warning("Running under profiler")
+    print("Running under profiler")
 
     cProfile.run("cli()", sort="time")
 else:

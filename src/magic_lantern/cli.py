@@ -1,13 +1,8 @@
 import sys
 import click
 import pathlib
-from importlib.metadata import version
 
 from magic_lantern import log, config, controller, snafu
-
-log.info(f"Application started.")
-log.info(f"Version: {version(__package__)}")
-log.info(f"Args: {' '.join(sys.argv)}")
 
 
 @click.command(
@@ -54,8 +49,9 @@ See https://github.com/normanlorrain/magic-lantern for more details."""
 def magic_lantern(config_file, fullscreen, shuffle, interval, directory):
     """A slide show generator. Specify a directory containing image files or use -c to specify a config file."""
 
-    # At this point "click" switches --version and --help have been dealt with.
-    log.initConsole()
+    # At this point switches --version and --help have been dealt with by click.
+    # Therefore we can initialize our log (which we start with an enpty file)
+    log.init()
 
     if config_file == None and directory == None:
         raise click.ClickException("Must specify a DIRECTORY or a config file.")
