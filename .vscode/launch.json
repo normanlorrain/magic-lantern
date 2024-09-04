@@ -10,6 +10,12 @@
       "request": "launch",
       "module": "magic_lantern",
       "args": ["${workspaceFolder}/tests/images"]
+    },    {
+      "name": "Test: bitmaps",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "magic_lantern",
+      "args": ["-f","${workspaceFolder}/tests/images/bitmaps"]
     },
     {
       "name": "Test: Help",

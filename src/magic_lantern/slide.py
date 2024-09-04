@@ -38,6 +38,8 @@ class Slide:
     def __init__(self, filename, interval) -> None:
         self.filename = filename
         self.path = pathlib.Path(self.filename)
+        self.width = 0
+        self.height = 0
         self.x = 0
         self.y = 0
         self.datetime = ""
@@ -53,7 +55,8 @@ class Slide:
             image = pygame.image.load(self.filename)
         except:
             raise SlideException(self.filename)
-
+        self.width = image.get_width()
+        self.height = image.get_height()
         # Read Exif tags
         tags = exifread.process_file(open(self.filename, "rb"), details=False)
 
@@ -94,7 +97,7 @@ class Slide:
         return (self.x, self.y)
 
     def getSurface(self):
-        log.info(f"{self.path.name}")
         if not self.imageLoaded:
             self.loadImage()
+        log.info(f"{self.path.name} ({self.width} x {self.height})")
         return self.surface

@@ -38,7 +38,7 @@ class Album:
                     continue
 
                 # Filter out files with unknown extensions
-                if f.lower().endswith((".png", ".jpg", ".jpeg")):
+                if f.lower().endswith((".bmp", ".png", ".jpg", ".jpeg")):
                     imageFile = os.path.join(root, f)
                     createSlide(imageFile, self.interval)
                     self._slideFileList.append(imageFile)
