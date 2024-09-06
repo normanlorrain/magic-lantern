@@ -16,7 +16,6 @@ from magic_lantern.slide import SlideException
 
 PHOTO_EVENT = pygame.event.custom_type()
 PHOTO_INTERVAL = None
-LOOP_INTERVAL = 100  # msec
 
 pauseState = False
 showYearState = False
@@ -137,7 +136,7 @@ def run() -> bool:
     # Creates a periodically repeating event on the event queue
     pygame.time.set_timer(PHOTO_EVENT, PHOTO_INTERVAL)
     while True:
-        event = pygame.event.wait(LOOP_INTERVAL)
+        event = pygame.event.wait()
         if event.type == pygame.NOEVENT:
             continue
         # log.debug(f"{event}") # Noisy, e.g. mouse movements
