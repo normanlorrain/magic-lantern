@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "magic-lantern"
-version = "0.0.14"
+version = "0.0.15"
 authors = [
   { name="Norman Lorrain", email="normanlorrain@gmail.com" },
 ]
