@@ -44,6 +44,14 @@
       "args": ["-c", "${workspaceFolder}/tests/example 3.toml"]
 
     },
+    {
+      "name": "example 4.toml",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "magic_lantern",
+      "args": ["D:/2008/No. 09"]
+
+    },
         {
       "name": "Test: interval option",
       "type": "debugpy",

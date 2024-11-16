@@ -30,6 +30,10 @@ class Album:
         for root, dirs, files in os.walk(path):
             dirs[:] = [d for d in dirs if d not in config.exclude]
             for f in files:
+                if "~" in f:
+                    log.debug(f"ignoring {f}")
+                    continue
+
                 if f.lower().endswith(".pdf"):
                     log.info(f"{f}  PDF file")
                     for pdfPageImageFile in pdf.convert(root, f):
