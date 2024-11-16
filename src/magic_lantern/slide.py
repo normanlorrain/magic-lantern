@@ -46,6 +46,19 @@ class Slide:
         self.exif_orientation = None
         self.interval = interval
         self.imageLoaded = False
+        self.surface = None
+
+    def unloadImage(self):
+        self.width = 0
+        self.height = 0
+        self.x = 0
+        self.y = 0
+        self.datetime = ""
+        self.exif_orientation = None
+        self.interval = 0
+        if self.surface:
+            del self.surface
+        self.imageLoaded = False
 
     def loadImage(self):
         log.debug(f"{self.path.name}")

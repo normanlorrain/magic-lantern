@@ -39,6 +39,10 @@ def showNewSlide(direction=NEXT):
     # Blank the screen
     screen.displaySurface.fill((0, 0, 0))
 
+    # Delete slide data to reduce memory usage
+    slide = slideshow.getCurrentSlide()
+    slide.unloadImage()
+
     # Since files can be modified without our knowing,
     # we wrap this in a try block, until we are
     # successful
