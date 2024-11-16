@@ -55,7 +55,6 @@ class Slide:
         self.y = 0
         self.datetime = ""
         self.exif_orientation = None
-        self.interval = 0
         if self.surface:
             del self.surface
         self.imageLoaded = False
