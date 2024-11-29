@@ -32,7 +32,7 @@ def init():
     signal.init()
     global PHOTO_INTERVAL
     PHOTO_INTERVAL = config.interval * 1000  # msec
-    pygame.key.set_repeat(500, 100)
+    pygame.key.set_repeat(1000, 100)
 
 
 def showNewSlide(direction=NEXT):
@@ -143,7 +143,7 @@ def run() -> bool:
         event = pygame.event.wait()
         if event.type == pygame.NOEVENT:
             continue
-        # log.debug(f"{event}") # Noisy, e.g. mouse movements
+        log.debug(f"{event}")  # Noisy, e.g. mouse movements
         if event.type == PHOTO_EVENT:
             if not pauseState:
                 showNewSlide()
