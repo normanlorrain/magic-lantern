@@ -44,14 +44,7 @@
       "args": ["-c", "${workspaceFolder}/tests/example 3.toml"]
 
     },
-    {
-      "name": "example 4.toml",
-      "type": "debugpy",
-      "request": "launch",
-      "module": "magic_lantern",
-      "args": ["-f", "-i","3","-s", "G:/.shortcut-targets-by-id/1QVzakoqO7WG5jTO7V--SDeI65W4_2m0K/D and S Wedding Slideshow Photos/Scanned 2024-10-20/School photos"]
-
-    },
+    
         {
       "name": "Test: interval option",
       "type": "debugpy",
