@@ -63,10 +63,10 @@ def init():
             if previousAlbum == album:
                 log.debug("preventing atomic album from repeating")
                 continue
-            while slide := album.getNextSlide():
+            for slide in album:
                 _slideList.append(slide)
         else:
-            slide = album.getNextSlide()
+            slide = next(album)
             _slideList.append(slide)
         previousAlbum = album
     _slideCount = len(_slideList)

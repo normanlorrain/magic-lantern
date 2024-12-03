@@ -59,11 +59,14 @@ class Album:
         # Update the slide count
         self._slideCount = len(self._slideFileList)
 
-    def getNextSlide(self):
+    def __iter__(self):
+        return self
+
+    def __next__(self):
         if self._slideIndex >= self._slideCount:
             self._slideIndex = 0
             if self._order == Order.ATOMIC:
-                return None  # We've reached the end; signal caller
+                raise StopIteration  # We've reached the end; signal caller
         slide = getSlide(self._slideFileList[self._slideIndex])
         self._slideIndex += 1
         return slide
