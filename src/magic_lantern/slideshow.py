@@ -53,13 +53,9 @@ def init():
 
 def slideGenerator():
     # Get slides from random album
-    previousAlbum = None
     while True:
         album = random.choices(_albumList, _albumWeights)[0]
         if album._order == Order.ATOMIC:
-            if previousAlbum == album:
-                log.debug("preventing atomic album from repeating")
-                continue
             yield from album
         else:
             try:
@@ -67,7 +63,6 @@ def slideGenerator():
                 yield slide
             except StopIteration:
                 pass
-        previousAlbum = album
 
 
 def getNextSlide():
