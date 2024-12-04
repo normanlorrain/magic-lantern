@@ -44,7 +44,7 @@ class Album:
                 # Filter out files with unknown extensions
                 if f.lower().endswith((".bmp", ".png", ".jpg", ".jpeg")):
                     imageFile = os.path.join(root, f)
-                    slide = Slide(imageFile, interval)
+                    slide = Slide(imageFile, self.interval)
                     self._slideList.append(slide)
                     continue
 
