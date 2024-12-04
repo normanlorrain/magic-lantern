@@ -1,7 +1,7 @@
 import random
 from pathlib import Path
 
-from magic_lantern.slide import Slide, clearCache
+from magic_lantern.slide import Slide
 from magic_lantern.album import Album
 from magic_lantern.config import Order
 from magic_lantern import config
@@ -12,6 +12,7 @@ _history: list[Slide] = []
 _historyCursor: int = 0
 _albumList: list[Album] = []
 _albumWeights: list[int] = []
+_slideGenerator = None
 
 
 class SlideShowException(Exception):
@@ -19,9 +20,6 @@ class SlideShowException(Exception):
 
 
 def init():
-    # clearCache()
-    # _history.clear()
-
     totalSlides = 0
     for dictAlbum in config.albums:
         try:
