@@ -57,6 +57,7 @@ class Slide:
         self.exif_orientation = None
         if self.surface:
             del self.surface
+            self.surface = None
         self.imageLoaded = False
 
     def loadImage(self):
