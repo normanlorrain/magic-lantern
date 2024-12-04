@@ -13,6 +13,7 @@ _historyCursor: int = 0
 _albumList: list[Album] = []
 _albumWeights: list[int] = []
 _slideGenerator = None
+_currentSlide: Slide = None
 
 
 class SlideShowException(Exception):
@@ -82,7 +83,8 @@ def getNextSlide():
         # memory.
         if len(_history) > 10:
             _history.pop(0).unloadImage()
-
+    global _currentSlide
+    _currentSlide = slide
     return slide
 
 
@@ -93,5 +95,12 @@ def getPreviousSlide():
     else:
         _historyCursor -= 1
     _historyCursor = max(_historyCursor, -len(_history))
+    slide = _history[_historyCursor]
 
-    return _history[_historyCursor]
+    global _currentSlide
+    _currentSlide = slide
+    return _currentSlide
+
+
+def getCurrentSlide():
+    return _currentSlide
