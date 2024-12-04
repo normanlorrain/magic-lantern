@@ -1,4 +1,3 @@
-import sys
 import click
 import pathlib
 
@@ -9,7 +8,7 @@ from magic_lantern import log, config, controller, snafu
     epilog="""To reload the configuration, send it the USR1 signal:
 
     pkill -USR1 magic-lantern
-\b    
+\b
 
 See https://github.com/normanlorrain/magic-lantern for more details."""
 )
@@ -47,17 +46,19 @@ See https://github.com/normanlorrain/magic-lantern for more details."""
     required=False,
 )
 def magic_lantern(config_file, fullscreen, shuffle, interval, directory):
-    """A slide show generator. Specify a directory containing image files or use -c to specify a config file."""
+    """A slide show generator. Specify a directory containing image files
+    or use -c to specify a config file."""
 
     # At this point switches --version and --help have been dealt with by click.
     # Therefore we can initialize our log (which we start with an enpty file)
     log.init()
 
-    if config_file == None and directory == None:
+    if config_file is None and directory is None:
         raise click.ClickException("Must specify a DIRECTORY or a config file.")
     if config_file and directory:
         log.warning(
-            "Warning: -c and DIRECTORY are mutually exclusive. DIRECTORY will be ignored"
+            "Warning: -c and DIRECTORY are mutually exclusive. "
+            "DIRECTORY will be ignored"
         )
     if directory:
         log.info(f"Single directory slide show: {directory}")
@@ -78,7 +79,7 @@ def cli():
         log.warning("Application ended (KeyboardInterrupt)")
     except snafu.Snafu as e:
         log.error(e)
-    except Exception as e:
+    except Exception:
         log.exception(
             "Application ended. (UNCAUGHT EXCEPTION)",
         )

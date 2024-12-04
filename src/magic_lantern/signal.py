@@ -16,5 +16,5 @@ def init():
     if os.name == "posix":
         signal.signal(signal.SIGUSR1, handler)
         log.info(f"Signal handler initialised. We are pid: {os.getpid()}")
-        log.info(f"To reset slideshow run:")
+        log.info("To reset slideshow run:")
         log.info("pkill -USR1 magic-lantern")

@@ -1,11 +1,9 @@
 import random
-from pathlib import Path
 
 from magic_lantern.slide import Slide
 from magic_lantern.album import Album
 from magic_lantern.config import Order
-from magic_lantern import config
-from magic_lantern import log
+from magic_lantern import config, log
 from magic_lantern.snafu import Snafu
 
 _history: list[Slide] = []

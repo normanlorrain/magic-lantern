@@ -9,7 +9,7 @@ _tempDir = None
 
 def convert(pathName, fileName):
     global _tempDir
-    if _tempDir == None:
+    if _tempDir is None:
         _tempDir = tempfile.TemporaryDirectory(
             suffix=None,
             prefix=None,

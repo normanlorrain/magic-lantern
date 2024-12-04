@@ -1,8 +1,12 @@
 import sys
-from logging import *
+import logging
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
 from importlib.metadata import version
+
+# Import these for use by client code.
+# "noqa" is for Flake8; warning is ignored
+from logging import error, debug, warning, info  # noqa: F401
 
 
 def init():
@@ -36,17 +40,18 @@ def init():
     SHORTFORMAT = "%(message)s"
 
     # Root logger gets everything.  Handlers defined below will filter it out...
-    getLogger("").setLevel(DEBUG)
+    logging.getLogger("").setLevel(logging.DEBUG)
 
-    # The exifread package is very chatty for this application.  Not everything has EXIF data.
-    getLogger("exifread").setLevel(ERROR)
+    # The exifread package is very chatty for this application.
+    # Not everything has EXIF data.
+    logging.getLogger("exifread").setLevel(logging.ERROR)
 
     debugHandler = RotatingFileHandler(
         Path(DEBUG_LOG), maxBytes=MAX_BYTES, backupCount=BACKUP_COUNT, encoding="utf-8"
     )
-    debugHandler.setLevel(DEBUG)
-    debugHandler.setFormatter(Formatter(LONGFORMAT))
-    getLogger("").addHandler(debugHandler)
+    debugHandler.setLevel(logging.DEBUG)
+    debugHandler.setFormatter(logging.Formatter(LONGFORMAT))
+    logging.getLogger("").addHandler(debugHandler)
 
     errorHandler = RotatingFileHandler(
         Path(ERROR_LOG),
@@ -54,18 +59,18 @@ def init():
         backupCount=BACKUP_COUNT,
         encoding="utf-8",
     )
-    errorHandler.setLevel(ERROR)
-    errorHandler.setFormatter(Formatter(LONGFORMAT))
-    getLogger("").addHandler(errorHandler)
+    errorHandler.setLevel(logging.ERROR)
+    errorHandler.setFormatter(logging.Formatter(LONGFORMAT))
+    logging.getLogger("").addHandler(errorHandler)
 
     # define a Handler which writes to sys.stderr
-    console = StreamHandler()
-    console.setLevel(INFO)
-    console.setFormatter(Formatter(SHORTFORMAT))
+    console = logging.StreamHandler()
+    console.setLevel(logging.INFO)
+    console.setFormatter(logging.Formatter(SHORTFORMAT))
     # add the handler to the root logger
-    getLogger("").addHandler(console)
+    logging.getLogger("").addHandler(console)
 
-    info(f"Application started.")
-    info(f"Version: {version(__package__)}")
-    info(f"Args: {' '.join(sys.argv)}")
-    info(f"Logging to {DEBUG_LOG} and {ERROR_LOG}")
+    logging.info("Application started.")
+    logging.info(f"Version: {version(__package__)}")
+    logging.info(f"Args: {' '.join(sys.argv)}")
+    logging.info(f"Logging to {DEBUG_LOG} and {ERROR_LOG}")

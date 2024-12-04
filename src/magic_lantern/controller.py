@@ -1,9 +1,5 @@
-from enum import auto
-
-
 import os
-
-os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "hide"  # suppresses Pygame message on import
+from enum import auto
 import pygame
 
 from magic_lantern import slideshow
@@ -13,6 +9,10 @@ from magic_lantern import config
 from magic_lantern import log
 from magic_lantern import signal
 from magic_lantern.slide import SlideException
+
+
+os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "hide"  # suppresses Pygame message on import
+
 
 PHOTO_EVENT = pygame.event.custom_type()
 PHOTO_INTERVAL = None

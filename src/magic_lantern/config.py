@@ -108,7 +108,7 @@ class ValidationError(Exception):
 def validateAlbumParams(album):
     for key in [WEIGHT, INTERVAL]:
         if key in album:
-            if type(album[key]) != int:
+            if album[key] is int:
                 raise ValidationError(
                     "Configuration: bad value for {key} in album {path}"
                 )

@@ -3,7 +3,7 @@ import pathlib
 import pygame
 import exifread
 
-from magic_lantern import screen, log, config
+from magic_lantern import screen, log
 
 EXIF_DATE = "EXIF DateTimeOriginal"
 EXIF_ORIENTATION = "Image Orientation"
@@ -49,7 +49,7 @@ class Slide:
         # Load the image
         try:
             image = pygame.image.load(self.filename)
-        except:
+        except Exception:
             raise SlideException(self.filename)
         self.width = image.get_width()
         self.height = image.get_height()
