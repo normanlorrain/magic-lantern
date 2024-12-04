@@ -5,28 +5,8 @@ import exifread
 
 from magic_lantern import screen, log, config
 
-_slideCache: dict = {}
-
 EXIF_DATE = "EXIF DateTimeOriginal"
 EXIF_ORIENTATION = "Image Orientation"
-
-
-def clearCache():
-    _slideCache.clear()
-
-
-def createSlide(path: str, interval: int):
-    if path in _slideCache:
-        slide = _slideCache[path]
-    else:
-        slide = Slide(path, interval)
-        _slideCache[path] = slide
-    log.info(f"{slide.path.name}")
-    return
-
-
-def getSlide(path: str):
-    return _slideCache[path]
 
 
 class SlideException(Exception):
@@ -47,6 +27,9 @@ class Slide:
         self.interval = interval
         self.imageLoaded = False
         self.surface = None
+
+    def __lt__(self, other):
+        return self.path < other.path
 
     def unloadImage(self):
         self.width = 0
