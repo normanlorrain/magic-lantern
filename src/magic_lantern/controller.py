@@ -161,6 +161,7 @@ def run() -> bool:
                 year()
             if event.key == pygame.K_SPACE:
                 pause()
+            pygame.event.clear(eventtype=[pygame.KEYDOWN, pygame.KEYUP])
 
         if event.type == signal.SIGUSR1_EVENT:
             log.info("Got signal. Reloading slide show.")
