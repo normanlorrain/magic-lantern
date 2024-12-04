@@ -8,9 +8,8 @@ from magic_lantern import config
 from magic_lantern import log
 from magic_lantern.snafu import Snafu
 
-_slideList: list[Slide] = []
-_slideIndex: int = -1
-_slideCount: int = 0
+_history: list[Slide] = []
+_historyCursor: int = 0
 
 
 class SlideShowException(Exception):
@@ -19,13 +18,21 @@ class SlideShowException(Exception):
 
 def init():
     clearCache()
+    _history.clear()
 
-    global _slideList
-    _slideList.clear()
-    global _slideIndex
-    _slideIndex = -1
+    global _slideGenerator
+    _slideGenerator = slideGenerator()
+
+
+def slideGenerator():
+    global _historyCursor
+    global _slideCount
+    global _history
+    global _historyCursor
+    _historyCursor = -1
     global _slideCount
     _slideCount = 0
+    _previousAlbum = None
 
     albumList: list[Album] = []
     albumWeights: list[int] = []
@@ -56,44 +63,47 @@ def init():
     if totalSlides == 0:
         raise Snafu("No images found for slide show.")
 
-    # Build a list of slides from random albums
-    previousAlbum = None
-    for album in random.choices(albumList, albumWeights, k=totalSlides * 100):
+    _historyCursor += 1
+    if _historyCursor >= _slideCount:
+        _historyCursor = 0
+
+    # Get slides from random album
+    while True:
+        album = random.choices(albumList, albumWeights)[0]
         if album._order == Order.ATOMIC:
-            if previousAlbum == album:
+            if _previousAlbum == album:
                 log.debug("preventing atomic album from repeating")
                 continue
             for slide in album:
-                _slideList.append(slide)
+                yield slide
         else:
             slide = next(album)
-            _slideList.append(slide)
+            yield slide
         previousAlbum = album
-    _slideCount = len(_slideList)
 
 
 def getNextSlide():
-    global _slideList
-    global _slideIndex
-    global _slideCount
-    _slideIndex += 1
-    if _slideIndex >= _slideCount:
-        _slideIndex = 0
-    return _slideList[_slideIndex]
+    global _historyCursor
+    if _historyCursor < 0:  # current slide is from history
+        _historyCursor += 1
+
+    if _historyCursor < 0:
+        slide = _history[_historyCursor]
+    else:
+        slide = next(_slideGenerator)
+        _history.append(slide)
+        if len(_history) > 10:
+            _history.pop(0).unloadImage()
+
+    return slide
 
 
 def getPreviousSlide():
-    global _slideList
-    global _slideIndex
-    global _slideCount
-    _slideIndex -= 1
-    if _slideIndex < 0:
-        _slideIndex = 0
-    return _slideList[_slideIndex]
+    global _historyCursor
+    if _historyCursor == 0:
+        _historyCursor = -2
+    else:
+        _historyCursor -= 1
+    _historyCursor = max(_historyCursor, -len(_history))
 
-
-def getCurrentSlide():
-    global _slideList
-    global _slideIndex
-    global _slideCount
-    return _slideList[_slideIndex]
+    return _history[_historyCursor]
