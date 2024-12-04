@@ -76,6 +76,10 @@ def getNextSlide():
     else:
         slide = next(_slideGenerator)
         _history.append(slide)
+
+        # Important.  The slide will still exists (it's in the album)
+        # but we unload the image otherwise large slideshows eat
+        # memory.
         if len(_history) > 10:
             _history.pop(0).unloadImage()
 
