@@ -10,6 +10,8 @@ from magic_lantern.snafu import Snafu
 
 _history: list[Slide] = []
 _historyCursor: int = 0
+_albumList: list[Album] = []
+_albumWeights: list[int] = []
 
 
 class SlideShowException(Exception):
@@ -17,27 +19,10 @@ class SlideShowException(Exception):
 
 
 def init():
-    clearCache()
-    _history.clear()
+    # clearCache()
+    # _history.clear()
 
-    global _slideGenerator
-    _slideGenerator = slideGenerator()
-
-
-def slideGenerator():
-    global _historyCursor
-    global _slideCount
-    global _history
-    global _historyCursor
-    _historyCursor = -1
-    global _slideCount
-    _slideCount = 0
-    _previousAlbum = None
-
-    albumList: list[Album] = []
-    albumWeights: list[int] = []
     totalSlides = 0
-
     for dictAlbum in config.albums:
         try:
             order = dictAlbum[config.ORDER]
@@ -52,8 +37,8 @@ def slideGenerator():
 
             album = Album(order, path, weight, interval)
             if album._slideCount > 0:
-                albumList.append(album)
-                albumWeights.append(album.weight)
+                _albumList.append(album)
+                _albumWeights.append(album.weight)
                 totalSlides += album._slideCount
             else:
                 raise SlideShowException(f"Album {path} is empty")
@@ -63,19 +48,20 @@ def slideGenerator():
     if totalSlides == 0:
         raise Snafu("No images found for slide show.")
 
-    _historyCursor += 1
-    if _historyCursor >= _slideCount:
-        _historyCursor = 0
+    global _slideGenerator
+    _slideGenerator = slideGenerator()
 
+
+def slideGenerator():
     # Get slides from random album
+    previousAlbum = None
     while True:
-        album = random.choices(albumList, albumWeights)[0]
+        album = random.choices(_albumList, _albumWeights)[0]
         if album._order == Order.ATOMIC:
-            if _previousAlbum == album:
+            if previousAlbum == album:
                 log.debug("preventing atomic album from repeating")
                 continue
-            for slide in album:
-                yield slide
+            yield from album
         else:
             slide = next(album)
             yield slide
