@@ -11,6 +11,7 @@ this_mod = sys.modules[__name__]
 configRoot: pathlib.Path = None
 fullscreen: bool = False
 interval: int = 5
+albums: list
 
 EXCLUDE = "exclude"
 FULLSCREEN = "fullscreen"
