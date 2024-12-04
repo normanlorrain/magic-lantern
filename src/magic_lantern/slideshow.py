@@ -62,8 +62,11 @@ def slideGenerator():
                 continue
             yield from album
         else:
-            slide = next(album)
-            yield slide
+            try:
+                slide = next(album)
+                yield slide
+            except StopIteration:
+                pass
         previousAlbum = album
 
 
