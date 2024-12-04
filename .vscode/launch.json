@@ -4,6 +4,7 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
+
     {
       "name": "Test: DIRECTORY",
       "type": "debugpy",
@@ -44,7 +45,14 @@
       "args": ["-c", "${workspaceFolder}/tests/example 3.toml"]
 
     },
-    
+    {
+      "name": "private_test.toml",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "magic_lantern",
+      "args": ["-c", "${workspaceFolder}/private_test.toml"]
+
+    },
         {
       "name": "Test: interval option",
       "type": "debugpy",
