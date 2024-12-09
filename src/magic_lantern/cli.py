@@ -20,7 +20,7 @@ See https://github.com/normanlorrain/magic-lantern for more details."""
         exists=True,
         file_okay=True,
         dir_okay=False,
-        resolve_path=True,
+        resolve_path=True,  # Convert relative to absolute
         path_type=pathlib.Path,
     ),
     help="Configuration file.",
@@ -41,7 +41,11 @@ See https://github.com/normanlorrain/magic-lantern for more details."""
 @click.argument(
     "directory",
     type=click.Path(
-        exists=True, resolve_path=True, dir_okay=True, path_type=pathlib.Path
+        exists=True,
+        file_okay=False,
+        dir_okay=True,
+        resolve_path=True,
+        path_type=pathlib.Path,
     ),
     required=False,
 )

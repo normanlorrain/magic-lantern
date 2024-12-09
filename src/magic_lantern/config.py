@@ -49,11 +49,13 @@ def init(ctx):
     for param, value in ctx.params.items():
         setattr(this_mod, param, value)
 
-    # We're working with a full config file
+    # If we're working with a full config file...
     if this_mod.config_file:
         dictConfig = loadConfig(this_mod.config_file)
 
-    # We're working with a simple directory
+    # ... or we're working with a simple directory...
+    # Note: the click library will convert
+    #       relative paths to absolute
     elif this_mod.directory:
         dictConfig = {ALBUMS: [{FOLDER: this_mod.directory}]}
 
