@@ -1,7 +1,7 @@
 import click
 import pathlib
 
-from magic_lantern import log, config, controller, snafu
+from magic_lantern import log, config, controller, slideshow
 
 
 @click.command(
@@ -84,7 +84,7 @@ def cli():
         log.info("Application ended normally (System Exit)")
     except KeyboardInterrupt:
         log.warning("Application ended (KeyboardInterrupt)")
-    except (snafu.Snafu, config.ConfigurationError) as e:
+    except (slideshow.SlideShowException, config.ConfigurationError) as e:
         log.error(e)
     except Exception:
         log.exception(

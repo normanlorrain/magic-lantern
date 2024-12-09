@@ -4,7 +4,6 @@ from magic_lantern.slide import Slide
 from magic_lantern.album import Album
 from magic_lantern.config import Order
 from magic_lantern import config, log
-from magic_lantern.snafu import Snafu
 
 _history: list[Slide] = []
 _historyCursor: int = 0
@@ -38,7 +37,7 @@ def init():
             log.error(e)
 
     if totalSlides == 0:
-        raise Snafu("No images found for slide show.")
+        raise SlideShowException("No images found for slide show.")
 
     global _slideGenerator
     _slideGenerator = slideGenerator()
