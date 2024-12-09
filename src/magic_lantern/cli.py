@@ -84,7 +84,7 @@ def cli():
         log.info("Application ended normally (System Exit)")
     except KeyboardInterrupt:
         log.warning("Application ended (KeyboardInterrupt)")
-    except snafu.Snafu as e:
+    except (snafu.Snafu, config.ConfigurationError) as e:
         log.error(e)
     except Exception:
         log.exception(

@@ -6,6 +6,7 @@ import sys
 from types import SimpleNamespace
 from magic_lantern import log
 
+
 # General configuration attributes:
 #    - config_file
 #    - fullscreen
@@ -45,14 +46,18 @@ defaults = {
     EXCLUDE: [],
     FULLSCREEN: False,
     SHUFFLE: False,
-    WEIGHT: 1,
     INTERVAL: 5,
 }
 
 # Album-specific defaults
 album_defaults = {
     ORDER: Order.SEQUENCE,
+    WEIGHT: 1,
 }
+
+
+class ConfigurationError(Exception):
+    pass
 
 
 def init(ctx):
@@ -72,12 +77,14 @@ def init(ctx):
         dictConfig = {ALBUMS: [{FOLDER: this_mod.directory}]}
 
     else:
-        raise Exception("No config or directory given.")
+        raise ConfigurationError("No config or directory given.")
 
     # Set the global parameters from the configuration
     for i in dictConfig:
         if i == ALBUMS:
             continue  # We handle the albums later
+        if i not in defaults:
+            raise ConfigurationError(f"Bad config file entry: {i}")
         if not hasattr(this_mod, i):
             setattr(this_mod, i, dictConfig[i])
     pass
@@ -97,26 +104,26 @@ def init(ctx):
             validateAlbumWeight(album)
             validateAlbumInterval(album)
             albums.append(SimpleNamespace(**album))
-        except ValidationError as e:
+        except ConfigurationError as e:
             log.error(e)
-
-
-class ValidationError(Exception):
-    pass
 
 
 def validateAlbumWeight(album):
     if WEIGHT in album:
         if not isinstance(album[WEIGHT], int):
-            raise ValidationError("Configuration: bad value for {key} in album {path}")
+            raise ConfigurationError(
+                "Configuration: bad value for {key} in album {path}"
+            )
     else:
-        album[WEIGHT] = this_mod.weight
+        album[WEIGHT] = album_defaults[WEIGHT]
 
 
 def validateAlbumInterval(album):
     if INTERVAL in album:
         if not isinstance(album[INTERVAL], int):
-            raise ValidationError("Configuration: bad value for {key} in album {path}")
+            raise ConfigurationError(
+                "Configuration: bad value for {key} in album {path}"
+            )
     else:
         album[INTERVAL] = this_mod.interval
 
@@ -124,7 +131,7 @@ def validateAlbumInterval(album):
 def validateAlbumOrder(album):
     if ORDER in album:
         if album[ORDER] not in [e.value for e in Order]:
-            raise ValidationError(
+            raise ConfigurationError(
                 "Configuration: bad value for {ORDER} in album {path}"
             )
     else:
@@ -144,4 +151,4 @@ def validateAlbumFolder(album: dict):
     if path.exists():
         album[FOLDER] = path
     else:
-        raise ValidationError(f"Configuration error. Invalid path: {path}")
+        raise ConfigurationError(f"Configuration error. Invalid path: {path}")
