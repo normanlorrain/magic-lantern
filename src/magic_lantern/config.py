@@ -34,7 +34,7 @@ class Order(enum.StrEnum):
 
 
 defaults = {
-    EXCLUDE: None,
+    EXCLUDE: [],
     FULLSCREEN: False,
     ORDER: Order.SEQUENCE,
     WEIGHT: 1,
@@ -42,24 +42,36 @@ defaults = {
 }
 
 
-def init(
-    ctx,
-):
-
-    # Set the "global" parameters, if the command line has them
-    for param, value in ctx.params.items():
-        if value is None:
-            continue
-        setattr(this_mod, param, value)
-    pass
-
-    # This is the folder that the slides are found in
-    if hasattr(this_mod, "config_file"):
+def init(ctx):
+    # We're working with a full config file
+    # if hasattr(this_mod, "config_file"):
+    if "config_file" in ctx.params:
+        setattr(this_mod, "config_file", ctx.params["config_file"])
+        setattr(this_mod, "config_parent", this_mod.config_file.parent)
         dictConfig = loadConfig(this_mod.config_file)
-    else:  # create a simple album
-        dictConfig = {ALBUMS: [{FOLDER: os.getcwd(), WEIGHT: 1}]}
 
-    # Set the global parameters from the file
+
+ #TODO
+
+    # We're working with a simple directory
+    elif hasattr(this_mod, "directory"):
+        Set the "global" parameters, if the command line has them
+        for param, value in ctx.params.items():
+            if value is None:
+                continue
+            setattr(this_mod, param, value)
+        pass
+
+        dictConfig = {ALBUMS: [{FOLDER: this_mod.directory}]}
+
+
+#TODO
+
+
+    else:
+        raise Exception("No config or directory given.")
+
+    # Set the global parameters from the configuration
     # (command line has priority, done above)
     for i in dictConfig:
         if i == ALBUMS:
@@ -147,11 +159,13 @@ def validateAlbumOrder(album):
 
 
 def validateAlbumPath(album: dict):
-    configRoot = this_mod.config_file.parent
-
     path = pathlib.Path(album[FOLDER])
+
+    # If the configured path is relative,
+    # prepend the path of the config file
     if not path.is_absolute():
-        path = configRoot / path
+        if hasattr(this_mod, "config_file"):
+            path = this_mod.config_file.parent / path
 
     if path.exists():
         album[FOLDER] = path
