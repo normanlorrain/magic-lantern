@@ -4,7 +4,6 @@ from magic_lantern.slide import Slide
 from magic_lantern.album import Album
 from magic_lantern.config import Order
 from magic_lantern import config, log
-from magic_lantern.snafu import Snafu
 
 _history: list[Slide] = []
 _historyCursor: int = 0
@@ -20,17 +19,12 @@ class SlideShowException(Exception):
 
 def init():
     totalSlides = 0
-    for dictAlbum in config.albums:
+    for album in config.albums:
         try:
-            order = dictAlbum[config.ORDER]
-            if order not in [e.value for e in Order]:
-                raise SlideShowException(
-                    f"Bad Config: {order} not in {[e.value for e in Order]}"
-                )
-
-            path = dictAlbum[config.FOLDER]
-            weight = dictAlbum.get(config.WEIGHT, None)
-            interval = dictAlbum.get(config.INTERVAL, None)
+            order = album.order
+            path = album.folder
+            weight = album.weight
+            interval = album.interval
 
             album = Album(order, path, weight, interval)
             if album._slideCount > 0:
@@ -43,7 +37,7 @@ def init():
             log.error(e)
 
     if totalSlides == 0:
-        raise Snafu("No images found for slide show.")
+        raise SlideShowException("No images found for slide show.")
 
     global _slideGenerator
     _slideGenerator = slideGenerator()

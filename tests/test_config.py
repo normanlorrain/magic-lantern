@@ -15,13 +15,3 @@ TEST_CFG = {
 def testLoadConfig(pytestconfig):
     cfg = config.loadConfig(pytestconfig.rootpath / "tests/example 1.toml")
     pass
-
-
-def testCreateConfig(pytestconfig):
-    cfg = config.createConfig("/a/b/c", True)
-    pass
-
-
-# def testInit(pytestconfig):
-#     config.init(pytestconfig.rootpath / "tests/configs/magic_lantern.toml")
-#     pass

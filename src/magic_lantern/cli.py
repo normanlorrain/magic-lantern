@@ -1,7 +1,7 @@
 import click
 import pathlib
 
-from magic_lantern import log, config, controller, snafu
+from magic_lantern import log, config, controller, slideshow
 
 
 @click.command(
@@ -20,7 +20,7 @@ See https://github.com/normanlorrain/magic-lantern for more details."""
         exists=True,
         file_okay=True,
         dir_okay=False,
-        resolve_path=True,
+        resolve_path=True,  # Convert relative to absolute
         path_type=pathlib.Path,
     ),
     help="Configuration file.",
@@ -41,11 +41,16 @@ See https://github.com/normanlorrain/magic-lantern for more details."""
 @click.argument(
     "directory",
     type=click.Path(
-        exists=True, resolve_path=True, dir_okay=True, path_type=pathlib.Path
+        exists=True,
+        file_okay=False,
+        dir_okay=True,
+        resolve_path=True,
+        path_type=pathlib.Path,
     ),
     required=False,
 )
-def magic_lantern(config_file, fullscreen, shuffle, interval, directory):
+@click.pass_context
+def magic_lantern(ctx, config_file, fullscreen, shuffle, interval, directory):
     """A slide show generator. Specify a directory containing image files
     or use -c to specify a config file."""
 
@@ -54,6 +59,8 @@ def magic_lantern(config_file, fullscreen, shuffle, interval, directory):
     log.init()
 
     if config_file is None and directory is None:
+        raise click.ClickException("Must specify a DIRECTORY or a config file.")
+    if config_file is not None and directory is not None:
         raise click.ClickException("Must specify a DIRECTORY or a config file.")
     if config_file and directory:
         log.warning(
@@ -65,7 +72,7 @@ def magic_lantern(config_file, fullscreen, shuffle, interval, directory):
 
     runState = True
     while runState:
-        config.init(config_file, fullscreen, shuffle, interval, directory)
+        config.init(ctx)
         controller.init()
         runState = controller.run()
 
@@ -77,7 +84,7 @@ def cli():
         log.info("Application ended normally (System Exit)")
     except KeyboardInterrupt:
         log.warning("Application ended (KeyboardInterrupt)")
-    except snafu.Snafu as e:
+    except (slideshow.SlideShowException, config.ConfigurationError) as e:
         log.error(e)
     except Exception:
         log.exception(
