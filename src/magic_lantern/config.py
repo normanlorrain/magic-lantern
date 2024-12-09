@@ -20,6 +20,7 @@ albums: list = []
 
 EXCLUDE = "exclude"
 FULLSCREEN = "fullscreen"
+SHUFFLE = "shuffle"
 ALBUMS = "albums"
 ORDER = "order"
 FOLDER = "folder"
@@ -36,6 +37,7 @@ class Order(enum.StrEnum):
 defaults = {
     EXCLUDE: [],
     FULLSCREEN: False,
+    SHUFFLE: False,
     ORDER: Order.SEQUENCE,
     WEIGHT: 1,
     INTERVAL: 5,
@@ -43,46 +45,33 @@ defaults = {
 
 
 def init(ctx):
+
+    for param, value in ctx.params.items():
+        setattr(this_mod, param, value)
+
     # We're working with a full config file
-    # if hasattr(this_mod, "config_file"):
-    if "config_file" in ctx.params:
-        setattr(this_mod, "config_file", ctx.params["config_file"])
-        setattr(this_mod, "config_parent", this_mod.config_file.parent)
+    if this_mod.config_file:
         dictConfig = loadConfig(this_mod.config_file)
 
-
- #TODO
-
     # We're working with a simple directory
-    elif hasattr(this_mod, "directory"):
-        Set the "global" parameters, if the command line has them
-        for param, value in ctx.params.items():
-            if value is None:
-                continue
-            setattr(this_mod, param, value)
-        pass
-
+    elif this_mod.directory:
         dictConfig = {ALBUMS: [{FOLDER: this_mod.directory}]}
-
-
-#TODO
-
 
     else:
         raise Exception("No config or directory given.")
 
-    # Set the global parameters from the configuration
-    # (command line has priority, done above)
-    for i in dictConfig:
-        if i == ALBUMS:
-            continue  # We handle the albums later
-        if not hasattr(this_mod, i):
-            setattr(this_mod, i, dictConfig[i])
-    pass
+    # # Set the global parameters from the configuration
+    # # (command line has priority, done above)
+    # for i in dictConfig:
+    #     if i == ALBUMS:
+    #         continue  # We handle the albums later
+    #     if not hasattr(this_mod, i):
+    #         setattr(this_mod, i, dictConfig[i])
+    # pass
 
     # Set any remaining missing values from the defaults
     for i in defaults:
-        if not hasattr(this_mod, i):
+        if not hasattr(this_mod, i) or getattr(this_mod, i) is None:
             setattr(this_mod, i, defaults[i])
 
     # Validate the albums. Make a copy first, then loop
@@ -97,32 +86,6 @@ def init(ctx):
             albums.append(SimpleNamespace(**album))
         except ValidationError as e:
             log.error(e)
-
-    # # If the config file doesn't specify a weight, set it here.
-    # # Each album can set it's own weight which will override this.
-    # if not hasattr(this_mod, WEIGHT):
-    #     setattr(this_mod, WEIGHT, 1)
-
-    # # If the config file doesn't specify exclude, set it here.
-    # if not hasattr(this_mod, EXCLUDE):
-    #     setattr(this_mod, EXCLUDE, [])
-
-    # # If the config file doesn't specify an interval, set it here.
-    # # Each album can set it's own interval which will override this.
-    # if not hasattr(this_mod, INTERVAL):
-    #     setattr(this_mod, INTERVAL, 1)
-
-    # # This is passed from the command line, and thus overrides any setting that
-    # # came from the config file above.
-    # if interval_:
-    #     global interval
-    #     interval = interval_
-
-    # # This is passed from the command line, and thus overrides any setting that
-    # # came from the config file above.
-    # if fullscreen_:
-    #     global fullscreen
-    #     fullscreen = fullscreen_
 
 
 def loadConfig(configFile):

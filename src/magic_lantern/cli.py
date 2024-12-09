@@ -25,8 +25,12 @@ See https://github.com/normanlorrain/magic-lantern for more details."""
     ),
     help="Configuration file.",
 )
-@click.option("-f", "--fullscreen", show_default=True, help="Full screen mode")
-@click.option("-s", "--shuffle", show_default=True, help="Shuffle the slides")
+@click.option(
+    "-f", "--fullscreen", is_flag=True, show_default=True, help="Full screen mode"
+)
+@click.option(
+    "-s", "--shuffle", is_flag=True, show_default=True, help="Shuffle the slides"
+)
 @click.option(
     "-i",
     "--interval",
@@ -51,6 +55,8 @@ def magic_lantern(ctx, config_file, fullscreen, shuffle, interval, directory):
     log.init()
 
     if config_file is None and directory is None:
+        raise click.ClickException("Must specify a DIRECTORY or a config file.")
+    if config_file is not None and directory is not None:
         raise click.ClickException("Must specify a DIRECTORY or a config file.")
     if config_file and directory:
         log.warning(
