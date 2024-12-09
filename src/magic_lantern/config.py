@@ -6,18 +6,24 @@ import sys
 from types import SimpleNamespace
 from magic_lantern import log
 
-# Global configuration attributes:
+# General configuration attributes:
 #    - config_file
 #    - fullscreen
 #    - shuffle
 #    - interval
 #    - path
+# Album-specific configuration attributes:
+#    - order
+#    - folder
+#    - weight
+#    - interval
 
 
 this_mod = sys.modules[__name__]
 
 albums: list = []
 
+# Configuration file string constants
 EXCLUDE = "exclude"
 FULLSCREEN = "fullscreen"
 SHUFFLE = "shuffle"
@@ -34,13 +40,18 @@ class Order(enum.StrEnum):
     RANDOM = "random"
 
 
+# General defaults
 defaults = {
     EXCLUDE: [],
     FULLSCREEN: False,
     SHUFFLE: False,
-    ORDER: Order.SEQUENCE,
     WEIGHT: 1,
     INTERVAL: 5,
+}
+
+# Album-specific defaults
+album_defaults = {
+    ORDER: Order.SEQUENCE,
 }
 
 
@@ -51,7 +62,8 @@ def init(ctx):
 
     # If we're working with a full config file...
     if this_mod.config_file:
-        dictConfig = loadConfig(this_mod.config_file)
+        with open(this_mod.config_file, "rb") as fp:
+            dictConfig = tomllib.load(fp)
 
     # ... or we're working with a simple directory...
     # Note: the click library will convert
@@ -62,14 +74,13 @@ def init(ctx):
     else:
         raise Exception("No config or directory given.")
 
-    # # Set the global parameters from the configuration
-    # # (command line has priority, done above)
-    # for i in dictConfig:
-    #     if i == ALBUMS:
-    #         continue  # We handle the albums later
-    #     if not hasattr(this_mod, i):
-    #         setattr(this_mod, i, dictConfig[i])
-    # pass
+    # Set the global parameters from the configuration
+    for i in dictConfig:
+        if i == ALBUMS:
+            continue  # We handle the albums later
+        if not hasattr(this_mod, i):
+            setattr(this_mod, i, dictConfig[i])
+    pass
 
     # Set any remaining missing values from the defaults
     for i in defaults:
@@ -81,18 +92,13 @@ def init(ctx):
     # albumList = list()
     for album in dictConfig[ALBUMS]:
         try:
-            validateAlbumPath(album)
+            validateAlbumFolder(album)
             validateAlbumOrder(album)
             validateAlbumWeight(album)
             validateAlbumInterval(album)
             albums.append(SimpleNamespace(**album))
         except ValidationError as e:
             log.error(e)
-
-
-def loadConfig(configFile):
-    with open(configFile, "rb") as fp:
-        return tomllib.load(fp)
 
 
 class ValidationError(Exception):
@@ -121,18 +127,21 @@ def validateAlbumOrder(album):
             raise ValidationError(
                 "Configuration: bad value for {ORDER} in album {path}"
             )
+    else:
+        album[ORDER] = album_defaults[ORDER]
 
 
-def validateAlbumPath(album: dict):
+def validateAlbumFolder(album: dict):
+    if this_mod.directory:  # Validation done by click
+        return
+
+    # If we reach this point the folder is an entry in the
+    # config file.  Make it absolute and verify it exists
     path = pathlib.Path(album[FOLDER])
-
-    # If the configured path is relative,
-    # prepend the path of the config file
     if not path.is_absolute():
-        if hasattr(this_mod, "config_file"):
-            path = this_mod.config_file.parent / path
+        path = this_mod.config_file.parent / path
 
     if path.exists():
         album[FOLDER] = path
     else:
-        raise ValidationError(f"Configuration: invalid path: {path}")
+        raise ValidationError(f"Configuration error. Invalid path: {path}")
