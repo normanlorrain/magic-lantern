@@ -6,7 +6,7 @@ from importlib.metadata import version
 
 # Import these for use by client code.
 # "noqa" is for Flake8; warning is ignored
-from logging import error, debug, warning, info  # noqa: F401
+from logging import error, debug, warning, info, exception  # noqa: F401
 
 
 def init():
