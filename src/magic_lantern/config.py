@@ -54,13 +54,10 @@ def init(
     pass
 
     # This is the folder that the slides are found in
-    config_file = this_mod.config_file
-    if config_file:
-        configRoot = config_file.parent
-        dictConfig = loadConfig(config_file)
+    if hasattr(this_mod, "config_file"):
+        dictConfig = loadConfig(this_mod.config_file)
     else:  # create a simple album
-        configRoot = os.getcwd()
-        dictConfig = createConfig(path, shuffle)
+        dictConfig = {ALBUMS: [{FOLDER: os.getcwd(), WEIGHT: 1}]}
 
     # Set the global parameters from the file
     # (command line has priority, done above)
@@ -81,7 +78,7 @@ def init(
     # albumList = list()
     for album in dictConfig[ALBUMS]:
         try:
-            validateAlbumPath(configRoot, album)
+            validateAlbumPath(album)
             validateAlbumOrder(album)
             validateAlbumWeight(album)
             validateAlbumInterval(album)
@@ -121,13 +118,6 @@ def loadConfig(configFile):
         return tomllib.load(fp)
 
 
-def createConfig(path, shuffle):
-
-    return {
-        ALBUMS: [{ORDER: "random" if shuffle else "sequence", FOLDER: path, WEIGHT: 1}]
-    }
-
-
 class ValidationError(Exception):
     pass
 
@@ -156,7 +146,9 @@ def validateAlbumOrder(album):
             )
 
 
-def validateAlbumPath(configRoot, album: dict):
+def validateAlbumPath(album: dict):
+    configRoot = this_mod.config_file.parent
+
     path = pathlib.Path(album[FOLDER])
     if not path.is_absolute():
         path = configRoot / path
