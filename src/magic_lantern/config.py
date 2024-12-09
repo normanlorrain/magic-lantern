@@ -1,5 +1,4 @@
 import pathlib
-import os
 import enum
 import tomllib
 import sys
@@ -68,7 +67,11 @@ def init(ctx):
     # If we're working with a full config file...
     if this_mod.config_file:
         with open(this_mod.config_file, "rb") as fp:
-            dictConfig = tomllib.load(fp)
+            try:
+                dictConfig = tomllib.load(fp)
+            except tomllib.TOMLDecodeError as e:
+                log.error(f"Configuration file error: {this_mod.config_file}")
+                raise ConfigurationError(e)
 
     # ... or we're working with a simple directory...
     # Note: the click library will convert

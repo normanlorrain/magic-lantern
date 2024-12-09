@@ -59,9 +59,9 @@ def magic_lantern(ctx, config_file, fullscreen, shuffle, interval, directory):
     log.init()
 
     if config_file is None and directory is None:
-        raise click.ClickException("Must specify a DIRECTORY or a config file.")
+        raise config.ConfigurationError("Must specify a DIRECTORY or a config file.")
     if config_file is not None and directory is not None:
-        raise click.ClickException("Must specify a DIRECTORY or a config file.")
+        raise config.ConfigurationError("Must specify a DIRECTORY or a config file.")
     if config_file and directory:
         log.warning(
             "Warning: -c and DIRECTORY are mutually exclusive. "
@@ -85,7 +85,7 @@ def cli():
     except KeyboardInterrupt:
         log.warning("Application ended (KeyboardInterrupt)")
     except (slideshow.SlideShowException, config.ConfigurationError) as e:
-        log.error(e)
+        log.error(f"Error: {e}")
     except Exception:
         log.exception(
             "Application ended. (UNCAUGHT EXCEPTION)",
