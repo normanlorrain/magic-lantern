@@ -1,0 +1,9 @@
+# Test how we deal with bad entries
+foo=["atomic","numbers"]
+bar=true
+baz=2
+
+[[albums]]
+bat="sequence" # These are picked in sequence
+bang="images"
+

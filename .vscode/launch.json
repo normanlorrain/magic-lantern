@@ -54,6 +54,14 @@
 
     },
     {
+      "name": "bad.toml",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "magic_lantern",
+      "args": ["-c", "${workspaceFolder}/tests/bad.toml"]
+
+    },
+    {
       "name": "private_test.toml",
       "type": "debugpy",
       "request": "launch",
