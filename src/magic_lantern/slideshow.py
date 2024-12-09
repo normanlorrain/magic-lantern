@@ -22,15 +22,7 @@ def init():
     totalSlides = 0
     for album in config.albums:
         try:
-            if hasattr(album, "order"):
-                order = album.order
-            else:
-                order = config.order
-            if order not in [e.value for e in Order]:
-                raise SlideShowException(
-                    f"Bad Config: {order} not in {[e.value for e in Order]}"
-                )
-
+            order = album.order
             path = album.folder
             weight = album.weight
             interval = album.interval
