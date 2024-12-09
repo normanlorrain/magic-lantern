@@ -20,17 +20,17 @@ class SlideShowException(Exception):
 
 def init():
     totalSlides = 0
-    for dictAlbum in config.albums:
+    for album in config.albums:
         try:
-            order = dictAlbum[config.ORDER]
+            order = album.order
             if order not in [e.value for e in Order]:
                 raise SlideShowException(
                     f"Bad Config: {order} not in {[e.value for e in Order]}"
                 )
 
-            path = dictAlbum[config.FOLDER]
-            weight = dictAlbum.get(config.WEIGHT, None)
-            interval = dictAlbum.get(config.INTERVAL, None)
+            path = album.folder
+            weight = album.weight
+            interval = album.interval
 
             album = Album(order, path, weight, interval)
             if album._slideCount > 0:

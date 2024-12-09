@@ -25,12 +25,8 @@ See https://github.com/normanlorrain/magic-lantern for more details."""
     ),
     help="Configuration file.",
 )
-@click.option(
-    "-f", "--fullscreen", is_flag=True, show_default=True, help="Full screen mode"
-)
-@click.option(
-    "-s", "--shuffle", is_flag=True, show_default=True, help="Shuffle the slides"
-)
+@click.option("-f", "--fullscreen", show_default=True, help="Full screen mode")
+@click.option("-s", "--shuffle", show_default=True, help="Shuffle the slides")
 @click.option(
     "-i",
     "--interval",
@@ -45,7 +41,8 @@ See https://github.com/normanlorrain/magic-lantern for more details."""
     ),
     required=False,
 )
-def magic_lantern(config_file, fullscreen, shuffle, interval, directory):
+@click.pass_context
+def magic_lantern(ctx, config_file, fullscreen, shuffle, interval, directory):
     """A slide show generator. Specify a directory containing image files
     or use -c to specify a config file."""
 
@@ -65,7 +62,7 @@ def magic_lantern(config_file, fullscreen, shuffle, interval, directory):
 
     runState = True
     while runState:
-        config.init(config_file, fullscreen, shuffle, interval, directory)
+        config.init(ctx)
         controller.init()
         runState = controller.run()
 
