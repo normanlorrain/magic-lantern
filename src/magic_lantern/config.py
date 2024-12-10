@@ -60,7 +60,8 @@ class ConfigurationError(Exception):
 
 
 def init(ctx):
-
+    # Configuration starts with what was on the command line
+    # Convert the parameters to attributes of this module
     for param, value in ctx.params.items():
         setattr(this_mod, param, value)
 
@@ -73,10 +74,11 @@ def init(ctx):
                 log.error(f"Configuration file error: {this_mod.config_file}")
                 raise ConfigurationError(e)
 
-    # ... or we're working with a simple directory...
-    # Note: the click library will convert
-    #       relative paths to absolute
+    # If we're working with a simple directory, create a bare-bones configuration
+    # to start with.
+
     elif this_mod.directory:
+        # Note: this directory name is guaranteed to be absolute per Click
         dictConfig = {ALBUMS: [{FOLDER: this_mod.directory}]}
 
     else:
