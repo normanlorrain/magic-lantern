@@ -38,13 +38,13 @@
       "type": "debugpy",
       "request": "launch",
       "module": "magic_lantern",
-      "args": ["-c", "${workspaceFolder}/tests/example 1.toml"]
+      "args": ["-c", "${workspaceFolder}/tests/example 1.toml","-f"]
     },    {
       "name": "example 2.toml",
       "type": "debugpy",
       "request": "launch",
       "module": "magic_lantern",
-      "args": ["-f", "-c", "${workspaceFolder}/tests/example 2.toml"]
+      "args": ["-c", "${workspaceFolder}/tests/example 2.toml"]
     }, {
       "name": "example 3.toml",
       "type": "debugpy",

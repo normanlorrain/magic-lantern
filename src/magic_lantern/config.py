@@ -88,9 +88,12 @@ def init(ctx):
             continue  # We handle the albums later
         if i not in defaults:
             raise ConfigurationError(f"Bad config file entry: {i}")
-        if not hasattr(this_mod, i):
+        if hasattr(this_mod, i):
+            value = getattr(this_mod, i)
+            if isinstance(value, bool):
+                setattr(this_mod, i, value or dictConfig[i])
+        else:
             setattr(this_mod, i, dictConfig[i])
-    pass
 
     # Set any remaining missing values from the defaults
     for i in defaults:
