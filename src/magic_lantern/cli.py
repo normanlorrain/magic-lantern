@@ -26,11 +26,9 @@ See https://github.com/normanlorrain/magic-lantern for more details."""
     help="Configuration file.",
 )
 @click.option(
-    "-f", "--fullscreen", is_flag=True, show_default=True, help="Full screen mode"
+    "-f", "--fullscreen", is_flag=True, default=False, help="Full screen mode"
 )
-@click.option(
-    "-s", "--shuffle", is_flag=True, show_default=True, help="Shuffle the slides"
-)
+@click.option("-s", "--shuffle", is_flag=True, default=False, help="Shuffle the slides")
 @click.option(
     "-i",
     "--interval",
