@@ -75,6 +75,12 @@
       "request": "launch",
       "module": "magic_lantern",
       "args": ["-i", "1", "${workspaceFolder}/tests/images"]
+    },{
+      "name": "Test: exclude option",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "magic_lantern",
+      "args": ["-e", "numbers", "-e", "paintings", "${workspaceFolder}/tests/images"]
     },        {
       "name": "Test: EMPTY LOCAL",
       "type": "debugpy",

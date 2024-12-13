@@ -39,6 +39,13 @@ See https://github.com/normanlorrain/magic-lantern for more details."""
     required=False,
     help="Interval (seconds) between images.",
 )
+@click.option(
+    "-e",
+    f"--{config.EXCLUDE}",
+    multiple=True,
+    required=False,
+    help="Exclude the given directories.  Multiple entries are permitted.",
+)
 @click.argument(
     config.DIRECTORY,
     type=click.Path(
@@ -51,7 +58,7 @@ See https://github.com/normanlorrain/magic-lantern for more details."""
     required=False,
 )
 @click.pass_context
-def magic_lantern(ctx, config_file, fullscreen, shuffle, interval, directory):
+def magic_lantern(ctx, config_file, fullscreen, shuffle, interval, exclude, directory):
     """A slide show generator. Specify a directory containing image files
     or use -c to specify a config file."""
 

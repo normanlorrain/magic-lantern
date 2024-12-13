@@ -31,7 +31,7 @@ class Album:
             dirs[:] = [d for d in dirs if d not in config.exclude]
             for f in files:
                 if "~" in f:
-                    log.debug(f"ignoring {f}")
+                    log.warning(f"Ignoring {f}")
                     continue
 
                 if f.lower().endswith(".pdf"):
@@ -48,7 +48,7 @@ class Album:
                     self._slideList.append(slide)
                     continue
 
-                log.debug(f"{f}  Unknown file type")
+                log.warning(f"{f}  Unknown file type")
 
         # Shuffle or sort the list of slides
         if self._order == Order.RANDOM:
