@@ -87,7 +87,9 @@ def init(ctx):
     # Set the global parameters from the configuration
     for i in dictConfig:
         if i == ALBUMS:
-            continue  # We handle the albums later
+            # We handle the albums later, because some "global"
+            # options may be relevant
+            continue
         if i not in defaults:
             raise ConfigurationError(f"Bad config file entry: {i}")
         if hasattr(this_mod, i):
@@ -102,9 +104,7 @@ def init(ctx):
         if not hasattr(this_mod, i) or getattr(this_mod, i) is None:
             setattr(this_mod, i, defaults[i])
 
-    # Validate the albums. Make a copy first, then loop
-    # and update with validated fields
-    # albumList = list()
+    # Validate the albums.
     for album in dictConfig[ALBUMS]:
         try:
             validateAlbumFolder(album)
