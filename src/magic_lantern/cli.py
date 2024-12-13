@@ -14,6 +14,7 @@ See https://github.com/normanlorrain/magic-lantern for more details."""
 )
 @click.version_option()
 @click.option(
+    config.CONFIG_FILE,
     "-c",
     "--config-file",
     type=click.Path(
@@ -26,18 +27,20 @@ See https://github.com/normanlorrain/magic-lantern for more details."""
     help="Configuration file.",
 )
 @click.option(
-    "-f", "--fullscreen", is_flag=True, default=False, help="Full screen mode"
+    "-f", f"--{config.FULLSCREEN}", is_flag=True, default=False, help="Full screen mode"
 )
-@click.option("-s", "--shuffle", is_flag=True, default=False, help="Shuffle the slides")
+@click.option(
+    "-s", f"--{config.SHUFFLE}", is_flag=True, default=False, help="Shuffle the slides"
+)
 @click.option(
     "-i",
-    "--interval",
+    f"--{config.INTERVAL}",
     type=click.IntRange(min=1, max=None),
     required=False,
     help="Interval (seconds) between images.",
 )
 @click.argument(
-    "directory",
+    config.DIRECTORY,
     type=click.Path(
         exists=True,
         file_okay=False,

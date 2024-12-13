@@ -8,6 +8,7 @@ from magic_lantern import log
 
 # General configuration attributes:
 #    - config_file
+#    - directory
 #    - fullscreen
 #    - shuffle
 #    - interval
@@ -24,6 +25,10 @@ this_mod = sys.modules[__name__]
 albums: list = []
 
 # Configuration file string constants
+# These are also used as command-line Click options
+# See cli.py
+CONFIG_FILE = "config_file"
+DIRECTORY = "directory"
 EXCLUDE = "exclude"
 FULLSCREEN = "fullscreen"
 SHUFFLE = "shuffle"
