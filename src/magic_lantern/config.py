@@ -30,6 +30,7 @@ albums: list = []
 CONFIG_FILE = "config_file"
 DIRECTORY = "directory"
 EXCLUDE = "exclude"
+DRY_RUN = "dry_run"
 FULLSCREEN = "fullscreen"
 SHUFFLE = "shuffle"
 ALBUMS = "albums"
@@ -84,7 +85,14 @@ def init(ctx):
 
     elif this_mod.directory:
         # Note: this directory name is guaranteed to be absolute per Click
-        dictConfig = {ALBUMS: [{FOLDER: this_mod.directory}]}
+        dictConfig = {
+            ALBUMS: [
+                {
+                    FOLDER: this_mod.directory,
+                    ORDER: Order.RANDOM if this_mod.shuffle else Order.SEQUENCE,
+                }
+            ]
+        }
 
     else:
         raise ConfigurationError("No config or directory given.")

@@ -81,6 +81,12 @@
       "request": "launch",
       "module": "magic_lantern",
       "args": ["-e", "numbers", "-e", "paintings", "${workspaceFolder}/tests/images"]
+    },{
+      "name": "dry run mode",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "magic_lantern",
+      "args": ["-d", "100","-s", "${workspaceFolder}/tests/images"]
     },        {
       "name": "Test: EMPTY LOCAL",
       "type": "debugpy",

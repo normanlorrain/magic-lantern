@@ -33,6 +33,14 @@ See https://github.com/normanlorrain/magic-lantern for more details."""
     "-s", f"--{config.SHUFFLE}", is_flag=True, default=False, help="Shuffle the slides"
 )
 @click.option(
+    config.DRY_RUN,
+    "-d",
+    "--dry-run",
+    type=click.IntRange(min=1, max=None),
+    required=False,
+    help="Test mode.  Only display the slide names. Specify the number of slides.",
+)
+@click.option(
     "-i",
     f"--{config.INTERVAL}",
     type=click.IntRange(min=1, max=None),
@@ -58,7 +66,9 @@ See https://github.com/normanlorrain/magic-lantern for more details."""
     required=False,
 )
 @click.pass_context
-def magic_lantern(ctx, config_file, fullscreen, shuffle, interval, exclude, directory):
+def magic_lantern(
+    ctx, config_file, fullscreen, shuffle, interval, exclude, dry_run, directory
+):
     """A slide show generator. Specify a directory containing image files
     or use -c to specify a config file."""
 
@@ -81,8 +91,11 @@ def magic_lantern(ctx, config_file, fullscreen, shuffle, interval, exclude, dire
     runState = True
     while runState:
         config.init(ctx)
-        controller.init()
-        runState = controller.run()
+        if dry_run:
+            runState = controller.dry_run()
+        else:
+            controller.init()
+            runState = controller.run()
 
 
 def cli():

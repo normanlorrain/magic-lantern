@@ -1,4 +1,5 @@
 import os
+import pathlib
 from enum import auto
 import pygame
 
@@ -167,5 +168,11 @@ def run() -> bool:
             log.info("Got signal. Reloading slide show.")
             return True
 
-        # pygame.event.clear()
-    # pygame.quit()
+
+def dry_run():
+    slideshow.init()
+    for i in range(config.dry_run):
+        slide = slideshow.getNextSlide()
+        parts = slide.path.parts
+        print(i, "/".join(parts[-2:]))
+    return False
