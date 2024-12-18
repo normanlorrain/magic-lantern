@@ -1,3 +1,5 @@
+# A friendly wrapper for Python's logging
+
 import sys
 import logging
 from logging.handlers import RotatingFileHandler

@@ -1,3 +1,5 @@
+# Abstract an image file with attributes with care about.
+
 import pathlib
 
 import pygame
@@ -32,6 +34,8 @@ class Slide:
         return self.path < other.path
 
     def unloadImage(self):
+        """We want to do this otherwise a large slideshow
+        can take up excessive memory."""
         self.width = 0
         self.height = 0
         self.x = 0

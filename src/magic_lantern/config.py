@@ -1,3 +1,5 @@
+# A central place to validate and access our configuration,
+# merging settings from the config file and the command line.
 import pathlib
 import enum
 import tomllib

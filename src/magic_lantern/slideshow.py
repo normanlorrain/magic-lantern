@@ -1,3 +1,9 @@
+# Something of a state machine to generate an infinite number of slides,
+# with the ability to recall previous slides.
+#
+# # A slideshow is built up from a collection of "albums".  Each album
+# can have it's own behaviour.
+
 import random
 import itertools
 
@@ -39,6 +45,8 @@ def init():
 
     if totalSlides == 0:
         raise SlideShowException("No images found for slide show.")
+    else:
+        log.info(f"Slide count: {totalSlides}")
 
     global _slideGenerator
     _slideGenerator = slideGenerator()

@@ -1,3 +1,5 @@
+# An interface layer for Pygames management of the window/screen.
+
 import pygame
 from magic_lantern import config
 from magic_lantern import log

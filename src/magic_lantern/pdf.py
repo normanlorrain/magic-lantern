@@ -1,3 +1,5 @@
+# PDF pages to images for the slideshow.
+
 import os
 import pymupdf
 import tempfile

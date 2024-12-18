@@ -1,3 +1,7 @@
+# An Album is a collection of images.  They can be displayed in
+# random or sequential order.  Iterating through the album yields the
+# next image.
+
 import os
 import pathlib
 import random

@@ -1,3 +1,6 @@
+# Command Line Interface
+# click is pretty cool
+
 import click
 import pathlib
 

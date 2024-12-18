@@ -1,3 +1,5 @@
+# Put text on a PyGame screen
+
 from enum import auto
 
 import pygame
