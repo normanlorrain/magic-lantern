@@ -1,4 +1,5 @@
 import random
+import itertools
 
 from magic_lantern.slide import Slide
 from magic_lantern.album import Album
@@ -41,12 +42,20 @@ def init():
 
     global _slideGenerator
     _slideGenerator = slideGenerator()
+    global _albumGenerator
+    _albumGenerator = itertools.cycle(_albumList)
 
 
 def slideGenerator():
     # Get slides from random album
     while True:
-        album = random.choices(_albumList, _albumWeights)[0]
+        if config.shuffle:
+            log.debug("random album")
+            album = random.choices(_albumList, _albumWeights)[0]
+        else:
+            log.debug("next album")
+            album = next(_albumGenerator)
+
         if album._order == Order.ATOMIC:
             yield from album
         else:
