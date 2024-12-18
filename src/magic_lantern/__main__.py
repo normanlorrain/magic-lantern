@@ -1,5 +1,5 @@
 import os
-from magic_lantern import cli
+from magic_lantern.cli import cli
 
 # To invoke the profiler, set this environment variable and run as a module
 # i.e. python -m magic_lantern ....
