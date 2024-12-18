@@ -1,5 +1,4 @@
 import os
-import pathlib
 from enum import auto
 import pygame
 
