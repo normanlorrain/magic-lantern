@@ -8,5 +8,5 @@ Normally runs continually on a dedicated computer.
 graph LR
 A[Controller] -->B(SlideShow)
 B -->| Many |C(Album)
-    C -->|Many| D[Slides]
+    C -->|Many| D[Slide]
 ```
