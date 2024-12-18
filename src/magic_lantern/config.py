@@ -1,11 +1,15 @@
 # A central place to validate and access our configuration,
 # merging settings from the config file and the command line.
+# Configuration attributes are set as attributes of this module.
+
 import pathlib
 import enum
 import tomllib
 import sys
 from types import SimpleNamespace
 from magic_lantern import log
+
+this_mod = sys.modules[__name__]
 
 
 # General configuration attributes:
@@ -21,8 +25,6 @@ from magic_lantern import log
 #    - weight
 #    - interval
 
-
-this_mod = sys.modules[__name__]
 
 albums: list = []
 
@@ -50,10 +52,11 @@ class Order(enum.StrEnum):
 
 # General defaults
 defaults = {
-    EXCLUDE: [],
+    EXCLUDE: (),
     FULLSCREEN: False,
     SHUFFLE: False,
     INTERVAL: 5,
+    ALBUMS: None,
 }
 
 # Album-specific defaults
@@ -69,8 +72,14 @@ class ConfigurationError(Exception):
 
 def init(ctx):
     # Configuration starts with what was on the command line
-    # Convert the parameters to attributes of this module
+    # Convert the parameters into attributes of this module
     for param, value in ctx.params.items():
+        if isinstance(value, bool):
+            if value is False:
+                continue
+        if isinstance(value, tuple):
+            if len(value) == 0:
+                continue
         setattr(this_mod, param, value)
 
     # If we're working with a full config file...
@@ -91,7 +100,9 @@ def init(ctx):
             ALBUMS: [
                 {
                     FOLDER: this_mod.directory,
-                    ORDER: Order.RANDOM if this_mod.shuffle else Order.SEQUENCE,
+                    ORDER: (
+                        Order.RANDOM if hasattr(this_mod, SHUFFLE) else Order.SEQUENCE
+                    ),
                 }
             ]
         }
@@ -99,18 +110,22 @@ def init(ctx):
     else:
         raise ConfigurationError("No config or directory given.")
 
-    # Set the global parameters from the configuration
+    # Set the global parameters from the configuration file
+    # This is where we "merge" the command line and the config file
     for i in dictConfig:
-        if i == ALBUMS:
-            # We handle the albums later, because some "global"
-            # options may be relevant
-            continue
+        # First validate the entry
         if i not in defaults:
             raise ConfigurationError(f"Bad config file entry: {i}")
+
+        # We handle the albums later, because some "global"
+        # options may be relevant
+        if i == ALBUMS:
+            continue
+
+        # If the attribute is already set, it must have been on the
+        # command line; that takes priority.
         if hasattr(this_mod, i):
-            value = getattr(this_mod, i)
-            if isinstance(value, bool):
-                setattr(this_mod, i, value or dictConfig[i])
+            continue
         else:
             setattr(this_mod, i, dictConfig[i])
 
