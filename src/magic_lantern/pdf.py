@@ -22,6 +22,8 @@ def convert(pathName, fileName):
     doc = pymupdf.open(os.path.join(pathName, fileName))  # open document
     for page in doc:  # iterate through the pages
         pix = page.get_pixmap(dpi=600)  # render page to an image
-        pixFile = os.path.join(_tempDir.name, f"{fileName}-page-{page.number}.png")
+        name = f"{fileName}-page-{page.number}.png"
+        log.info(f"    {name}")
+        pixFile = os.path.join(_tempDir.name, name)
         pix.save(pixFile)  # store image as a PNG
         yield pixFile
