@@ -117,7 +117,7 @@
       "type": "debugpy",
       "request": "launch",
       "module": "magic_lantern",
-      "args": ["-c" "C:/Users/norma/Downloads/waiting_room_slideshow/magic_lantern/magic_lantern.toml"]
+      "args": ["-c", "C:/Users/norma/Downloads/waiting_room_slideshow/magic_lantern/magic_lantern.toml"]
     },
     {
       "name": "pytest",
