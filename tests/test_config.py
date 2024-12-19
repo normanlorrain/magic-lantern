@@ -1,6 +1,9 @@
-import pytest
+# import pytest
+import pathlib
+from types import SimpleNamespace
 
 from magic_lantern import config
+
 
 TEST_CFG = {
     "albums": [
@@ -12,6 +15,32 @@ TEST_CFG = {
 }
 
 
+def mockLoadConfig(cfg_file):
+    print(cfg_file)
+    return {
+        config.EXCLUDE: (),
+        config.FULLSCREEN: False,
+        config.SHUFFLE: False,
+        config.INTERVAL: 5,
+        config.ALBUMS: [
+            {
+                config.FOLDER: "/foo/bar/wha",
+                config.ORDER: config.Order.RANDOM,
+            }
+        ],
+    }
+
+
 def testLoadConfig(pytestconfig):
-    cfg = config.loadConfig(pytestconfig.rootpath / "tests/example 1.toml")
+    config.loadConfig = mockLoadConfig
+
+    commandLineContext = SimpleNamespace(
+        params={
+            config.CONFIG_FILE: pathlib.Path("/home/foo/foo.toml"),
+            "directory": None,
+        }
+    )
+    # ctx.params = {}
+    config.init(commandLineContext)
+
     pass

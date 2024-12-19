@@ -84,12 +84,7 @@ def init(ctx):
 
     # If we're working with a full config file...
     if this_mod.config_file:
-        with open(this_mod.config_file, "rb") as fp:
-            try:
-                dictConfig = tomllib.load(fp)
-            except tomllib.TOMLDecodeError as e:
-                log.error(f"Configuration file error: {this_mod.config_file}")
-                raise ConfigurationError(e)
+        dictConfig = loadConfig(this_mod.config_file)
 
     # If we're working with a simple directory, create a bare-bones configuration
     # to start with.
@@ -190,3 +185,12 @@ def validateAlbumFolder(album: dict):
         album[FOLDER] = path
     else:
         raise ConfigurationError(f"Configuration error. Invalid path: {path}")
+
+
+def loadConfig(config_file):
+    with open(config_file, "rb") as fp:
+        try:
+            return tomllib.load(fp)
+        except tomllib.TOMLDecodeError as e:
+            log.error(f"Configuration file error: {config_file}")
+            raise ConfigurationError(e)
