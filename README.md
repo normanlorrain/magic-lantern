@@ -31,6 +31,22 @@ See
 
 ```bash
 magic-lantern --help
+Usage: magic-lantern [OPTIONS] [DIRECTORY]
+
+  A slide show generator. Specify a directory containing image files or use -c
+  to specify a config file.
+
+Options:
+  --version                     Show the version and exit.
+  -c, --config-file FILE        Configuration file.
+  -f, --fullscreen              Full screen mode
+  -s, --shuffle                 Shuffle the slides
+  -d, --dry-run INTEGER RANGE   Test mode.  Only display the slide names.
+                                Specify the number of slides.  [x>=1]
+  -i, --interval INTEGER RANGE  Interval (seconds) between images.  [x>=1]
+  -e, --exclude TEXT            Exclude the given directories.  Multiple
+                                entries are permitted.
+  --help                        Show this message and exit.
 ```
 
 When running, use the following keys to control the slideshow:
@@ -98,6 +114,14 @@ This is a list of keys, their scope, etc., defined in the configuration file:
 - *value*: give the time in seconds after a slide before the next one. 
 - *default*: 5
 
+#### shuffle
+- *scope*: global
+- *type*: bool
+- *value*: randomize the output
+  - for a single directory, all the photos are "shuffled"
+  - for a configuration with multiple albums, the selection of albums is randomized. (The selection of photos within an album is governed in the album scope)
+- *default*: false
+  
 #### [[albums]]
 In TOML this specifies an array of key/value pairs.  Each of these entries define each album being configured. 
 
