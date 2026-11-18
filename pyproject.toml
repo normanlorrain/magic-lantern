@@ -31,6 +31,14 @@ Homepage = "https://github.com/normanlorrain/magic-lantern"
 [tool.hatch.build.targets.wheel]
 packages = ["src/magic_lantern"]
 
+[dependency-groups]
+dev = [
+  "pytest",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
 [project.scripts]
 # See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#creating-executable-scripts
 # This determines the contents of ~.local/bin/magic-lantern

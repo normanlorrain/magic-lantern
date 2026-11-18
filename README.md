@@ -25,6 +25,15 @@ pipx install magic-lantern
 pipx install magic-lantern
 ```
 
+### From source
+
+See [Development](docs/development.md).
+
+```bash
+uv sync
+uv run magic-lantern --help
+```
+
 ## Usage
 
 See 
