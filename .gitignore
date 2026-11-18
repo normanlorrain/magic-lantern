@@ -159,3 +159,5 @@ dmypy.json
 cython_debug/
 
 private_test.toml
+
+et_waiting_room/
