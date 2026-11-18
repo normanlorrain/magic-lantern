@@ -31,6 +31,19 @@ def mockLoadConfig(cfg_file):
     }
 
 
+def testInitReplacesAlbums():
+    ctx = SimpleNamespace(
+        params={
+            config.CONFIG_FILE: None,
+            config.DIRECTORY: pathlib.Path("/tmp"),
+        }
+    )
+    config.init(ctx)
+    config.init(ctx)
+    assert len(config.albums) == 1
+    assert config.albums[0].folder == pathlib.Path("/tmp")
+
+
 def testLoadConfig(pytestconfig):
     config.loadConfig = mockLoadConfig
 

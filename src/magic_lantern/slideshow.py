@@ -25,6 +25,15 @@ class SlideShowException(Exception):
 
 
 def init():
+    global _historyCursor, _currentSlide
+
+    # config.albums is rebuilt on each init. Drop the previous show with it.
+    _albumList.clear()
+    _albumWeights.clear()
+    _history.clear()
+    _historyCursor = 0
+    _currentSlide = None
+
     totalSlides = 0
     for album in config.albums:
         try:

@@ -129,6 +129,9 @@ def init(ctx):
         if not hasattr(this_mod, i) or getattr(this_mod, i) is None:
             setattr(this_mod, i, defaults[i])
 
+    # Reload replaces the previous album list. USR1 calls init() again.
+    albums.clear()
+
     # Validate the albums.
     for album in dictConfig[ALBUMS]:
         try:
